@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Nationality;
+use App\Models\Natinality;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +15,7 @@ class NationalitiesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('nationality')->delete();
+        DB::table('nationalitys')->delete();
 
         $nationals = [
 
@@ -1251,7 +1251,7 @@ class NationalitiesTableSeeder extends Seeder
         ];
 
         foreach ($nationals as $n) {
-            Nationality::create(['Name' => $n]);
+            Natinality::create(['name' => $n]);
         }
 
     }

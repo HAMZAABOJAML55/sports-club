@@ -40,9 +40,17 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'admin' => [
+        'player' => [
             'driver' => 'session',
-            'provider' => 'admins',
+            'provider' => 'players',
+        ],
+        'coach' => [
+            'driver' => 'session',
+            'provider' => 'coachs',
+        ],
+        'employee' => [
+            'driver' => 'session',
+            'provider' => 'employees',
         ],
     ],
 
@@ -68,9 +76,17 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'admins' => [
+        'players' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
+            'model' => App\Models\Player::class,
+        ],
+        'coachs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Coach::class,
+        ],
+        'employees' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Employe::class,
         ],
 
         // 'users' => [

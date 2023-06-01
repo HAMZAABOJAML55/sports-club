@@ -15,15 +15,16 @@ class CreatePlayersTable extends Migration
     {
         Schema::create('players', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('user_name');
-            $table->string('email')->unique();
-            $table->string('subscription_number');
-            $table->date('date_of_birth');
-            $table->text('phone');
-            $table->date('start_time');
-            $table->date('end_time');
-            $table->text('player_description');
+            $table->string('name')->nullable();
+            $table->string('user_name')->nullable();
+            $table->string('email' ,128)->unique();
+            $table->string('password');
+            $table->string('subscription_number')->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->text('phone')->nullable();
+            $table->date('start_time')->nullable();
+            $table->date('end_time')->nullable();
+            $table->text('player_description')->nullable();
             $table->string('link_website')->nullable();
             $table->string('link_facebook')->nullable();
             $table->string('link_instagram')->nullable();
@@ -35,7 +36,7 @@ class CreatePlayersTable extends Migration
             $table->foreign('nationalitys_id')->references('id')->on('nationalitys');
             $table->bigInteger('locations_id')->unsigned();
             $table->foreign('locations_id')->references('id')->on('locations');
-            $table->string('postal_code');
+            $table->string('postal_code')->nullable();
             $table->bigInteger('coachs_id')->unsigned();
             $table->foreign('coachs_id')->references('id')->on('coachs');
             $table->timestamps();

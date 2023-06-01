@@ -10,21 +10,20 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-
-    public const HOME = '/home';
-    public const ADMIN = '/admin/dashboard';
-
     /**
-     * The controller namespace for the application.
+     * The path to the "home" route for your application.
      *
-     * When present, controller route declarations will automatically be prefixed with this namespace.
+     * Typically, users are redirected here after authentication.
      *
-     * @var string|null
+     * @var string
      */
-    // protected $namespace = 'App\\Http\\Controllers';
+    public const HOME = '/dashboard';
+    public const player = '/player/dashboard';
+    public const coach = '/coach/dashboard';
+    public const employee = '/employee/dashboard';
 
     /**
-     * Define your route model bindings, pattern filters, etc.
+     * Define your route model bindings, pattern filters, and other route configuration.
      *
      * @return void
      */
@@ -33,18 +32,25 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::prefix('api')
-                ->middleware('api')
-                ->namespace($this->namespace)
+            Route::middleware('api')
+                ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
-                ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
 
+
             Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/admin.php'));
+                ->group(base_path('routes/player.php'));
+
+            Route::middleware('web')
+                ->group(base_path('routes/coach.php'));
+
+            Route::middleware('web')
+                ->group(base_path('routes/employee.php'));
+
+            Route::middleware('web')
+                ->group(base_path('routes/ajax.php'));
         });
     }
 
@@ -56,7 +62,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting()
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
+            return Limit::perMinute(60)->by($request->user()->id ?: $request->ip());
         });
     }
 }

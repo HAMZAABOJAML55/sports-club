@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,21 +16,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+     Route::get('/', [HomeController::class,'index'])->name('selection');
+
+    Route::get('/login/{type}',[LoginController::class,'loginForm'])->middleware('guest')->name('login.show');
+
+    Route::post('/login',[LoginController::class,'login'])->name('login');
+
+    Route::get('/logout/{type}', [LoginController::class,'logout'])->name('logout');
+
+
+
+    //==============================Translate all pages============================
+    Route::group(
+        [
+            'prefix' => LaravelLocalization::setLocale(),
+            'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth']
+        ], function () {
+
+    //==============================dashboard============================
+    Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+
+    //==============================dashboard============================
+
+
+
+
+
+
 });
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles','App\Http\Controllers\RoleController');
-    Route::resource('users','App\Http\Controllers\UserController');
-});
 
 
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

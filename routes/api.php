@@ -33,7 +33,6 @@ Route::group(['prefix'=>'v1' ,'namspace'=>'API'], function()
 Route::group(['prefix'=>'v1' ,'namspace'=>'API'], function()
 {
     require 'API\user.php';
-    require 'API\admin.php';
     require 'API\location.php';
     require 'API\nationality.php';
     require 'API\SubLocation.php';

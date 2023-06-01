@@ -22,6 +22,7 @@ class PlayersController extends Controller
         $data['name'] = $request->name;
         $data['user_name'] = $request->user_name;
         $data['email'] = $request->email;
+        $data['password'] = bcrypt($request->password);
         $data['subscription_number'] = $request->subscription_number;
         $data['date_of_birth'] = $request->date_of_birth;
         $data['phone'] = $request->phone;
