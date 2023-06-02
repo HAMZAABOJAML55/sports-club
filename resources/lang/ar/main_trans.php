@@ -40,7 +40,9 @@ return [
     'Name_Programer' => 'عبدو شـــــــاهين',
     'management_pormotion'=>'ادارة ترقية الطلاب',
     'management_Graduated'=>'إدارة الخريجين',
-    'add_graduated'=>'إضافة خريج جديد'
+    'add_graduated'=>'إضافة خريج جديد',
+    'player' => 'الاعب',
+    'coach' => 'مدرب',
 
 
 

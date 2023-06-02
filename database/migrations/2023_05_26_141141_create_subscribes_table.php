@@ -13,7 +13,7 @@ class CreateSubscripesTable extends Migration
      */
     public function up()
     {
-        Schema::create('subscripes', function (Blueprint $table) {
+        Schema::create('subscribes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('user_name');

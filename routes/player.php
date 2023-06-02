@@ -22,10 +22,7 @@ Route::group(
 
     //==============================dashboard============================
     Route::get('/player/dashboard', function () {
-        return view('pages.player.dashboard');
+        return view('pages.player.index');
     })->name('dashboard.player');
-
-
-
 
 });
