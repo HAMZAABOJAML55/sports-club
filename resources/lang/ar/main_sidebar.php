@@ -23,7 +23,6 @@ return [
     'add_tournament'=> 'اضافة بطولة',
     'add_team'=> 'اضافة فريق',
     'add_food_system'=> 'اضافة نظام غذائي',
-    'add_team'=> 'اضافة فريق',
     'add_section' => 'اضافة قسم',
     'add_subscribe' => 'اضافة الاشتراك',
     'add_accounting' => 'اضافة الحساب',

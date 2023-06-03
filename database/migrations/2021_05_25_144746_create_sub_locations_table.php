@@ -15,7 +15,7 @@ class CreateSubLocationsTable extends Migration
     {
         Schema::create('sub_locations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name',300);
             $table->bigInteger('location_id')->unsigned();
             $table->foreign('location_id')->references('id')->on('locations');
             $table->timestamps();

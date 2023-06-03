@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Translatable\HasTranslations;
 
 class Coach extends Authenticatable
 {
+    use HasTranslations;
+    public $translatable =['name'];
     use HasFactory;
     protected $guarded = [''];
     protected $table='coachs';

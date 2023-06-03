@@ -14,6 +14,7 @@
 @endsection
 @section('content')
     <!-- row -->
+    @include('sessions')
     <a href="{{route('coach.create')}}" class="btn btn-success btn-sm" role="button"
                                    aria-pressed="true">{{trans('main_sidebar.add_coach')}}</a><br><br>
 

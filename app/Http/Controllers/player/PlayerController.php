@@ -25,7 +25,7 @@ class PlayerController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.player.create');
     }
 
     /**
@@ -81,7 +81,7 @@ class PlayerController extends Controller
      */
     public function destroy($id)
     {
-        
+
         $player = Player::destroy($id);
 
     }
