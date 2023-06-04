@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Translatable\HasTranslations;
 
-class Employe extends Authenticatable
+class Employee extends Authenticatable
 {
     use HasTranslations;
     public $translatable =['name'];
