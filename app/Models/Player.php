@@ -23,27 +23,45 @@ class Player extends Authenticatable
     {
         $this->belongsTo(Time::class,'time_id','id');
     }
-    public function gender()
+
+    public function employment_type()
     {
-        $this->belongsTo(Gender::class,'gender_id','id');
+        return  $this->belongsTo(Employment_type::class,'employment_type_id','id');
     }
+
+    public function profs_degree()
+    {
+        return   $this->belongsTo(Prof::class,'profs_id','id');
+    }
+
     public function location()
     {
-        $this->belongsTo(Location::class,'location_id','id');
+        return  $this->belongsTo(Location::class,'location_id','id');
     }
+    public function sub_location()
+    {
+        return $this->belongsTo(Sub_Location::class,'sub_location_id','id');
+    }
+
     public function nationality()
     {
-        $this->belongsTo(Nationality::class,'nationality_id','id');
+        return  $this->belongsTo(Natinality::class,'nationality_id','id');
     }
+    public function gender()
+   {
+    return $this->belongsTo(Gender::class,'genders_id','id');
+   }
+
     public function coach()
     {
-        $this->belongsTo(Coach::class,'coach_id','id');
+        return  $this->belongsTo(Coach::class,'coach_id','id');
     }
 
     public function team()
     {
         return $this->belongsToMany(Team::class, 'player_has_team', 'player_id', 'team_id');
     }
+
     public function tournament()
     {
         return $this->belongsToMany(Tournament::class, 'player_has_tournament', 'player_id', 'tournament_id');

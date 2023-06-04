@@ -8,12 +8,11 @@
 @section('page-header')
     <!-- breadcrumb -->
     @section('PageTitle')
-        {{trans('main_sidebar.player')}}
+        {{trans('main_sidebar.add_player')}}
     @stop
     <!-- breadcrumb -->
 @endsection
 @section('content')
-
     <!-- row -->
     <div class="row">
         <div class="col-md-12 mb-30">
@@ -77,13 +76,20 @@
                                     <input  type="text" name="subscription_number" class="form-control" >
                                 </div>
                             </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{trans('player_trans.salary')}} :</label>
+                                    <input  type="text" name="salary" class="form-control" >
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('player_trans.player_description')}} :</label>
                                     <input  type="text" name="player_description" class="form-control" >
                                 </div>
                             </div>
-
 
 
 
@@ -136,18 +142,30 @@
                                 </div>
                             </div>
 
+
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="coachs">{{trans('player_trans.coach')}} : <span class="text-danger">*</span></label>
-                                    <select class="custom-select mr-sm-2" name="coach_id">
+                                    <label for="employment">{{trans('player_trans.Employment_Type')}} : <span class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="employment_type_id">
                                         <option selected disabled>{{trans('player_trans.Choose')}}...</option>
-                                        @foreach($coachs as $s)
-                                            <option  value="{{ $s->id }}">{{ $s->name }}</option>
+                                        @foreach($Employment_Types as $E)
+                                            <option  value="{{ $E->id }}">{{ $E->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
 
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="profs">{{trans('player_trans.profs_degree')}} : <span class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="profs_id">
+                                        <option selected disabled>{{trans('player_trans.Choose')}}...</option>
+                                        @foreach($profs_degrees as $E)
+                                            <option  value="{{ $E->id }}">{{ $E->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -199,16 +217,6 @@
                                 <input  type="url" name="link_youtupe" class="form-control" >
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>{{trans('player_trans.employment_type')}} :</label>
-                                <input  type="text" name="employment_type" class="form-control" >
-                            </div>
-                        </div>
-
-
-
-
 
 
                         <div class="row">
@@ -227,6 +235,5 @@
     <!-- row closed -->
 @endsection
 @section('js')
-    @toastr_js
-    @toastr_render
+
 @endsection

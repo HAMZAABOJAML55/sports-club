@@ -80,7 +80,7 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        $employee = Employe::destroy($id);
+        $employee = Employee::destroy($id);
 
     }
 }
