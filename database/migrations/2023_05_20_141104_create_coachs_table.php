@@ -15,13 +15,14 @@ class CreatecoachsTable extends Migration
     {
         Schema::create('coachs', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('user_name')->nullable();
-            $table->text('phone')->nullable();
+            $table->string('name');
+            $table->string('user_name');
+            $table->text('phone');
             $table->string('email' ,128)->unique();
             $table->string('password');
-            $table->string('subscription_number')->nullable();
-            $table->date('date_of_birth')->nullable();
+            $table->string('salary');
+            $table->string('subscription_number');
+            $table->date('date_of_birth');
             $table->date('start_time')->nullable();
             $table->date('end_time')->nullable();
             $table->text('coach_description')->nullable();
@@ -29,7 +30,10 @@ class CreatecoachsTable extends Migration
             $table->string('link_facebook')->nullable();
             $table->string('link_twitter')->nullable();
             $table->string('link_youtupe')->nullable();
-            $table->string('employment_type')->nullable();
+            $table->bigInteger('profs_id')->unsigned();
+            $table->foreign('profs_id')->references('id')->on('profs');
+            $table->bigInteger('employment_type_id')->unsigned();
+            $table->foreign('employment_type_id')->references('id')->on('employmenttypes');
             $table->bigInteger('location_id')->unsigned();
             $table->foreign('location_id')->references('id')->on('locations');
             $table->bigInteger('sub_location_id')->unsigned();

@@ -20,10 +20,18 @@ return [
     'link_facebook' => 'link_facebook',
     'link_twitter' => 'link_twitter',
     'link_youtupe' => 'link_youtube',
-    'employment_type' => 'employment_type',
     'location' => 'Country',
     'sub_location' => 'City',
     'Choose'=>'Choose',
     'submit'=>'submit',
+    'Close'=>'Close',
+    'Deleted_tilte'=>'Are you sure',
+    'Employment_Type'=>'Employment_Type',
+    'profs_degree'=>'profs_degree',
+    'salary'=>'Salary',
+    'Processes'=>'Processes',
+
+
+
 
 ];

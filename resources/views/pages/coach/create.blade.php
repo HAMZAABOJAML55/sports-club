@@ -76,6 +76,14 @@
                                     <input  type="text" name="subscription_number" class="form-control" >
                                 </div>
                             </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{trans('coach_trans.salary')}} :</label>
+                                    <input  type="text" name="salary" class="form-control" >
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('coach_trans.coach_description')}} :</label>
@@ -137,6 +145,30 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
+                                    <label for="employment">{{trans('coach_trans.Employment_Type')}} : <span class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="employment_type_id">
+                                        <option selected disabled>{{trans('coach_trans.Choose')}}...</option>
+                                        @foreach($Employment_Types as $E)
+                                            <option  value="{{ $E->id }}">{{ $E->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="profs">{{trans('coach_trans.profs_degree')}} : <span class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="profs_id">
+                                        <option selected disabled>{{trans('coach_trans.Choose')}}...</option>
+                                        @foreach($profs_degrees as $E)
+                                            <option  value="{{ $E->id }}">{{ $E->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
                                     <label>{{trans('coach_trans.Date_of_Birth')}}:</label>
                                     <input class="form-control" type="text"  id="datepicker-action" name="date_of_birth" data-date-format="yyyy-mm-dd">
                                 </div>
@@ -183,12 +215,6 @@
                             <div class="form-group">
                                 <label>{{trans('coach_trans.link_youtupe')}} :</label>
                                 <input  type="url" name="link_youtupe" class="form-control" >
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>{{trans('coach_trans.employment_type')}} :</label>
-                                <input  type="text" name="employment_type" class="form-control" >
                             </div>
                         </div>
 

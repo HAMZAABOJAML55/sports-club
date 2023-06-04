@@ -22,18 +22,34 @@ class Coach extends Authenticatable
 
     public function player()
     {
-        $this->belongsTo(Player::class,'player_id','id');
+        return   $this->belongsTo(Player::class,'player_id','id');
     }
-
+    public function employment_type()
+    {
+        return  $this->belongsTo(Employment_type::class,'employment_type_id','id');
+    }
+    public function profs_degree()
+    {
+        return   $this->belongsTo(Prof::class,'profs_id','id');
+    }
     public function location()
     {
-        $this->belongsTo(Location::class,'location_id','id');
+        return  $this->belongsTo(Location::class,'location_id','id');
+    }
+    public function sub_location()
+    {
+        return $this->belongsTo(Sub_Location::class,'sub_location_id','id');
     }
 
     public function nationality()
     {
-        $this->belongsTo(Natinality::class,'nationality_id','id');
+        return  $this->belongsTo(Natinality::class,'nationality_id','id');
     }
+    public function gender()
+   {
+    return $this->belongsTo(Gender::class,'genders_id','id');
+   }
+
 
     public function team()
     {

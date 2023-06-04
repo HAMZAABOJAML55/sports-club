@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\coach;
 use App\Http\Controllers\Controller;
 use App\Models\Coach;
+use App\Models\Employment_type;
 use App\Models\Gender;
 use App\Models\Location;
 use App\Models\Natinality;
+use App\Models\Prof;
 use App\Models\Sub_Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -20,54 +22,50 @@ class CoachController extends Controller
      */
     public function index()
     {
-        return view('pages.coach.index');
+        $coachs=Coach::all();
+        return view('pages.coach.index', compact('coachs'));
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $nationals=Natinality::all();
         $Genders=Gender::all();
         $locations=Location::all();
         $sub_locations=Sub_Location::all();
-        return view('pages.coach.create', compact('nationals','Genders','locations','sub_locations'));
+        $Employment_Types=Employment_type::all();
+        $profs_degrees=Prof::all();
+        return view('pages.coach.create', compact('profs_degrees','Employment_Types','nationals','Genders','locations','sub_locations'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         try {
-            $students = new Coach();
-            $students->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
-            $students->user_name = $request->user_name;
-            $students->phone = $request->phone;
-            $students->email = $request->email;
-            $students->password = Hash::make($request->password);
-            $students->subscription_number = $request->subscription_number;
-            $students->date_of_birth = $request->date_of_birth;
-            $students->start_time = $request->start_time;
-            $students->end_time = $request->end_time;
-            $students->link_website = $request->link_website;
-            $students->link_facebook = $request->link_facebook;
-            $students->link_twitter = $request->link_twitter;
-            $students->link_youtupe = $request->link_youtupe;
-            $students->employment_type = $request->employment_type;
-            $students->location_id = $request->location_id;
-            $students->sub_location_id = $request->sub_location_id;
-            $students->coach_description = $request->coach_description;
-            $students->nationality_id = $request->nationality_id;
-            $students->genders_id = $request->genders_id;
-            $students->save();
+            $coach = new Coach();
+            $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $coach->user_name = $request->user_name;
+            $coach->phone = $request->phone;
+            $coach->email = $request->email;
+            $coach->password = Hash::make($request->password);
+            $coach->subscription_number = $request->subscription_number;
+            $coach->salary = $request->salary;
+            $coach->date_of_birth = $request->date_of_birth;
+            $coach->start_time = $request->start_time;
+            $coach->end_time = $request->end_time;
+            $coach->link_website = $request->link_website;
+            $coach->link_facebook = $request->link_facebook;
+            $coach->link_twitter = $request->link_twitter;
+            $coach->link_youtupe = $request->link_youtupe;
+            $coach->employment_type_id = $request->employment_type_id;
+            $coach->profs_id = $request->profs_id;
+            $coach->location_id = $request->location_id;
+            $coach->sub_location_id = $request->sub_location_id;
+            $coach->coach_description = $request->coach_description;
+            $coach->nationality_id = $request->nationality_id;
+            $coach->genders_id = $request->genders_id;
+            $coach->save();
             session()->flash('Add', trans('notifi.add'));
             return redirect()->route('coach.index');
         } catch (\Exception $e) {
@@ -76,48 +74,68 @@ class CoachController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
-        //
+        $coach=Coach::findorfail($id);
+        $nationals=Natinality::all();
+        $Genders=Gender::all();
+        $locations=Location::all();
+        $sub_locations=Sub_Location::all();
+        $Employment_Types=Employment_type::all();
+        $profs_degrees=Prof::all();
+        return view('pages.coach.edit', compact('coach','profs_degrees','Employment_Types','nationals','Genders','locations','sub_locations'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        try {
+//            return $request->id;
+            $coach =Coach::findorfail($request->id);
+            $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $coach->user_name = $request->user_name;
+            $coach->phone = $request->phone;
+            $coach->email = $request->email;
+            $coach->password = Hash::make($request->password);
+            $coach->subscription_number = $request->subscription_number;
+            $coach->salary = $request->salary;
+            $coach->date_of_birth = $request->date_of_birth;
+            $coach->start_time = $request->start_time;
+            $coach->end_time = $request->end_time;
+            $coach->link_website = $request->link_website;
+            $coach->link_facebook = $request->link_facebook;
+            $coach->link_twitter = $request->link_twitter;
+            $coach->link_youtupe = $request->link_youtupe;
+            $coach->employment_type_id = $request->employment_type_id;
+            $coach->profs_id = $request->profs_id;
+            $coach->location_id = $request->location_id;
+            $coach->sub_location_id = $request->sub_location_id;
+            $coach->coach_description = $request->coach_description;
+            $coach->nationality_id = $request->nationality_id;
+            $coach->genders_id = $request->genders_id;
+            $coach->save();
+            session()->flash('update', trans('notifi.update'));
+            return redirect()->route('coach.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function destroy(Request $request)
     {
-        $coach = Coach::destroy($id);
+        try {
+            Coach::destroy($request->id);
+
+            session()->flash('delete', trans('notifi.delete'));
+            return redirect()->route('coach.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }

@@ -25,6 +25,15 @@ return [
     'sub_location' => 'المدينه',
     'Choose'=>'اختر',
     'submit'=>'التسجيل',
+    'Close'=>'اغلاق',
+    'Deleted_tilte'=>'هل انت متأكد من الحذف',
+    'Processes'=>'العمليات',
+
+    'Employment_Type'=>'نوع الوظيفة',
+    'profs_degree'=>'درجة الإحتراف',
+    'salary'=>'الراتب',
+
+
 
 
 ];
