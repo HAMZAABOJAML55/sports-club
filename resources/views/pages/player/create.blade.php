@@ -76,14 +76,28 @@
                                     <input  type="text" name="subscription_number" class="form-control" >
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{trans('player_trans.postal_code')}} :</label>
+                                    <input  type="text" name="postal_code" class="form-control" >
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{trans('player_trans.salary_month')}} :</label>
+                                    <input  type="text" name="salary_month" class="form-control" >
+                                </div>
+                            </div>
 
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>{{trans('player_trans.salary')}} :</label>
-                                    <input  type="text" name="salary" class="form-control" >
+                                    <label>{{trans('player_trans.total')}} :</label>
+                                    <input  type="text" name="total" class="form-control" >
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('player_trans.player_description')}} :</label>
@@ -145,10 +159,23 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="employment">{{trans('player_trans.Employment_Type')}} : <span class="text-danger">*</span></label>
-                                    <select class="custom-select mr-sm-2" name="employment_type_id">
+                                    <label for="subtypes">{{trans('player_trans.subtypes')}} : <span class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="subtype_id">
                                         <option selected disabled>{{trans('player_trans.Choose')}}...</option>
-                                        @foreach($Employment_Types as $E)
+                                        @foreach($subtypes as $E)
+                                            <option  value="{{ $E->id }}">{{ $E->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="coachs">{{trans('player_trans.coach')}} : <span class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="coachs_id">
+                                        <option selected disabled>{{trans('player_trans.Choose')}}...</option>
+                                        @foreach($coachs as $E)
                                             <option  value="{{ $E->id }}">{{ $E->name }}</option>
                                         @endforeach
                                     </select>
@@ -174,23 +201,24 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>{{trans('player_trans.start_time')}}:</label>
-                                    <input class="form-control" type="text"  id="datepicker-action" name="start_time" data-date-format="yyyy-mm-dd">
-                                </div>
-                            </div>
 
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>{{trans('player_trans.end_time')}}:</label>
-                                    <input class="form-control" type="text"  id="datepicker-action" name="end_time" data-date-format="yyyy-mm-dd">
-                                </div>
-                            </div>
 
                         </div>
 
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{trans('player_trans.weight')}} :</label>
+                                <input  type="text" name="weight" class="form-control" >
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{trans('player_trans.height')}} :</label>
+                                <input  type="text" name="height" class="form-control" >
+                            </div>
+                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -203,6 +231,12 @@
                             <div class="form-group">
                                 <label>{{trans('player_trans.link_facebook')}} :</label>
                                 <input  type="url" name="link_facebook" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{trans('player_trans.link_instagram')}} :</label>
+                                <input  type="url" name="link_instagram" class="form-control" >
                             </div>
                         </div>
                         <div class="col-md-6">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\player;
 use App\Http\Controllers\Controller;
+use App\Models\Coach;
 use App\Models\player;
 use App\Models\Employment_type;
 use App\Models\Gender;
@@ -9,19 +10,20 @@ use App\Models\Location;
 use App\Models\Natinality;
 use App\Models\Prof;
 use App\Models\Sub_Location;
+use App\Models\Subtype;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class PlayerController extends Controller
 {
-    
+
     public function index()
     {
         return view('pages.player.index');
 
     }
 
-    
+
     public function create()
     {
         $nationals=Natinality::all();
@@ -29,12 +31,13 @@ class PlayerController extends Controller
         $locations=Location::all();
         $sub_locations=Sub_Location::all();
         $players=player::all();
-        $Employment_Types=Employment_type::all();
+        $subtypes=Subtype::all();
         $profs_degrees=Prof::all();
-        return view('pages.player.create', compact('nationals','Genders','locations','sub_locations','players', 'Employment_Types' ,'profs_degrees' ));
+        $coachs=Coach::all();
+        return view('pages.player.create', compact('coachs','nationals','Genders','locations','sub_locations','players', 'subtypes' ,'profs_degrees' ));
     }
 
- 
+
     public function store(Request $request)
     {
         try {
@@ -45,16 +48,20 @@ class PlayerController extends Controller
             $player->email = $request->email;
             $player->password = Hash::make($request->password);
             $player->subscription_number = $request->subscription_number;
-            $player->salary = $request->salary;
+            $player->salary_month = $request->salary_month;
+            $player->total = $request->total;
+            $player->weight = $request->weight;
+            $player->height = $request->height;
+            $player->postal_code = $request->postal_code;
             $player->date_of_birth = $request->date_of_birth;
-            $player->start_time = $request->start_time;
-            $player->end_time = $request->end_time;
             $player->link_website = $request->link_website;
             $player->link_facebook = $request->link_facebook;
+            $player->link_instagram = $request->link_instagram;
             $player->link_twitter = $request->link_twitter;
             $player->link_youtupe = $request->link_youtupe;
-            $player->employment_type_id = $request->employment_type_id;
             $player->profs_id = $request->profs_id;
+            $player->coachs_id = $request->coachs_id;
+            $player->subtype_id = $request->subtype_id;
             $player->location_id = $request->location_id;
             $player->sub_location_id = $request->sub_location_id;
             $player->player_description = $request->player_description;
@@ -129,7 +136,7 @@ class PlayerController extends Controller
     public function destroy(Request $request)
     {
 
-        
+
         try {
             Player::destroy($request->id);
 
