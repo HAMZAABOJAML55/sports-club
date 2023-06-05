@@ -33,7 +33,10 @@ class Player extends Authenticatable
     {
         return   $this->belongsTo(Prof::class,'profs_id','id');
     }
-
+    public function subtype()
+    {
+        return  $this->belongsTo(Subtype::class,'subtype_id','id');
+    }
     public function location()
     {
         return  $this->belongsTo(Location::class,'location_id','id');
@@ -54,7 +57,7 @@ class Player extends Authenticatable
 
     public function coach()
     {
-        return  $this->belongsTo(Coach::class,'coach_id','id');
+        return  $this->belongsTo(Coach::class,'coachs_id','id');
     }
 
     public function team()

@@ -15,11 +15,7 @@ use Illuminate\Support\Facades\Hash;
 
 class CoachController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $coachs=Coach::all();

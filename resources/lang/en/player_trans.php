@@ -25,7 +25,13 @@ return [
     'Choose'=>'Choose',
     'submit'=>'submit',
     'coach'=>'coach',
+    'weight'=>'weight',
+    'profs_degree'=>'profs_degree',
+    'subtype'=>'subtype',
+    'height'=>'height',
+    'salary'=>'salary per month',
     'player_description'=>'player_description',
+    'Processes'=>'Processes',
 
 
 ];

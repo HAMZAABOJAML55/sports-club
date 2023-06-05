@@ -13,8 +13,6 @@ return [
     'gender' => 'النوع',
     'Nationality' => 'الجنسية',
     'Date_of_Birth' => 'تاريخ الميلاد',
-    'start_time' => 'تاريخ البداية',
-    'end_time' => 'تاريخ النهاية',
     'coach_description' => 'الوصف',
     'link_website' => 'عنوان الموقع',
     'link_facebook' => 'الفيسبوك',
@@ -26,7 +24,13 @@ return [
     'Choose'=>'اختر',
     'submit'=>'التسجيل',
     'coach'=>'المدرب',
+    'weight'=>'الوزن',
+    'height'=>'الطول',
+    'salary'=>'الاشتراك الشهري',
+    'profs_degree'=>'درجة الإحتراف',
+    'subtype'=>'نوع الاشتراك',
     'player_description'=>'الوصف',
+    'Processes'=>'العمليات',
 
 
 

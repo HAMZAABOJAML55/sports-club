@@ -19,8 +19,8 @@ class PlayerController extends Controller
 
     public function index()
     {
-        return view('pages.player.index');
-
+        $players=Player::all();
+        return view('pages.player.index', compact('players'));
     }
 
 
@@ -90,10 +90,10 @@ class PlayerController extends Controller
         $Genders=Gender::all();
         $locations=Location::all();
         $sub_locations=Sub_Location::all();
-        $Employment_Types=Employment_type::all();
         $profs_degrees=Prof::all();
-        $players=Player::all();
-        return view('pages.player.edit', compact('player','profs_degrees','Employment_Types','nationals','Genders','locations','sub_locations'));
+        $subtypes =Subtype::all();
+        $coachs  =Coach::all();
+        return view('pages.player.edit', compact('coachs','subtypes','player','profs_degrees','nationals','Genders','locations','sub_locations'));
 
     }
 
@@ -109,16 +109,20 @@ class PlayerController extends Controller
             $player->email = $request->email;
             $player->password = Hash::make($request->password);
             $player->subscription_number = $request->subscription_number;
-            $player->salary = $request->salary;
+            $player->salary_month = $request->salary_month;
+            $player->total = $request->total;
+            $player->weight = $request->weight;
+            $player->height = $request->height;
+            $player->postal_code = $request->postal_code;
             $player->date_of_birth = $request->date_of_birth;
-            $player->start_time = $request->start_time;
-            $player->end_time = $request->end_time;
             $player->link_website = $request->link_website;
             $player->link_facebook = $request->link_facebook;
+            $player->link_instagram = $request->link_instagram;
             $player->link_twitter = $request->link_twitter;
             $player->link_youtupe = $request->link_youtupe;
-            $player->employment_type_id = $request->employment_type_id;
             $player->profs_id = $request->profs_id;
+            $player->coachs_id = $request->coachs_id;
+            $player->subtype_id = $request->subtype_id;
             $player->location_id = $request->location_id;
             $player->sub_location_id = $request->sub_location_id;
             $player->player_description = $request->player_description;
@@ -139,7 +143,6 @@ class PlayerController extends Controller
 
         try {
             Player::destroy($request->id);
-
             session()->flash('delete', trans('notifi.delete'));
             return redirect()->route('player.index');
         } catch (\Exception $e) {

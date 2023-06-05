@@ -25,6 +25,7 @@
                         @method('PUT')
                         @csrf
 
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -78,14 +79,28 @@
                                     <input  type="text" value="{{$player->subscription_number}}" name="subscription_number" class="form-control" >
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{trans('player_trans.postal_code')}} :</label>
+                                    <input  type="text" value="{{$player->postal_code}}" name="postal_code" class="form-control" >
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{trans('player_trans.salary_month')}} :</label>
+                                    <input  type="text" value="{{$player->salary_month}}" name="salary_month" class="form-control" >
+                                </div>
+                            </div>
 
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>{{trans('player_trans.salary')}} :</label>
-                                    <input  type="text" value="{{$player->salary}}" name="salary" class="form-control" >
+                                    <label>{{trans('player_trans.total')}} :</label>
+                                    <input  type="text" value="{{$player->total}}" name="total" class="form-control" >
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('player_trans.player_description')}} :</label>
@@ -101,7 +116,7 @@
                                     <select class="custom-select mr-sm-2" name="genders_id">
                                         <option selected disabled>{{trans('player_trans.Choose')}}...</option>
                                         @foreach($Genders as $Gender)
-                                            <option  value="{{$Gender->id}}" {{$Gender->id == $player->genders_id ? 'selected' : ""}}>{{ $Gender->name }}</option>
+                                            <option  value="{{ $Gender->id }}" {{$Gender->id == $player->genders_id ? 'selected' : ""}}>{{ $Gender->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -147,11 +162,24 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="employment">{{trans('player_trans.Employment_Type')}} : <span class="text-danger">*</span></label>
-                                    <select class="custom-select mr-sm-2" name="employment_type_id">
+                                    <label for="subtypes">{{trans('player_trans.subtypes')}} : <span class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="subtype_id">
                                         <option selected disabled>{{trans('player_trans.Choose')}}...</option>
-                                        @foreach($Employment_Types as $E)
-                                            <option  value="{{ $E->id }}" {{$E->id == $player->employment_type_id ? 'selected' : ""}}>{{ $E->name }}</option>
+                                        @foreach($subtypes as $E)
+                                            <option  value="{{ $E->id }}" {{$E->id == $player->subtype_id ? 'selected' : ""}}>{{ $E->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="coachs">{{trans('player_trans.coach')}} : <span class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="coachs_id">
+                                        <option selected disabled>{{trans('player_trans.Choose')}}...</option>
+                                        @foreach($coachs as $E)
+                                            <option  value="{{ $E->id }}" {{$E->id == $player->coachs_id ? 'selected' : ""}}>{{ $E->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -172,51 +200,58 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>{{trans('player_trans.Date_of_Birth')}}:</label>
-                                    <input class="form-control" type="text" value="{{$player->date_of_birth}}" id="datepicker-action" name="date_of_birth" data-date-format="yyyy-mm-dd">
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>{{trans('player_trans.start_time')}}:</label>
-                                    <input class="form-control" type="text" value="{{$player->start_time}}" id="datepicker-action" name="start_time" data-date-format="yyyy-mm-dd">
+                                    <input class="form-control" type="text"  value="{{$player->date_of_birth}}" id="datepicker-action" name="date_of_birth" data-date-format="yyyy-mm-dd">
                                 </div>
                             </div>
 
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>{{trans('player_trans.end_time')}}:</label>
-                                    <input class="form-control" type="text" value="{{$player->end_time}}" id="datepicker-action" name="end_time" data-date-format="yyyy-mm-dd">
-                                </div>
-                            </div>
 
                         </div>
 
 
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label>{{trans('player_trans.weight')}} :</label>
+                                <input  type="text" value="{{$player->weight}}" name="weight" class="form-control" >
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{trans('player_trans.height')}} :</label>
+                                <input  type="text" value="{{$player->height}}" name="height" class="form-control" >
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label>{{trans('player_trans.link_website')}} :</label>
-                                <input  type="url" name="link_website" value="{{$player->link_website}}" class="form-control" >
+                                <input  type="url" value="{{$player->link_website}}" name="link_website" class="form-control" >
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{trans('player_trans.link_facebook')}} :</label>
-                                <input  type="url" name="link_facebook" value="{{$player->link_facebook}}" class="form-control" >
+                                <input  type="url" value="{{$player->link_facebook}}" name="link_facebook" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{trans('player_trans.link_instagram')}} :</label>
+                                <input  type="url" value="{{$player->link_instagram}}" name="link_instagram" class="form-control" >
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{trans('player_trans.link_twitter')}} :</label>
-                                <input  type="url" name="link_twitter" value="{{$player->link_twitter}}" class="form-control" >
+                                <input  type="url" value="{{$player->link_twitter}}" name="link_twitter" class="form-control" >
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{trans('player_trans.link_youtupe')}} :</label>
-                                <input  type="url" name="link_youtupe" value="{{$player->link_youtupe}}" class="form-control" >
+                                <input  type="url" value="{{$player->link_youtupe}}" name="link_youtupe" class="form-control" >
                             </div>
                         </div>
 
