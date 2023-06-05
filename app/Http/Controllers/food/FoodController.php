@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\food;
 use App\Http\Controllers\Controller;
 use App\Models\Food;
+use App\Models\Foodsystem;
 use Illuminate\Http\Request;
 
 class FoodController extends Controller
@@ -12,9 +13,11 @@ class FoodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-
-        return view('pages.food.index');
+    public function index()
+    {
+        $foodsystems = Foodsystem::all();
+        $foods = Food::all();
+        return view('pages.food.index' , compact('foodsystems', 'foods'));
     }
 
     /**
@@ -24,7 +27,10 @@ class FoodController extends Controller
      */
     public function create()
     {
-        //
+
+        $foodsystems = Foodsystem::all();
+        $foods = Food::all();
+        return view('pages.food.create', compact('foodsystems', 'foods'));
     }
 
     /**
@@ -35,7 +41,21 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $food = new Food();
+            $food->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $food->foodsystem_id = $request->foodsystem_id;
+            $food->number = $request->number;
+            $food->start_time = $request->start_time;
+            $food->end_time = $request->end_time;
+            $food->description = $request->description;
+            $food->save();
+            session()->flash('Add', trans('notifi.add'));
+            return redirect()->route('food.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+
     }
 
     /**
@@ -57,7 +77,10 @@ class FoodController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $food=Food::findorfail($id);
+        $foodsystems = Foodsystem::all();
+        return view('pages.food.edit', compact('foodsystems', 'food'));
     }
 
     /**
@@ -69,18 +92,33 @@ class FoodController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $food = Food::findorfail($request->id);
+            $food->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $food->foodsystem_id = $request->foodsystem_id;
+            $food->number = $request->number;
+            $food->start_time = $request->start_time;
+            $food->end_time = $request->end_time;
+            $food->description = $request->description;
+            $food->save();
+            session()->flash('update', trans('notifi.update'));
+            return redirect()->route('food.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+ 
+    public function destroy(Request $request ,$id)
     {
-        $food = Food::destroy($id);
+        try {
+            Food::destroy($request->id);
+            session()->flash('delete', trans('notifi.delete'));
+            return redirect()->route('food.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+
 
     }
 }

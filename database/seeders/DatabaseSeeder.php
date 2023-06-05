@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ProfDegreeTableSeeder::class);
         $this->call(SubtypeTableSeeder::class);
         $this->call(ProductTypeTableSeeder::class);
+        $this->call(FoodsyStemTableSeeder::class);
+
 
     }
 }

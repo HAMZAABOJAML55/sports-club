@@ -16,9 +16,8 @@ class CreateFoodTable extends Migration
         Schema::create('food', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('breakfast');
-            $table->string('lunch');
-            $table->string('dinner');
+            $table->bigInteger('foodsystem_id')->unsigned();
+            $table->foreign('foodsystem_id')->references('id')->on('foodsystems');
             $table->integer('number');
             $table->text('description');
 //            $table->foreign('components_id')->references('id')->on('components');

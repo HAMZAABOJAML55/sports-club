@@ -6,18 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
-class Food extends Model
+
+class Foodsystem extends Model
 {
     use HasFactory;
     use HasTranslations;
     public $translatable =['name'];
-    protected $table ='food';
-
     protected $guarded = [''];
 
-    public function foodsystem()
-    {
-      return  $this->belongsTo(Foodsystem::class,'foodsystem_id','id');
-    }
+    
 
+    
 }
