@@ -4,17 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Product extends Model
 {
     use HasFactory;
-
+    use HasTranslations;
+    public $translatable =['name'];
     protected $guarded = [''];
 
-    
-    public function player()
+
+    public function productType()
     {
-        $this->belongsTo(Player::class,'player_id','id');
+        return $this->belongsTo(ProductType::class,'product_types_id','id');
     }
 
     public function image()

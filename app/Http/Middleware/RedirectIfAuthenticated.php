@@ -17,15 +17,15 @@ class RedirectIfAuthenticated
         }
 
         if (auth('player')->check()) {
-            return redirect(RouteServiceProvider::player);
+            return redirect(RouteServiceProvider::PLAYER);
         }
 
         if (auth('coach')->check()) {
-            return redirect(RouteServiceProvider::coach);
+            return redirect(RouteServiceProvider::COACH);
         }
 
         if (auth('employee')->check()) {
-            return redirect(RouteServiceProvider::employee);
+            return redirect(RouteServiceProvider::EMPLOYEE);
         }
 
         return $next($request);

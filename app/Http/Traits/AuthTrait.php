@@ -8,14 +8,14 @@ trait AuthTrait
 {
     public function chekGuard($request){
 
-        if($request->type == 'student'){
-            $guardName= 'student';
+        if($request->type == 'player'){
+            $guardName= 'player';
         }
-        elseif ($request->type == 'parent'){
-            $guardName= 'parent';
+        elseif ($request->type == 'coach'){
+            $guardName= 'coach';
         }
-        elseif ($request->type == 'teacher'){
-            $guardName= 'teacher';
+        elseif ($request->type == 'employee'){
+            $guardName= 'employee';
         }
         else{
             $guardName= 'web';
@@ -26,13 +26,13 @@ trait AuthTrait
     public function redirect($request){
 
         if($request->type == 'player'){
-            return redirect()->intended(RouteServiceProvider::player);
+            return redirect()->intended(RouteServiceProvider::PLAYER);
         }
         elseif ($request->type == 'coach'){
-            return redirect()->intended(RouteServiceProvider::coach);
+            return redirect()->intended(RouteServiceProvider::COACH);
         }
         elseif ($request->type == 'employee'){
-            return redirect()->intended(RouteServiceProvider::employee);
+            return redirect()->intended(RouteServiceProvider::EMPLOYEE);
         }
         else{
             return redirect()->intended(RouteServiceProvider::HOME);
