@@ -16,13 +16,6 @@ class Employe extends Authenticatable
 
     protected $guarded = [''];
 
-    public function section()
-    {
-        $this->belongsTo(Section::class,'section_id','id');
-    }
-    public function nationality()
-    {
-        $this->belongsTo(Natinality::class,'nationality_id','id');
-    }
+
 
 }

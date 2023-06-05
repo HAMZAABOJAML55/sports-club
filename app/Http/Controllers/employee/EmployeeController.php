@@ -14,7 +14,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('pages.Employee.index');
+        $employees=Employe::all();
+        return view('pages.Employee.index' , compact('employees'));
     }
 
     /**
@@ -24,7 +25,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.employee.create');
     }
 
     /**
@@ -35,7 +36,22 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $employees  = new Employe();
+            $employees->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $employees->email = $request->email;
+            $employees->password = $request->password;
+            $employees->number = $request->number;
+            $employees->description = $request->description;
+            $employees->full_description = $request->full_description;
+            $employees->date_of_birth = $request->date_of_birth;
+            $employees->emp_id = $request->emp_id;
+            $employees->save();
+            session()->flash('Add', trans('notifi.add'));
+            return redirect()->route('employee.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -57,19 +73,28 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employees = Employe::findorfail($id) ; 
+        return view('pages.employee.edit', compact('employees'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $employees = new Employe();
+            $employees->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $employees->email = $request->email;
+            $employees->password = $request->password;
+            $employees->number = $request->number;
+            $employees->description = $request->description;
+            $employees->full_description = $request->full_description;
+            $employees->date_of_birth = $request->date_of_birth;
+            $employees->emp_id = $request->emp_id;
+            $employees->save();
+            session()->flash('update', trans('notifi.update'));
+            return redirect()->route('employee.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -78,9 +103,15 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request ,$id)
     {
-        $employee = Employee::destroy($id);
 
+        try {
+            Employe::destroy($request->id);
+            session()->flash('delete', trans('notifi.delete'));
+            return redirect()->route('employee.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }
