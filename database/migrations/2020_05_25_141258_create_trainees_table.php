@@ -18,10 +18,15 @@ class CreateTraineesTable extends Migration
             $table->string('name');
             $table->string('number');
             $table->text('description');
-            $table->string('video_website')->nullable();
-            $table->string('training_period');
-            $table->string('training_time');
-            $table->string('address');
+            $table->bigInteger('training_group_id')->unsigned();
+            $table->foreign('training_group_id')->references('id')->on('training_groups');
+            $table->string('link_website')->nullable();
+            $table->string('duration_of_training');
+            $table->string('training_number');
+            $table->string('number_of_iterations');
+
+            //عدد التكرارت
+            // $table->string('Number_of_repetitions');
             $table->timestamps();
             $table->softDeletes();
         });

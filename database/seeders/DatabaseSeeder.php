@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SubtypeTableSeeder::class);
         $this->call(ProductTypeTableSeeder::class);
         $this->call(FoodsyStemTableSeeder::class);
+        $this->call(TrainingGroupTableSeeder::class);
         $this->call(TournamentTypeTableSeeder::class);
         $this->call(PrizeTypeTableSeeder::class);
         $this->call(ChampionshipLevelTableSeeder::class);

@@ -80,7 +80,6 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $employees = new Employe();
             $employees->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $employees->email = $request->email;
             $employees->password = $request->password;
@@ -88,6 +87,7 @@ class EmployeeController extends Controller
             $employees->description = $request->description;
             $employees->full_description = $request->full_description;
             $employees->date_of_birth = $request->date_of_birth;
+            $employees = new Employe();
             $employees->emp_id = $request->emp_id;
             $employees->save();
             session()->flash('update', trans('notifi.update'));
