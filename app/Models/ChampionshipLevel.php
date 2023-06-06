@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
-class Prize extends Model
+class ChampionshipLevel extends Model
 {
-    use HasFactory;
     use HasTranslations;
     public $translatable =['name'];
     protected $guarded = [''];
-
+    use HasFactory;
 }

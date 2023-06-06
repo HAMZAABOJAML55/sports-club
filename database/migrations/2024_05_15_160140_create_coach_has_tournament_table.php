@@ -16,9 +16,9 @@ class CreateCoachHasTournamentTable extends Migration
         Schema::create('coach_has_tournament', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('coach_id')->unsigned();
-            $table->foreign('coach_id')->references('id')->on('coachs');
+            $table->foreign('coach_id')->references('id')->on('coachs')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('tournament_id')->unsigned();
-            $table->foreign('tournament_id')->references('id')->on('tournaments');
+            $table->foreign('tournament_id')->references('id')->on('tournaments')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

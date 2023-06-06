@@ -16,11 +16,17 @@ class CreateTournamentsTable extends Migration
         Schema::create('tournaments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('number');
             $table->text('description');
             $table->date('start_time');
             $table->date('end_time');
-            $table->bigInteger('prizes_id')->unsigned();
-            $table->foreign('prizes_id')->references('id')->on('prizes');
+            $table->bigInteger('tournament_type_id')->unsigned();
+            $table->foreign('tournament_type_id')->references('id')->on('tournament_types');
+            $table->bigInteger('prize_type_id')->unsigned();
+            $table->foreign('prize_type_id')->references('id')->on('prizes');
+            $table->bigInteger('championship_levels_id')->unsigned();
+            $table->foreign('championship_levels_id')->references('id')->on('championship_levels');
+
             $table->timestamps();
         });
     }

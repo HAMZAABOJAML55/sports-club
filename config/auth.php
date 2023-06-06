@@ -50,7 +50,7 @@ return [
         ],
         'employee' => [
             'driver' => 'session',
-            'provider' => 'employees',
+            'provider' => 'employes',
         ],
     ],
 
@@ -84,7 +84,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Coach::class,
         ],
-        'employees' => [
+        'employes' => [
             'driver' => 'eloquent',
             'model' => App\Models\Employe::class,
         ],
