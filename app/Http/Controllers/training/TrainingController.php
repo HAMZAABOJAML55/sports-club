@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\training;
 use App\Http\Controllers\Controller;
+use App\Models\Trainee;
+use App\Models\TrainingGroup;
 use Illuminate\Http\Request;
 
 class TrainingController extends Controller
@@ -13,7 +15,8 @@ class TrainingController extends Controller
      */
     public function index()
     {
-        return view('pages.training.index');
+        $trainings =Trainee::all();
+        return view('pages.training.index' , compact('trainings'));
 
     }
 
@@ -24,7 +27,8 @@ class TrainingController extends Controller
      */
     public function create()
     {
-        //
+        $training_group = TrainingGroup::all();
+        return view('pages.training.create', compact('training_group'));
     }
 
     /**
@@ -35,7 +39,23 @@ class TrainingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        try {
+            $training_groupsroup = new Trainee();
+            $training_groupsroup->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $training_groupsroup->link_website = $request->link_website;
+            $training_groupsroup->training_group_id = $request->training_group_id;
+            $training_groupsroup->number = $request->number;
+            $training_groupsroup->duration_of_training = $request->duration_of_training;
+            $training_groupsroup->training_number = $request->training_number;
+            $training_groupsroup->description = $request->description;
+            $training_groupsroup->number_of_iterations = $request->number_of_iterations;
+            $training_groupsroup->save();
+            session()->flash('Add', trans('notifi.add'));
+            return redirect()->route('training.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -57,8 +77,11 @@ class TrainingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $trainings=Trainee::findorfail($id);
+        $training_group = TrainingGroup::all();
+        return view('pages.training.edit', compact('trainings' , 'training_group'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +92,22 @@ class TrainingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $training_groupsroup = new Trainee();
+            $training_groupsroup->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $training_groupsroup->link_website = $request->link_website;
+            $training_groupsroup->training_group_id = $request->training_group_id;
+            $training_groupsroup->number = $request->number;
+            $training_groupsroup->duration_of_training = $request->duration_of_training;
+            $training_groupsroup->training_number = $request->training_number;
+            $training_groupsroup->description = $request->description;
+            $training_groupsroup->number_of_iterations = $request->number_of_iterations;
+            $training_groupsroup->save();
+            session()->flash('update', trans('notifi.update'));
+            return redirect()->route('training.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -78,9 +116,14 @@ class TrainingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request ,$id)
     {
-        $training = Training::destroy($id);
-
+        try {
+            Trainee::destroy($request->id);
+            session()->flash('delete', trans('notifi.delete'));
+            return redirect()->route('training.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }
