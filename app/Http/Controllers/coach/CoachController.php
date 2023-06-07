@@ -26,6 +26,7 @@ class CoachController extends Controller
 
     public function create()
     {
+
         $nationals=Natinality::all();
         $Genders=Gender::all();
         $locations=Location::all();
@@ -39,7 +40,7 @@ class CoachController extends Controller
     public function store(Request $request)
     {
         try {
-//            return $request;
+
             $coach = new Coach();
             $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $coach->user_name = $request->user_name;

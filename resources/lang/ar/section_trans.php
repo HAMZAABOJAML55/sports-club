@@ -31,7 +31,6 @@ return [
     'subtype'=>'نوع الاشتراك',
     'player_description'=>'الوصف',
     'Processes'=>'العمليات',
-
-
+    'Attachments'=>'رفع صوره',
 
 ];

@@ -108,7 +108,7 @@ class FoodController extends Controller
         }
     }
 
- 
+
     public function destroy(Request $request ,$id)
     {
         try {

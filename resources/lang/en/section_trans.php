@@ -32,6 +32,6 @@ return [
     'salary'=>'salary per month',
     'player_description'=>'player_description',
     'Processes'=>'Processes',
-
+    'Attachments'=>'Add Photo',
 
 ];

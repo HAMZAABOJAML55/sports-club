@@ -37,7 +37,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('section_trans.name_en')}} : <span class="text-danger">*</span></label>
-                                    <input value="{{$player->getTranslation('name','en')}}" class="form-control" name="name_en" type="text" >
+                                    <input value="{{$section->getTranslation('name','en')}}" class="form-control" name="name_en" type="text" >
                                 </div>
                             </div>
 
@@ -45,21 +45,21 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('section_trans.number')}} :</label>
-                                    <input alue="{{$section->number}}"type="number" name="number" class="form-control">
+                                    <input value="{{$section->number}}" type="number" name="number" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('section_trans.section_description')}} :</label>
-                                    <input alue="{{$section->section_description}}" type="text" name="section_description" class="form-control">
+                                    <input value="{{$section->section_description}}" type="text" name="section_description" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('section_trans.department_address')}} :</label>
-                                    <input alue="{{$section->department_address}}" type="text" name="department_address" class="form-control" >
+                                    <input value="{{$section->department_address}}" type="text" name="department_address" class="form-control" >
                                 </div>
                             </div>
 
@@ -68,7 +68,7 @@
 
 
                         </div><br>
-
+                        </div>
                         <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">{{trans('section_trans.submit')}}</button>
                     </form>
 

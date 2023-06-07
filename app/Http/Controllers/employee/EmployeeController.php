@@ -26,6 +26,7 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         try {
+            return $request;
             $employees  = new Employe();
             $employees->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $employees->email = $request->email;
@@ -61,6 +62,8 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
         try {
+
+
             $employees =Employe::findorfail($request->id);
             $employees->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $employees->email = $request->email;

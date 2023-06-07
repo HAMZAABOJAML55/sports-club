@@ -26,6 +26,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         try {
+
             $product = new Product();
             $product->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $product->description = $request->description;

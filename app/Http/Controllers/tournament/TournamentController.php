@@ -33,6 +33,7 @@ class TournamentController extends Controller
     public function store(Request $request)
     {
         try {
+//            return $request;
             $tournament = new Tournament();
             $tournament->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $tournament->description = $request->description;

@@ -21,8 +21,7 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required','min:4'],
-            'phone'=>['string','max:25'],
-            'birth_day' =>'date',
+
         ]);
 
         $failds['password']= Hash::make($failds['password']);
@@ -37,6 +36,7 @@ class AuthController extends Controller
     // function login
     public function login(Request $request)
     {
+
         $credentials = $request->only('email', 'password');
         $failds= $request->validate([
             'email' => ['required', 'email'],

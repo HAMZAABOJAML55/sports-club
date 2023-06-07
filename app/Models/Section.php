@@ -12,4 +12,9 @@ class Section extends Model
     use HasTranslations;
     public $translatable =['name'];
     protected $guarded = [''];
+
+    public function images()
+    {
+        return $this->morphMany('App\Models\Image', 'imageable');
+    }
 }

@@ -62,7 +62,14 @@
                                     <input  type="text" name="department_address" class="form-control" >
                                 </div>
                             </div>
-                           
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="academic_year">{{trans('section_trans.Attachments')}} : <span class="text-danger">*</span></label>
+                                    <input type="file" accept="image/*" name="photos[]" multiple>
+                                </div>
+                            </div>
+
 
                             <div class="row">
 
