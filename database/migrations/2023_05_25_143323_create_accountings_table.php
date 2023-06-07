@@ -16,13 +16,16 @@ class CreateAccountingsTable extends Migration
         Schema::create('accountings', function (Blueprint $table) {
             $table->id();
             $table->string('number');
-            $table->string('number_of_months');
             $table->foreignId('coach_id')->references('id')->on('coachs');
             $table->foreignId('player_id')->references('id')->on('players');
-            $table->string('discounts');
-//  نظام السحوبا
+            $table->bigInteger('Payment_trainee_id')->unsigned();
+            $table->foreign('Payment_trainee_id')->references('id')->on('paymentstrainees');
+//            number_of_months
+            $table->bigInteger('subtype_id')->unsigned();
+            $table->foreign('subtype_id')->references('id')->on('subtypes');
+//  نظام السحوبات
             $table->string('draws');
-            $table->string('Payments_trainees');
+            $table->string('discounts');
             $table->timestamps();
         });
     }
