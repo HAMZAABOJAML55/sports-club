@@ -14,7 +14,8 @@ class SectionController extends Controller
      */
     public function index()
     {
-        return view('pages.section.index');
+        $sections = Section::all();
+        return view('pages.section.index', compact('sections'));
 
     }
 
@@ -25,7 +26,9 @@ class SectionController extends Controller
      */
     public function create()
     {
-        //
+
+        $sections = Section::all();
+        return view('pages.section.create', compact('sections'));
     }
 
     /**
@@ -36,7 +39,18 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $sections = new Section();
+            $sections->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $sections->number = $request->number;
+            $sections->section_description = $request->section_description;
+            $sections->department_address = $request->department_address;
+            $sections->save();
+            session()->flash('Add', trans('notifi.add'));
+            return redirect()->route('section.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -58,7 +72,8 @@ class SectionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sections=Section::findorfail($id);
+        return view('pages.section.create', compact('sections'));
     }
 
     /**
@@ -70,7 +85,18 @@ class SectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $sections = new Section();
+            $sections->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $sections->number = $request->number;
+            $sections->section_description = $request->section_description;
+            $sections->department_address = $request->department_address;
+            $sections->save();
+            session()->flash('update', trans('notifi.update'));
+            return redirect()->route('section.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -79,9 +105,14 @@ class SectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request ,$id)
     {
-        $section = Section::destroy($id);
-
+        try {
+            Section::destroy($request->id);
+            session()->flash('delete', trans('notifi.delete'));
+            return redirect()->route('section.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }
