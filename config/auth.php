@@ -48,7 +48,7 @@ return [
             'driver' => 'session',
             'provider' => 'coachs',
         ],
-        'employee' => [
+        'employe' => [
             'driver' => 'session',
             'provider' => 'employes',
         ],

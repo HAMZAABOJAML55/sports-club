@@ -24,8 +24,8 @@ class RedirectIfAuthenticated
             return redirect(RouteServiceProvider::COACH);
         }
 
-        if (auth('employee')->check()) {
-            return redirect(RouteServiceProvider::EMPLOYEE);
+        if (auth('employe')->check()) {
+            return redirect(RouteServiceProvider::EMPLOYE);
         }
 
         return $next($request);

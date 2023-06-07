@@ -8,15 +8,16 @@
             @endif
 
             @if (auth('player')->check())
-{{--                @include('layouts.main-sidebar.student-main-sidebar')--}}
+                @include('layouts.main-sidebar.player-main-sidebar')
             @endif
 
             @if (auth('coach')->check())
-{{--                @include('layouts.main-sidebar.teacher-main-sidebar')--}}
+                @include('layouts.main-sidebar.coach-main-sidebar')
+
             @endif
 
-            @if (auth('employee')->check())
-{{--                @include('layouts.main-sidebar.parent-main-sidebar')--}}
+            @if (auth('employe')->check())
+                @include('layouts.main-sidebar.employe-main-sidebar')
             @endif
         </div>
 

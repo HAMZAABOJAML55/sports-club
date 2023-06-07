@@ -29,14 +29,15 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('employee_trans.name_ar')}} : <span class="text-danger">*</span></label>
-                                    <input  type="text" name="name_ar"   class="form-control">
+                                    <input  type="text" value="{{$employees->getTranslation('name','ar')}}" name="name_ar"   class="form-control">
                                 </div>
                             </div>
+                            <input value="{{$employees->id}}" type="hidden" name="id"  class="form-control">
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('employee_trans.name_en')}} : <span class="text-danger">*</span></label>
-                                    <input  class="form-control" name="name_en" type="text" >
+                                    <input  class="form-control" value="{{$employees->getTranslation('name','en')}}" name="name_en" type="text" >
                                 </div>
                             </div>
 
@@ -44,53 +45,64 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>{{trans('employee_trans.email')}} : </label>
-                                        <input type="email"  name="email" class="form-control" >
+                                        <input type="email" value="{{$employees->email}}" name="email" class="form-control" >
                                     </div>
                                 </div>
-    
-    
+
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>{{trans('employee_trans.password')}} :</label>
-                                        <input  type="password" name="password" class="form-control" >
+                                        <input  type="password" value="{{$employees->password}}" name="password" class="form-control" >
                                     </div>
                                 </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('employee_trans.number')}} : <span class="text-danger">*</span></label>
-                                    <input  class="form-control" name="number" type="number" >
+                                    <input  class="form-control" value="{{$employees->number}}" name="number" type="number" >
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('employee_trans.description')}} : <span class="text-danger">*</span></label>
-                                    <input  class="form-control" name="description" type="text" >
+                                    <input  class="form-control"  value="{{$employees->description}}" name="description" type="text" >
                                 </div>
                             </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="gender">{{trans('player_trans.section')}} : <span class="text-danger">*</span></label>
+                                        <select class="custom-select mr-sm-2" name="section_id">
+                                            <option selected disabled>{{trans('player_trans.Choose')}}...</option>
+                                            @foreach($sections as $G)
+                                                <option  value="{{ $G->id }}" {{$G->id == $employees->section_id ? 'selected' : ""}}>{{ $G->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('employee_trans.full_description')}} : <span class="text-danger">*</span></label>
-                                    <input  class="form-control" name="full_description" type="text" >
+                                    <input  class="form-control" value="{{$employees->full_description}}" name="full_description" type="text" >
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('employee_trans.emp_id')}} : <span class="text-danger">*</span></label>
-                                    <input  class="form-control" name="emp_id" type="number" >
+                                    <input  class="form-control"  value="{{$employees->emp_id}}" name="emp_id" type="number" >
                                 </div>
                             </div>
                         </div>
 
-{{--#ajax--}} 
+{{--#ajax--}}
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>{{trans('employee_trans.Date_of_Birth')}}:</label>
-                                    <input class="form-control" type="text"  id="datepicker-action" name="date_of_birth" data-date-format="yyyy-mm-dd">
+                                    <input class="form-control" type="text" value="{{$employees->date_of_birth}}" id="datepicker-action" name="date_of_birth" data-date-format="yyyy-mm-dd">
                                 </div>
                             </div>
 

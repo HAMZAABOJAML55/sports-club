@@ -2,7 +2,7 @@
     <ul class="nav navbar-nav side-menu" id="sidebarnav">
         <!-- menu item Dashboard-->
         <li>
-            <a href="{{ route('dashboard.parents') }}">
+            <a href="{{ route('dashboard.employes') }}">
                 <div class="pull-left"><i class="ti-home"></i><span
                         class="right-nav-text">{{trans('main_trans.Dashboard')}}</span>
                 </div>
@@ -16,21 +16,12 @@
 
         <!-- الابناء-->
         <li>
-            <a href="{{route('sons.index')}}"><i class="fas fa-book-open"></i><span
+            <a href="#"><i class="fas fa-book-open"></i><span
                     class="right-nav-text">الابناء</span></a>
         </li>
 
-        <!-- تقرير الحضور والغياب-->
-        <li>
-            <a href="#"><i class="fas fa-book-open"></i><span
-                    class="right-nav-text">تقرير الحضور والغياب</span></a>
-        </li>
 
-        <!-- تقرير المالية-->
-        <li>
-            <a href="#"><i class="fas fa-book-open"></i><span
-                    class="right-nav-text">تقرير المالية</span></a>
-        </li>
+
 
 
         <!-- Settings-->

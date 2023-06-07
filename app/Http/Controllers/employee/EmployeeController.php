@@ -3,45 +3,35 @@
 namespace App\Http\Controllers\employee;
 use App\Http\Controllers\Controller;
 use App\Models\Employe;
+use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $employees=Employe::all();
         return view('pages.Employee.index' , compact('employees'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        return view('pages.employee.create');
+        $sections=Section::all();
+        return view('pages.employee.create',compact('sections'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         try {
             $employees  = new Employe();
             $employees->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $employees->email = $request->email;
-            $employees->password = $request->password;
+            $employees->password = Hash::make($request->password);
             $employees->number = $request->number;
+            $employees->section_id = $request->section_id;
             $employees->description = $request->description;
             $employees->full_description = $request->full_description;
             $employees->date_of_birth = $request->date_of_birth;
@@ -54,40 +44,32 @@ class EmployeeController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
-        $employees = Employe::findorfail($id) ; 
-        return view('pages.employee.edit', compact('employees'));
+        $employees = Employe::findorfail($id) ;
+        $sections=Section::all();
+        return view('pages.employee.edit', compact('employees','sections'));
     }
 
     public function update(Request $request, $id)
     {
         try {
+            $employees =Employe::findorfail($request->id);
             $employees->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $employees->email = $request->email;
-            $employees->password = $request->password;
+            $employees->password = Hash::make($request->password);
             $employees->number = $request->number;
+            $employees->section_id = $request->section_id;
             $employees->description = $request->description;
             $employees->full_description = $request->full_description;
             $employees->date_of_birth = $request->date_of_birth;
-            $employees = new Employe();
             $employees->emp_id = $request->emp_id;
             $employees->save();
             session()->flash('update', trans('notifi.update'));
@@ -97,15 +79,9 @@ class EmployeeController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request ,$id)
-    {
 
+    public function destroy(Request $request)
+    {
         try {
             Employe::destroy($request->id);
             session()->flash('delete', trans('notifi.delete'));

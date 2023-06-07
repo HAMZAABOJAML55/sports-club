@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-use App\Http\Controllers\Controller;
 use App\Http\Traits\AuthTrait;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +22,7 @@ class LoginController
 
     public function login(Request $request){
 
+//        return $request;
         if (Auth::guard($this->chekGuard($request))->attempt(['email' => $request->email, 'password' => $request->password])) {
             return $this->redirect($request);
         }

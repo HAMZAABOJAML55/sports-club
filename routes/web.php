@@ -29,7 +29,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 */
 
 
-     Route::get('/', [HomeController::class,'index'])->name('selection');
+    Route::get('/', [HomeController::class,'index'])->name('selection');
 
     Route::get('/login/{type}',[LoginController::class,'loginForm'])->middleware('guest')->name('login.show');
 

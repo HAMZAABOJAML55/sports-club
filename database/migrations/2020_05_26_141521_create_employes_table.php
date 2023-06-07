@@ -21,9 +21,11 @@ class CreateEmployesTable extends Migration
             $table->date('date_of_birth')->nullable();
             $table->string('description')->nullable();
             $table->string('full_description')->nullable();
+            $table->bigInteger('section_id')->unsigned();
+            $table->foreign('section_id')->references('id')->on('sections');
             $table->integer('number')->nullable();
              $table->integer('emp_id')->nullable();
-        
+
             $table->timestamps();
         });
     }

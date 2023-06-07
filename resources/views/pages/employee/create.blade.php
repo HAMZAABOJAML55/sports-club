@@ -46,8 +46,8 @@
                                         <input type="email"  name="email" class="form-control" >
                                     </div>
                                 </div>
-    
-    
+
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>{{trans('employee_trans.password')}} :</label>
@@ -69,6 +69,18 @@
                                 </div>
                             </div>
 
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="gender">{{trans('player_trans.section')}} : <span class="text-danger">*</span></label>
+                                        <select class="custom-select mr-sm-2" name="section_id">
+                                            <option selected disabled>{{trans('player_trans.Choose')}}...</option>
+                                            @foreach($sections as $G)
+                                                <option  value="{{ $G->id }}">{{ $G->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('employee_trans.full_description')}} : <span class="text-danger">*</span></label>
@@ -84,7 +96,7 @@
                             </div>
                         </div>
 
-{{--#ajax--}} 
+{{--#ajax--}}
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -93,12 +105,12 @@
                                 </div>
                             </div>
 
-                           
+
 
                         </div>
 
 
-                       
+
 
                         <div class="row">
 

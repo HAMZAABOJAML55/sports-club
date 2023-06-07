@@ -4,24 +4,41 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Translatable\HasTranslations;
 
 class Player extends Authenticatable
 {
-    use HasTranslations;
-    public $translatable =['name'];
-    use HasFactory;
 
+    use HasApiTokens, HasFactory, Notifiable ,HasTranslations;
+
+    public $translatable =['name'];
+//    protected $table='players';
     protected $guarded = [''];
 
-    protected $players= [
-        'phone'=>'array',
-        'email'=>'array',
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
-    public function time()
-    {
-        $this->belongsTo(Time::class,'time_id','id');
-    }
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+
+
 
     public function employment_type()
     {

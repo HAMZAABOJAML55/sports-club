@@ -23,9 +23,6 @@ Route::group(
     //==============================dashboard============================
     Route::get('/coach/dashboard', function () {
         return view('pages.coach.dashboard');
-    })->name('dashboard.coach');
-
-
-
+    })->name('dashboard.coachs');
 
 });

@@ -14,8 +14,8 @@ trait AuthTrait
         elseif ($request->type == 'coach'){
             $guardName= 'coach';
         }
-        elseif ($request->type == 'employee'){
-            $guardName= 'employee';
+        elseif ($request->type == 'employe'){
+            $guardName= 'employe';
         }
         else{
             $guardName= 'web';
@@ -31,8 +31,8 @@ trait AuthTrait
         elseif ($request->type == 'coach'){
             return redirect()->intended(RouteServiceProvider::COACH);
         }
-        elseif ($request->type == 'employee'){
-            return redirect()->intended(RouteServiceProvider::EMPLOYEE);
+        elseif ($request->type == 'employe'){
+            return redirect()->intended(RouteServiceProvider::EMPLOYE);
         }
         else{
             return redirect()->intended(RouteServiceProvider::HOME);

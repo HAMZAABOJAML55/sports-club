@@ -59,8 +59,8 @@ login-->
                         @if($type == 'player')
                             <h3 style="font-family: 'Cairo', sans-serif" class="mb-30">تسجيل دخول لاعب</h3>
                         @elseif($type == 'coach')
-                            <h3 style="font-family: 'Cairo', sans-serif" class="mb-30">تسجيل دخول كابتن</h3>
-                        @elseif($type == 'employee')
+                            <h3 style="font-family: 'Cairo', sans-serif" class="mb-30">تسجيل دخول مدرب</h3>
+                        @elseif($type == 'employe')
                             <h3 style="font-family: 'Cairo', sans-serif" class="mb-30">تسجيل دخول موظف</h3>
                         @else
                             <h3 style="font-family: 'Cairo', sans-serif" class="mb-30">تسجيل دخول ادمن</h3>

@@ -20,7 +20,7 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/dashboard';
     public const PLAYER = '/player/dashboard';
     public const COACH = '/coach/dashboard';
-    public const EMPLOYEE = '/employee/dashboard';
+    public const EMPLOYE = '/employe/dashboard';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -47,10 +47,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/coach.php'));
 
             Route::middleware('web')
-                ->group(base_path('routes/employee.php'));
+                ->group(base_path('routes/employe.php'));
 
-            Route::middleware('web')
-                ->group(base_path('routes/ajax.php'));
         });
     }
 

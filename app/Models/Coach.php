@@ -9,17 +9,11 @@ use Spatie\Translatable\HasTranslations;
 class Coach extends Authenticatable
 {
     use HasTranslations;
-
-    public $translatable = ['name'];
+    public $translatable =['name'];
     use HasFactory;
-
+    protected $table='coachs';
     protected $guarded = [''];
-    protected $table = 'coachs';
 
-    protected $casts = [
-        'phone' => 'array',
-        'email' => 'array',
-    ];
 
     public function player()
     {

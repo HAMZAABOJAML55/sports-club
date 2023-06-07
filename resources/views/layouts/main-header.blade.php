@@ -129,8 +129,8 @@ header start-->
                     <form method="GET" action="{{ route('logout','coach') }}">
                         @elseif(auth('player')->check())
                             <form method="GET" action="{{ route('logout','player') }}">
-                                @elseif(auth('employee')->check())
-                                    <form method="GET" action="{{ route('logout','employee') }}">
+                                @elseif(auth('employe')->check())
+                                    <form method="GET" action="{{ route('logout','employe') }}">
                                         @else
                                             <form method="GET" action="{{ route('logout','web') }}">
                                                 @endif

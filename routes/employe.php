@@ -6,7 +6,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
-| student Routes
+| employee Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
@@ -17,13 +17,13 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth:employee']
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth:employe']
     ], function () {
 
     //==============================dashboard============================
-    Route::get('/employee/dashboard', function () {
+    Route::get('/employe/dashboard', function () {
         return view('pages.employee.dashboard');
-    })->name('dashboard.employee');
+    })->name('dashboard.employes');
 
 
 });

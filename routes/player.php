@@ -6,7 +6,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
-| student Routes
+| player Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
@@ -22,7 +22,8 @@ Route::group(
 
     //==============================dashboard============================
     Route::get('/player/dashboard', function () {
-        return view('pages.dashboard.dashboard');
-    })->name('dashboard.Players');
+        return view('pages.player.dashboard.dashboard');
+    })->name('dashboard.players');
+
 
 });
