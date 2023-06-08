@@ -20,34 +20,34 @@ class LocationController extends Controller
 
     public function store(StoreLocationRequest $request)
     {
-        $data['name'] = $request->name;
-//dd($data);
-        $location=location::create($data);
-        return response()->json([
-            'status'=>true,
-            'data' =>$location,
-            'message' => 'location Information Added Successfully',
-        ]);
+//        $data['name'] = $request->name;
+////dd($data);
+//        $location=location::create($data);
+//        return response()->json([
+//            'status'=>true,
+//            'data' =>$location,
+//            'message' => 'location Information Added Successfully',
+//        ]);
 
     }
 
 
 
 
-    public function update(UpdateCompanyRequest $request)
+    public function update(Request $request)
     {
-        $location = location::findOrFail($request->id);
-
-        if($location)
-        {
-            $data['name']  = $request->name ? $request->name : $location->name;
-        }
-        $location->update($data);
-        return response()->json([
-            'status'=>true,
-            'data' => $location,
-            'message' => 'location Information Updated Successfully',
-        ]);
+//        $location = location::findOrFail($request->id);
+//
+//        if($location)
+//        {
+//            $data['name']  = $request->name ? $request->name : $location->name;
+//        }
+//        $location->update($data);
+//        return response()->json([
+//            'status'=>true,
+//            'data' => $location,
+//            'message' => 'location Information Updated Successfully',
+//        ]);
     }
 
 

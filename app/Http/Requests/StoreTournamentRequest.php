@@ -28,11 +28,12 @@ class StoreTournamentRequest extends FormRequest
     public function rules()
     {$id = $this->route('id');
         return [
-            'name' => 'required|max:100|unique:tournaments,name,'.$id,
+            'name_ar' => 'required|max:100|unique:tournaments,name,'.$id,
+            'name_en' => 'required|max:100|unique:tournaments,name,'.$id,
             'description'     =>'required',
             'start_time'    =>'date',
             'end_time'      =>'date',
-            'prizes_id'    =>'required',
+            'prize_type_id'    =>'required',
         ];
     }
     protected function failedValidation(Validator $validator)

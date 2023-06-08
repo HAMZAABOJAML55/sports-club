@@ -20,7 +20,7 @@ class EmployeeController extends Controller
     }
 
 
-    public function store(StoreEmployeRequest $request)
+    public function store(Request $request)
     {
         $task =Employe::create($request->all());
         return response()->json([
@@ -37,7 +37,7 @@ class EmployeeController extends Controller
     }
 
 
-    public function update(StoreEmployeRequest $request)
+    public function update(Request $request)
     {
         $task = Employe::findOrFail($request->id);
         if($task)

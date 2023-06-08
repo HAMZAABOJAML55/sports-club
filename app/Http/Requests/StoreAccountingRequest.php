@@ -29,10 +29,13 @@ class StoreAccountingRequest extends FormRequest
     {
         return [
             'number'   => 'required',
-            'number_of_months' =>'required',
-            'discounts' =>'required',
+            'coach_id' =>'required',
+            'player_id' =>'required',
+            'subtype_id' => 'required',
+            'discounts' => 'required',
             'draws' => 'required',
-            'Payments_trainees'=>'required'
+            'Payment_trainee_id'=>'required'
+
         ];
     }
 

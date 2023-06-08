@@ -52,6 +52,7 @@ return [
             'driver' => 'session',
             'provider' => 'employes',
         ],
+
     ],
 
     /*
@@ -89,10 +90,7 @@ return [
             'model' => App\Models\Employe::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+
     ],
 
     /*

@@ -22,6 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
 
+
     ];
 
     /**
@@ -47,6 +48,9 @@ class Kernel extends HttpKernel
             EnsureFrontendRequestsAreStateful::class,
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+//            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+//            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+//            \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 
@@ -58,6 +62,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
+
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
@@ -74,5 +79,5 @@ class Kernel extends HttpKernel
         'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
         'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
         'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
-    ];
+        ];
 }

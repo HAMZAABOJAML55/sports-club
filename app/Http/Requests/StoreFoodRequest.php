@@ -28,13 +28,10 @@ class StoreFoodRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => 'required|string|max:255',
-            'breakfast'      => 'required|string',
-            'lunch'    => 'required|string',
-            'dinner'    => 'required|string',
-            'number'      => 'required|integer',
+            'name_en'          => 'required|string|max:255',
+            'name_ar'          => 'required|string|max:255',
             'description'         => 'required|string',
-            'start_time'         => 'required|date',
+            'number'         => 'required',
             'end_time'         => 'required|date',
 
         ];

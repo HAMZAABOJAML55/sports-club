@@ -4,29 +4,21 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSubscripeRequest;
+use App\Models\Subscribe;
 use App\Models\Subscripe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class SubscripesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $subscripes = Subscripe::all();
+        $subscripes = Subscribe::all();
         return response()->json($subscripes);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(StoreSubscripeRequest $request)
     {
         $data[ 'name'] =$request->name ;
@@ -47,7 +39,7 @@ class SubscripesController extends Controller
         $data['coach_description']  = $request->coach_description;
         $data['employment_type']  = $request->employment_type ;
 
-        $subscripe=Subscripe::create($data);
+        $subscripe=Subscribe::create($data);
         return response()->json([
             'status'=>true,
             'date' =>$subscripe,
@@ -56,29 +48,18 @@ class SubscripesController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Request $request)
     {
-        $subscripe = Subscripe::findOrFail($request->id);
+        $subscripe = Subscribe::findOrFail($request->id);
             return response()->json($subscripe);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(StoreSubscripeRequest $request, $id)
     {
 
-        $subscripe = Subscripe::findOrFail($id);
+        $subscripe = Subscribe::findOrFail($id);
 
         if($subscripe)
         {
@@ -108,15 +89,10 @@ class SubscripesController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Request $request)
     {
-        Subscripe::find($request->id)->delete();
+        Subscribe::find($request->id)->delete();
             return response()->json([
             'status'=>true,
             'message' => 'Subscripe Information deleted Successfully',

@@ -30,7 +30,14 @@ class FoodsController extends Controller
      */
     public function store(StoreFoodRequest $request)
     {
-        $food = Food::create($request->all());
+        $food = new Food();
+        $food->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+        $food->foodsystem_id = $request->foodsystem_id;
+        $food->number = $request->number;
+        $food->start_time = $request->start_time;
+        $food->end_time = $request->end_time;
+        $food->description = $request->description;
+        $food->save();
         return response()->json([
             'status'=>true,
             'date' => $food,
@@ -60,7 +67,13 @@ class FoodsController extends Controller
     public function update(StoreFoodRequest $request)
     {   $food = Food::findOrFail($request->id);
         if($food){
-            $food->update($request->all());
+            $food->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $food->foodsystem_id = $request->foodsystem_id;
+            $food->number = $request->number;
+            $food->start_time = $request->start_time;
+            $food->end_time = $request->end_time;
+            $food->description = $request->description;
+            $food->save();
             return response()->json([
                 'status'=>true,
                 'data' => $food,

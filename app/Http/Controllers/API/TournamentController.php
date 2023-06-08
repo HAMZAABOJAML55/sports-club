@@ -20,11 +20,22 @@ class TournamentController extends Controller
 
     public function store(StoreTournamentRequest $request)
     {
-        $profession = Tournament::create($request->all());
+        $tournament = new Tournament();
+        $tournament->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+        $tournament->description = $request->description;
+        $tournament->number = $request->number;
+        $tournament->start_time = $request->start_time;
+        $tournament->end_time = $request->end_time;
+        $tournament->tournament_type_id = $request->tournament_type_id;
+        $tournament->prize_type_id = $request->prize_type_id;
+        $tournament->championship_levels_id = $request->championship_levels_id;
+        $tournament->save();
+        $tournament->player()->attach($request->player_id);
+        $tournament->coach()->attach($request->coach_id);
         return response()->json([
             'status'=>true,
             'message'=>'created Tournament successfully',
-            'data'=>$profession
+            'data'=>$tournament
         ]);
     }
 
@@ -51,20 +62,37 @@ class TournamentController extends Controller
 
     public function update(Request $request)
     {
-        $Tournament = Tournament::findOrFail($request->id);
+        $tournament = Tournament::findOrFail($request->id);
 
-        if($Tournament)
+        if($tournament)
         {
-            $data['name']  = $request->name ? $request->name : $Tournament->name;
-            $data['description']  = $request->description ;
-            $data['start_time']  = $request->start_time ;
-            $data['end_time']  = $request->end_time ;
-            $data['prizes_id']  = $request->prizes_id;
-            $Tournament->update($data);
+            $tournament->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $tournament->description = $request->description;
+            $tournament->number = $request->number;
+            $tournament->start_time = $request->start_time;
+            $tournament->end_time = $request->end_time;
+            $tournament->tournament_type_id = $request->tournament_type_id;
+            $tournament->prize_type_id = $request->prize_type_id;
+            $tournament->championship_levels_id = $request->championship_levels_id;
+            //important to update player
+            if(isset($request->player_id)) {
+                $tournament->player()->sync($request->player_id);
+            } else {
+                $tournament->player()->sync(array());
+            }
+
+            //important to update coach
+            if(isset($request->coach_id)) {
+                $tournament->coach()->sync($request->coach_id);
+            } else {
+                $tournament->coach()->sync(array());
+            }
+            $tournament->save();
+
             return response()->json([
                 'status'=>true,
                 'message'=>'update Tournament',
-                'data'=>$Tournament
+                'data'=>$tournament
             ]);
         }
         else{

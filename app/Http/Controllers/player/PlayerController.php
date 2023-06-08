@@ -41,7 +41,7 @@ class PlayerController extends Controller
     public function store(Request $request)
     {
         try {
-            return $request;
+
             $player = new Player();
             $player->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $player->user_name = $request->user_name;

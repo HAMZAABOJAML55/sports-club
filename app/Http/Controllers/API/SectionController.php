@@ -16,15 +16,17 @@ class SectionController extends Controller
         return response()->json($items);
     }
 
-    public function store(StoreSectionRequest $request)
+    public function store(Request $request)
     {
-        $data['name'] = $request->name ;
-        $data['description'] = $request->description ;
-
-        $item = Section::create($data);
+        $sections = new Section();
+        $sections->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+        $sections->number = $request->number;
+        $sections->section_description = $request->section_description;
+        $sections->department_address = $request->department_address;
+        $sections->save();
         return response()->json([
             'status'=>true,
-            'date' =>$item,
+            'date' =>$sections,
             'message' => 'Item  Added Successfully',
         ]);
 
@@ -37,25 +39,25 @@ class SectionController extends Controller
     }
 
 
-    public function update(StoreSectionRequest $request)
+    public function update(Request $request)
     {
-
-        $section = Section::findOrFail($request->id);
-        if($section)
+        $sections = Section::findOrFail($request->id);
+        if($sections)
         {
-            $data['name'] = $request->name ;
-            $data['description'] = $request->description  ;
-
-            $section->update($data);
+            $sections->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $sections->number = $request->number;
+            $sections->section_description = $request->section_description;
+            $sections->department_address = $request->department_address;
+            $sections->save();
             return response()->json([
                 'status'=>true,
-                'data' => $section,
+                'data' => $sections,
                 'message' => 'Section Updated Successfully',
             ]);
         }else{
             return response()->json([
                 'status'=>false,
-                'data' => $section,
+                'data' => $sections,
                 'message' => 'Section Not Updated Successfully',
             ]);
         }

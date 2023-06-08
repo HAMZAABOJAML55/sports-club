@@ -18,18 +18,19 @@ class TeamController extends Controller
         return response()->json($invoices);
     }
 
-    public function store(StoreTeamRequest $request)
+    public function store(Request $request)
     {
-        $data['name']      =$request->name;
-        $data['number']          =$request->number;
-        $data['description' ]   =$request->description;
-        $data['phone']       =$request->phone;
-//dd($data);
-        $Team=Team::create($data);
+        $team = new Team();
+        $team->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+        $team->description = $request->description;
+        $team->number = $request->number;
+        $team->save();
+        $team->player()->attach($request->player_id);
+        $team->coach()->attach($request->coach_id);
         return response()->json([
             'status'=>true,
-            'date' =>$Team,
-            'message' => 'Team Information Added Successfully',
+            'message'=>'created $team successfully',
+            'data'=>$team
         ]);
 
     }
@@ -43,12 +44,24 @@ class TeamController extends Controller
         if($team)
         {
 
-            $data['name']      =$request->name;
-            $data['number']          =$request->number;
-            $data['description' ]   =$request->description;
-            $data['phone']       =$request->phone;
+            $team->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $team->description = $request->description;
+            $team->number = $request->number;
+            //important to update player
+            if(isset($request->player_id)) {
+                $team->player()->sync($request->player_id);
+            } else {
+                $team->player()->sync(array());
+            }
 
-            $team->update($data);
+            //important to update coach
+            if(isset($request->coach_id)) {
+                $team->coach()->sync($request->coach_id);
+            } else {
+                $team->coach()->sync(array());
+            }
+            $team->save();
+
             return response()->json([
                 'status'=>true,
                 'data' => $team,

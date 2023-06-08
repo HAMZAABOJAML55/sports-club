@@ -26,14 +26,14 @@ class GenderController extends Controller
 
     public function store(Request $request)
     {
-        $data['name'] = $request->name;
-//dd($data);
-        $location=Gender::create($data);
-        return response()->json([
-            'status'=>true,
-            'data' =>$location,
-            'message' => 'Gender Information Added Successfully',
-        ]);
+//        $data['name'] = $request->name;
+////dd($data);
+//        $location=Gender::create($data);
+//        return response()->json([
+//            'status'=>true,
+//            'data' =>$location,
+//            'message' => 'Gender Information Added Successfully',
+//        ]);
 
     }
 
@@ -42,18 +42,18 @@ class GenderController extends Controller
 //UpdateNatinalityRequest
     public function update(Request $request)
     {
-        $location = Gender::findOrFail($request->id);
-
-        if($location)
-        {
-            $data['name']  = $request->name ? $request->name : $location->name;
-        }
-        $location->update($data);
-        return response()->json([
-            'status'=>true,
-            'data' => $location,
-            'message' => 'Gender Information Updated Successfully',
-        ]);
+//        $location = Gender::findOrFail($request->id);
+//
+//        if($location)
+//        {
+//            $data['name']  = $request->name ? $request->name : $location->name;
+//        }
+//        $location->update($data);
+//        return response()->json([
+//            'status'=>true,
+//            'data' => $location,
+//            'message' => 'Gender Information Updated Successfully',
+//        ]);
     }
 
 
