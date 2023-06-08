@@ -43,7 +43,6 @@ class TeamController extends Controller
         $team = Team::findOrFail($request->id);
         if($team)
         {
-
             $team->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $team->description = $request->description;
             $team->number = $request->number;

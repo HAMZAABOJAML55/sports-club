@@ -23,7 +23,7 @@ class LoginController
     public function login(Request $request){
 
 //        return $request;
-        if (Auth::guard($this->chekGuard($request))->attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (Auth::guard($this->chekGuard($request))->attempt(['email' => $request->email,'password' => $request->password])) {
             return $this->redirect($request);
         }
         else{

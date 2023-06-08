@@ -16,13 +16,13 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (!$request->expectsJson()) {
-            if (Request::is(app()->getLocale() . '/player/dashboard')) {
+            if (Request::is(app()->getLocale().'/player/dashboard')) {
                 return route('selection');
             }
-            elseif(Request::is(app()->getLocale() . '/coach/dashboard')) {
+            elseif(Request::is(app()->getLocale().'/coach/dashboard')) {
                 return route('selection');
             }
-            elseif(Request::is(app()->getLocale() . '/employe/dashboard')) {
+            elseif(Request::is(app()->getLocale().'/employe/dashboard')) {
                 return route('selection');
             }
             else {
