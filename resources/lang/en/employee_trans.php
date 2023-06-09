@@ -13,5 +13,6 @@ return [
     'full_description'=>'full_description  ',
     'emp_id'=>'emp_id  ',
     'Processes'=>'Processes',
+    'section' => 'section',
 
 ];

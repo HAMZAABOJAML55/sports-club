@@ -72,9 +72,9 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="gender">{{trans('player_trans.section')}} : <span class="text-danger">*</span></label>
+                                        <label for="gender">{{trans('employee_trans.section')}} : <span class="text-danger">*</span></label>
                                         <select class="custom-select mr-sm-2" name="section_id">
-                                            <option selected disabled>{{trans('player_trans.Choose')}}...</option>
+                                            <option selected disabled>{{trans('employee_trans.Choose')}}...</option>
                                             @foreach($sections as $G)
                                                 <option  value="{{ $G->id }}">{{ $G->name }}</option>
                                             @endforeach

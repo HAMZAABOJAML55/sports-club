@@ -31,6 +31,8 @@ return [
     'subtype'=>'نوع الاشتراك',
     'player_description'=>'الوصف',
     'Processes'=>'العمليات',
+    'food_type' => 'اوقات الطعام',
+
 
 
 

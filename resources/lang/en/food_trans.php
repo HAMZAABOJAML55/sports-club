@@ -32,6 +32,7 @@ return [
     'salary'=>'salary per month',
     'player_description'=>'player_description',
     'Processes'=>'Processes',
+    'food_type' => 'food_type',
 
 
 ];

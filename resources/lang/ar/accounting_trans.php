@@ -36,6 +36,14 @@ return [
     'salary_month '=> 'الراتب الشهري',
     'total'=> 'المجموع',
     'subtypes' => 'انواع الاشتراك',
+    'draws' => 'السحوبات',
+    'discounts' => 'الخصومات ',
+    'coachs' => 'المدربين',
+    'players' => 'الاعبين',
+    'subtype_id' => 'الفئة الفرعية',
+    'Payment_trainee_id' => 'مبلغ التدريب',
+
+
 
 
 

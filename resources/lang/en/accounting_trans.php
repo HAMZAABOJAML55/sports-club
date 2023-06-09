@@ -19,7 +19,6 @@ return [
     'link_facebook' => 'link_facebook',
     'link_twitter' => 'link_twitter',
     'link_youtupe' => 'link_youtube',
-    'link_instagram' => 'link_instagram',
     'employment_type' => 'employment_type',
     'location' => 'Country',
     'sub_location' => 'City',
@@ -33,10 +32,12 @@ return [
     'salary'=>'salary per month',
     'player_description'=>'player_description',
     'Processes'=>'Processes',
-    'postal_code' => 'postal_code',
-    'salary_month' => 'salary_month',
-    'total'=> 'total',
-    'subtypes' => ' subtypes',
+    'draws' => 'draws',
+    'discounts' => 'discounts ',
+    'subtype_id' => ' subtype_id',
+    'coachs' => 'coachs',
+    'players' => 'players',
+    'Payment_trainee_id' => 'Payment_trainee_id',
 
 
 

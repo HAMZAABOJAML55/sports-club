@@ -16,6 +16,8 @@ return [
     'Close'=>'Close',
     'Deleted_tilte'=>' Deleted_tilte ',
     'Processes'=>'Processes',
+    'group_exercises' => 'group_exercises ',
+
 
 
 
