@@ -21,7 +21,7 @@ Route::group(
     ], function () {
 
     //==============================dashboard============================
-    Route::get('/player/dashboard', function () {
+    Route::get('/players/dashboard', function () {
         return view('pages.player.dashboard.dashboard');
     })->name('dashboard.players');
 

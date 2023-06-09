@@ -27,6 +27,7 @@ class LoginController
 
 //        return $request;
         if (Auth::guard($this->chekGuard($request))->attempt(['email' => $request->email, 'password' => $request->password])) {
+//           dd($request);
             return $this->redirect($request);
         }
         else{
@@ -34,6 +35,7 @@ class LoginController
         }
 
     }
+
 
     public function logout(Request $request,$type)
     {

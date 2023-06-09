@@ -21,9 +21,9 @@ Route::group(
     ], function () {
 
     //==============================dashboard============================
-    Route::get('/coach/dashboard', function () {
-        dd('kdj');
-//        return view('pages.coach.dashboard');
-    })->name('dashboard.coachs');
+    Route::get('/coaches/dashboard', function () {
+//        dd('kdj');
+        return view('pages.coach.dashboard');
+    })->name('dashboard.coaches');
 
 });
