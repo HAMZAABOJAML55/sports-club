@@ -106,7 +106,26 @@ login-->
                             </div>
                             <button class="button"><span>دخول</span><i class="fa fa-check"></i></button>
                         </form>
+                            <br>
+                            @if($type == 'player')
+                                <a href="{{route('SignUpPlayer.index','player')}}" class="primary-btn normal-btn" data-aos="flip-left" data-aos-delay="2400"
+                                   style="color: #ffffff;">
+                                    <button class="button"><span>تسجيل مستخدم جديد</span><i class="fa fa-check"></i></button>
+                                </a>
+                            @elseif($type == 'coach')
+                                <a href="{{route('SignUpCoach.index','coach')}}" class="primary-btn normal-btn" data-aos="flip-left" data-aos-delay="2400"
+                                   style="color: #ffffff;">
+                                    <button class="button"><span>تسجيل مستخدم جديد</span><i class="fa fa-check"></i></button>
+                                </a>
+                            @elseif($type == 'employe')
+                                <a href="{{route('singnupemployee.index','employe')}}" class="primary-btn normal-btn" data-aos="flip-left" data-aos-delay="2400"
+                                   style="color: #ffffff;">
+                                    <button class="button"><span>تسجيل مستخدم جديد</span><i class="fa fa-check"></i></button>
+                                </a>
+                            @endif
+
                     </div>
+
                 </div>
             </div>
         </div>

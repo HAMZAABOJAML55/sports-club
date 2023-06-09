@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\employee;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreEmployeeRequest;
 use App\Models\Employe;
 use App\Models\Section;
 use Illuminate\Http\Request;
@@ -23,10 +24,9 @@ class EmployeeController extends Controller
         return view('pages.employee.create',compact('sections'));
     }
 
-    public function store(Request $request)
+    public function store(StoreEmployeeRequest $request)
     {
         try {
-            return $request;
             $employees  = new Employe();
             $employees->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $employees->email = $request->email;

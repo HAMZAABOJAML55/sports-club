@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCoachRequest;
 use App\Models\Coach;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -22,7 +23,7 @@ class CoachsController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StoreCoachRequest $request)
     {
         $coach = new Coach();
         $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];

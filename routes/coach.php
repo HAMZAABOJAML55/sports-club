@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\coach\SignupController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -14,6 +15,8 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::resource('SignUpCoach', SignupController::class);
+
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),

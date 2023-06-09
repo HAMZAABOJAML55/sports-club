@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\employee\SignUpEmployeeController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -14,6 +15,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::resource('singnupemployee', SignUpEmployeeController::class);
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),

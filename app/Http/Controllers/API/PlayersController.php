@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\player\SignupPlayerController;
+use App\Http\Requests\StorePlayerRequest;
 use App\Models\Player;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,7 +20,7 @@ class PlayersController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StorePlayerRequest $request)
     {
         $player = new Player();
         $player->name = ['en' => $request->name_en, 'ar' => $request->name_ar];

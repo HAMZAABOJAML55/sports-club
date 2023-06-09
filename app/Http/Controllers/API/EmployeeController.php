@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\StoreEmployeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Employe;
@@ -20,7 +21,7 @@ class EmployeeController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StoreEmployeeRequest $request)
     {
         $task =Employe::create($request->all());
         return response()->json([

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\coach;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCoachRequest;
 use App\Models\Coach;
 use App\Models\Employment_type;
 use App\Models\Gender;
@@ -37,10 +38,9 @@ class CoachController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StoreCoachRequest $request)
     {
         try {
-
             $coach = new Coach();
             $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $coach->user_name = $request->user_name;

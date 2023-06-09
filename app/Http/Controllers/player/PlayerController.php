@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\player;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePlayerRequest;
 use App\Models\Coach;
 use App\Models\player;
 use App\Models\Employment_type;
@@ -38,7 +39,7 @@ class PlayerController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StorePlayerRequest $request)
     {
         try {
 
