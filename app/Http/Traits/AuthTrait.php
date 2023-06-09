@@ -7,7 +7,6 @@ use App\Providers\RouteServiceProvider;
 trait AuthTrait
 {
     public function chekGuard($request){
-
         if($request->type == 'player'){
             $guardName= 'player';
         }

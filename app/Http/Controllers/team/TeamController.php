@@ -69,16 +69,11 @@ class TeamController extends Controller
     {
         $coachs=Coach::all();
         $players=Player::all();
-        return view('pages.team.edit', compact('players','coachs'));
+        $teams=Team::findorfail($id);
+        return view('pages.team.edit', compact('players','coachs','teams'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         try {
@@ -108,12 +103,7 @@ class TeamController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Request $request,$id)
     {
         try {

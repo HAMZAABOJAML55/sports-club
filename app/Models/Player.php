@@ -10,9 +10,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Player extends Authenticatable
 {
-
     use HasApiTokens, HasFactory, Notifiable ,HasTranslations;
-
     public $translatable =['name'];
 //    protected $table='players';
     protected $guarded = [''];

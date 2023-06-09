@@ -4,86 +4,97 @@
 namespace App\Http\Controllers\accounting;
 use App\Http\Controllers\Controller;
 use App\Models\Accounting;
+use App\Models\Coach;
+use App\Models\Paymentstrainee;
+use App\Models\Player;
+use App\Models\Subtype;
 use Illuminate\Http\Request;
 
 class AccountingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        return view('pages.accounting.index');
-
+        $accountings=Accounting::all();
+        return view('pages.accounting.index', compact('accountings'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+        $coachs=Coach::all();
+        $players=Player::all();
+        $subtype=Subtype::all();
+        $Payment_trainee=Paymentstrainee::all();
+        return view('pages.accounting.create', compact('subtype','Payment_trainee','players','coachs'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+        try {
+            $accounting = new Accounting();
+            $accounting->draws = $request->draws;
+            $accounting->discounts = $request->discounts;
+            $accounting->coach_id = $request->coach_id;
+            $accounting->Payment_trainee_id = $request->Payment_trainee_id;
+            $accounting->player_id = $request->player_id;
+            $accounting->subtype_id = $request->subtype_id;
+            $accounting->number = $request->number;
+            $accounting->save();
+            session()->flash('Add', trans('notifi.add'));
+            return redirect()->route('accounting.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
-        //
+        $coachs=Coach::all();
+        $players=Player::all();
+        $subtype=Subtype::all();
+        $Payment_trainee=Paymentstrainee::all();
+        $accountings=Accounting::findorfail($id);
+        return view('pages.accounting.edit', compact('players','coachs','accountings','subtype','Payment_trainee'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $accounting = Accounting::findOrFail($request->id);
+            $accounting->draws = $request->draws;
+            $accounting->discounts = $request->discounts;
+            $accounting->coach_id = $request->coach_id;
+            $accounting->Payment_trainee_id = $request->Payment_trainee_id;
+            $accounting->player_id = $request->player_id;
+            $accounting->subtype_id = $request->subtype_id;
+            $accounting->number = $request->number;
+            $accounting->save();
+            session()->flash('update', trans('notifi.update'));
+            return redirect()->route('accounting.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function destroy(Request $request,$id)
     {
-
-   $accounting = Accounting::destroy($id);
-
+        try {
+            Accounting::destroy($request->id);
+            session()->flash('delete', trans('notifi.delete'));
+            return redirect()->route('accounting.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }

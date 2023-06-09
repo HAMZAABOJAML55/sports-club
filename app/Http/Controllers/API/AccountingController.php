@@ -19,8 +19,6 @@ class AccountingController extends Controller
 
     public function store(StoreAccountingRequest $request)
     {
-//        dd("knknnk");
-
         $location =Accounting::create($request->all());
         return response()->json([
             'status' => true,

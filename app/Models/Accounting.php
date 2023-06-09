@@ -18,11 +18,18 @@ class Accounting extends Model
 
     public function player()
     {
-        $this->belongsTo(Player::class,'player_id','id');
+        return $this->belongsTo(Player::class,'player_id','id');
+    }
+    public function coach()
+    {
+        return $this->belongsTo(Coach::class,'coach_id','id');
     }
     public function Payments_trainees()
     {
-        $this->belongsTo(Paymentstrainee::class,'Payment_trainee_id','id');
+        return $this->belongsTo(Paymentstrainee::class,'Payment_trainee_id','id');
     }
-
+    public function subtype()
+    {
+        return $this->belongsTo(Subtype::class,'subtype_id','id');
+    }
 }

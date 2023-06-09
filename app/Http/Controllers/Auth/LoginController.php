@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 use App\Http\Traits\AuthTrait;
+use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class LoginController
 {
@@ -23,7 +26,7 @@ class LoginController
     public function login(Request $request){
 
 //        return $request;
-        if (Auth::guard($this->chekGuard($request))->attempt(['email' => $request->email,'password' => $request->password])) {
+        if (Auth::guard($this->chekGuard($request))->attempt(['email' => $request->email, 'password' => $request->password])) {
             return $this->redirect($request);
         }
         else{

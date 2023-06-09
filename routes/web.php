@@ -6,6 +6,7 @@ use App\Http\Controllers\coach\CoachController;
 use App\Http\Controllers\employee\EmployeeController;
 use App\Http\Controllers\food\FoodController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\player\playerController;
 use App\Http\Controllers\product\ProductController;
 use App\Http\Controllers\prof\profController;
@@ -66,6 +67,8 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
     Route::resource('accounting' , AccountingController::class);
 
 
+    //==============================image====================================
+    Route::resource('image', ImageController::class);
 
 
 

@@ -55,6 +55,7 @@
                                                             العمليات
                                                         </a>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                            <a class="dropdown-item" href="{{route('product.show',$product->id)}}"><i style="color: #ffc107" class="far fa-eye "></i>&nbsp; show all images</a>
                                                             <a class="dropdown-item" href="{{route('product.edit',$product->id)}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;  تعديل بيانات الطالب</a>
                                                             <a class="dropdown-item" data-target="#Delete_Student{{ $product->id }}" data-toggle="modal" href="##Delete_Student{{ $product->id }}"><i style="color: red" class="fa fa-trash"></i>&nbsp;  حذف بيانات الطالب</a>
                                                         </div>

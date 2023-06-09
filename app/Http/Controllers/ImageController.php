@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -49,37 +50,41 @@ class ImageController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Image  $image
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Image $image)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Image $image)
+
+    public function update(Request $request)
     {
-        //
+//        return $request;
+        if ($request->hasfile('photos')) {
+            foreach ($request->file('photos') as $file) {
+                $name = $file->getClientOriginalName();
+                $file->storeAs('attachments/product/'.$request->product_name,$file->getClientOriginalName(), 'upload_attachments');
+                // insert in image_table
+                $images = new Image();
+                $images->filename = $name;
+                $images->imageable_id = $request->id;
+                $images->imageable_type = 'App\Models\Product';
+                $images->save();
+            }
+        }
+        session()->flash('Add', trans('notifi.add'));
+        return redirect()->route('product.show', $request->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Image $image)
+
+    public function destroy(Request $request ,Image $image)
     {
-        //
+//        return $request;
+        // Delete img in server disk
+        Storage::disk('upload_attachments')->delete('attachments/product/' . $request->product_name . '/' . $request->filename);
+        // Delete in data
+        image::where('id',$request->id)->where('filename', $request->filename)->delete();
+        session()->flash('delete', trans('notifi.delete'));
+        return redirect()->route('product.show', $request->product_id);
     }
 }
