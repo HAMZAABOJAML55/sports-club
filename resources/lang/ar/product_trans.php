@@ -13,12 +13,11 @@ return [
     'gender' => 'النوع',
     'Nationality' => 'الجنسية',
     'Date_of_Birth' => 'تاريخ الميلاد',
-    'coach_description' => 'الوصف',
+    'description' => 'الوصف',
     'link_website' => 'عنوان الموقع',
     'link_facebook' => 'الفيسبوك',
     'link_twitter' => 'التويتر',
     'link_youtupe' => 'اليوتيوب',
-    'link_instagram' => 'أنستجرام',
     'employment_type' => 'نوع الوظيفة',
     'location' => 'الدولة',
     'sub_location' => 'المدينه',
@@ -32,10 +31,10 @@ return [
     'subtype'=>'نوع الاشتراك',
     'player_description'=>'الوصف',
     'Processes'=>'العمليات',
-    'postal_code' => 'الرمز البريدي',
-    'salary_month '=> 'الراتب الشهري',
-    'total'=> 'المجموع',
-    'subtypes' => 'انواع الاشتراك',
+    'product_type' => 'نوع المنتج',
+    'product_description' => 'وصف المنتجات',
+    'Attachments' => 'ارفاق صورة',
+    'price' => 'السعر',
 
 
 

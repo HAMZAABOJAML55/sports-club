@@ -18,7 +18,9 @@ return [
     'Close'=>'اغلاق',
     'Deleted_tilte'=>'هل انت متأكد من الحذف',
     'Processes'=>'العمليات',
-    'number_of_iterations' => 'عدد التكرارت'
+    'number_of_iterations' => 'عدد التكرارت',
+    'group_exercises' => 'مجموعة التمارين',
+
     
 
 
