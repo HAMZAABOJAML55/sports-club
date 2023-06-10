@@ -54,7 +54,6 @@ class SignupPlayerController extends Controller
     public function store(StorePlayerRequest $request)
     {
         try {
-
             $player = new Player();
             $player->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $player->user_name = $request->user_name;

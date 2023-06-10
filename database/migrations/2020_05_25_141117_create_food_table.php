@@ -20,6 +20,8 @@ class CreateFoodTable extends Migration
             $table->foreign('foodsystem_id')->references('id')->on('foodsystems');
             $table->integer('number');
             $table->text('description');
+            $table->string('image_path')->nullable();
+
 //            $table->foreign('components_id')->references('id')->on('components');
             $table->date('start_time');
             $table->date('end_time');

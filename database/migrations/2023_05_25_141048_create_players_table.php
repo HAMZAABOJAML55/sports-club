@@ -22,6 +22,7 @@ class CreatePlayersTable extends Migration
             $table->string('subscription_number');
             $table->date('date_of_birth');
             $table->text('phone');
+            $table->string('image_path')->nullable();
             $table->text('player_description');
             $table->string('link_website')->nullable();
             $table->string('link_facebook')->nullable();

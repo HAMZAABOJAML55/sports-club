@@ -21,6 +21,7 @@ class CreateCoachsTable extends Migration
             $table->string('email' ,128)->unique();
             $table->string('password');
             $table->string('salary');
+            $table->string('image_path')->nullable();
             $table->string('subscription_number');
             $table->date('date_of_birth');
             $table->date('start_time')->nullable();

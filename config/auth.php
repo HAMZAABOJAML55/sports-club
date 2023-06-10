@@ -14,8 +14,9 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'api',
         'passwords' => 'users',
+
     ],
 
     /*
@@ -51,6 +52,26 @@ return [
         'employe' => [
             'driver' => 'session',
             'provider' => 'employes',
+        ],
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+            'hash' => false,
+        ],
+        'api_player' => [
+            'driver' => 'jwt',
+            'provider' => 'players',
+            'hash' => false,
+        ],
+        'api_coach' => [
+            'driver' => 'jwt',
+            'provider' => 'coachs',
+            'hash' => false,
+        ],
+        'api_employe' => [
+            'driver' => 'jwt',
+            'provider' => 'employes',
+            'hash' => false,
         ],
 
     ],

@@ -23,6 +23,7 @@ class CreateTraineesTable extends Migration
             $table->string('link_website')->nullable();
             $table->string('duration_of_training');
             $table->string('training_number');
+            $table->string('image_path')->nullable();
             $table->string('number_of_iterations');
 
             //عدد التكرارت

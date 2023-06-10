@@ -19,6 +19,7 @@ class CreateSectionsTable extends Migration
             $table->string('number');
             $table->text('section_description');
             $table->string('department_address');
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }
