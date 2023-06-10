@@ -7,7 +7,7 @@ use App\Http\Controllers\employee\EmployeeController;
 use App\Http\Controllers\food\FoodController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
-use App\Http\Controllers\player\playerController;
+use App\Http\Controllers\player\PlayerController;
 use App\Http\Controllers\product\ProductController;
 use App\Http\Controllers\prof\profController;
 use App\Http\Controllers\section\SectionController;
