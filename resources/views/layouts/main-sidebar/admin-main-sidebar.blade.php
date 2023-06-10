@@ -38,6 +38,19 @@
 
             </ul>
         </li>
+
+        <!-- coach-->
+        <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#sections-menu">
+                <div class="pull-left"><i class="fas fa-chalkboard"></i></i><span
+                        class="right-nav-text">{{trans('main_sidebar.coach')}}</span></div>
+                <div class="pull-right"><i class="ti-plus"></i></div>
+                <div class="clearfix"></div>
+            </a>
+            <ul id="sections-menu" class="collapse" data-parent="#sidebarnav">
+                <li><a href="{{route('coach.index')}}">{{trans('main_sidebar.coach')}}</a></li>
+            </ul>
+        </li>
         <!-- classes-->
         <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#classes-menu">
@@ -52,18 +65,7 @@
         </li>
 
 
-        <!-- sections-->
-        <li>
-            <a href="javascript:void(0);" data-toggle="collapse" data-target="#sections-menu">
-                <div class="pull-left"><i class="fas fa-chalkboard"></i></i><span
-                        class="right-nav-text">{{trans('main_sidebar.coach')}}</span></div>
-                <div class="pull-right"><i class="ti-plus"></i></div>
-                <div class="clearfix"></div>
-            </a>
-            <ul id="sections-menu" class="collapse" data-parent="#sidebarnav">
-                <li><a href="{{route('coach.index')}}">{{trans('main_sidebar.coach')}}</a></li>
-            </ul>
-        </li>
+
 
 <!-- employees-->
 <li>
@@ -111,17 +113,17 @@
 
 
         <!-- Parents-->
-        <li>
-            <a href="javascript:void(0);" data-toggle="collapse" data-target="#Parents-menu">
-                <div class="pull-left"><i class="fas fa-user-tie"></i><span
-                        class="right-nav-text">{{trans('main_sidebar.subscribe')}}</span></div>
-                <div class="pull-right"><i class="ti-plus"></i></div>
-                <div class="clearfix"></div>
-            </a>
-            <ul id="Parents-menu" class="collapse" data-parent="#sidebarnav">
-                <li> <a href="{{ route('subscribe.index') }}">{{trans('main_sidebar.subscribe')}}</a> </li>
-            </ul>
-        </li>
+{{--        <li>--}}
+{{--            <a href="javascript:void(0);" data-toggle="collapse" data-target="#Parents-menu">--}}
+{{--                <div class="pull-left"><i class="fas fa-user-tie"></i><span--}}
+{{--                        class="right-nav-text">{{trans('main_sidebar.subscribe')}}</span></div>--}}
+{{--                <div class="pull-right"><i class="ti-plus"></i></div>--}}
+{{--                <div class="clearfix"></div>--}}
+{{--            </a>--}}
+{{--            <ul id="Parents-menu" class="collapse" data-parent="#sidebarnav">--}}
+{{--                <li> <a href="{{ route('subscribe.index') }}">{{trans('main_sidebar.subscribe')}}</a> </li>--}}
+{{--            </ul>--}}
+{{--        </li>--}}
 
         <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#accounting-menu">

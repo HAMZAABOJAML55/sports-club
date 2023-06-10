@@ -15,10 +15,10 @@
 
 
         <!-- الابناء-->
-        <li>
-            <a href="#"><i class="fas fa-book-open"></i><span
-                    class="right-nav-text">الابناء</span></a>
-        </li>
+{{--        <li>--}}
+{{--            <a href="#"><i class="fas fa-book-open"></i><span--}}
+{{--                    class="right-nav-text">الابناء</span></a>--}}
+{{--        </li>--}}
 
 
 
