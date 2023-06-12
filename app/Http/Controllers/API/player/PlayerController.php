@@ -5,10 +5,14 @@ namespace App\Http\Controllers\API\player;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\GeneralTrait;
 use App\Http\Traits\imageTrait;
+use App\Models\Coach;
 use App\Models\Player;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class PlayerController extends Controller
 {
@@ -31,10 +35,18 @@ class PlayerController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            $code = $this->returnCodeAccordingToInput($validator);
-            return $this->returnValidationError($code, $validator);
+            $response = new JsonResponse([
+                'data' => [],
+                'message' => 'Validation Error',
+                'errors' => $validator->messages()->all(),
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+
+            throw new ValidationException($validator, $response);
+
         } else {
             try {
+                $coach=Coach::findorfail('$request->coachs_id');
+                if ($coach)
                 $player = new Player();
                 $player->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
                 $player->user_name = $request->user_name;
@@ -65,18 +77,27 @@ class PlayerController extends Controller
 
                 $token = auth('api_player')->login($player);
 
-                return $this->returnData('token', $token, 'Here Is Your Token');
+                return response()->json([
+                    'message' => 'player successfully registered',
+                    'token'=>$token,
+                    'user' => $player,
+
+                ], 201);
             } catch (\Throwable $ex) {
                 return $this->returnError($ex->getCode(), $ex->getMessage());
             }
         }
     }
-    public function login()
-    {
-        $credentials = request()->only('email', 'password');
-
-        if (!$token = auth('api_player')->attempt($credentials)) {
-            return $this->returnError('401', 'Unauthorized');
+    public function login(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        if (!$token = auth('api_player')->attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
         return $this->returnData('token', $token, 'Here Is Your Token');
     }

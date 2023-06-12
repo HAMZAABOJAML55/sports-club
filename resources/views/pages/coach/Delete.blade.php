@@ -14,6 +14,7 @@
                     @method('DELETE')
 
                     <input type="hidden" name="id" value="{{$coach->id}}">
+                    <input type="hidden" name="user_name" value="{{$coach->user_name}}">
 
                     <h5 style="font-family: 'Cairo', sans-serif;">{{trans('coach_trans.Deleted_tilte')}}</h5>
                     <input type="text" readonly value="{{$coach->name}}" class="form-control">

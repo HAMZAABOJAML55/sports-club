@@ -23,10 +23,10 @@ Route::get('/login', function () {
 });
 
 Route::group(['middleware' => ['api', 'auth:api'], 'prefix' => 'v1'], function ($router) {
-    Route::post('login' ,[AuthController::class , 'login'] )->withoutMiddleware('auth:api');
-    Route::post('logout', 'App\Http\Controllers\API\AuthController@logout');
-    Route::post('refresh', 'App\Http\Controllers\API\AuthController@refresh');
-    Route::get('userProfile', 'App\Http\Controllers\API\AuthController@userProfile');
+    Route::post('login/admin' ,'App\Http\Controllers\API\AuthController@login')->withoutMiddleware('auth:api');
+    Route::post('logout/admin', 'App\Http\Controllers\API\AuthController@logout');
+    Route::post('refresh/admin', 'App\Http\Controllers\API\AuthController@refresh');
+    Route::get('userProfile/admin', 'App\Http\Controllers\API\AuthController@userProfile');
 });
 
 
@@ -53,31 +53,31 @@ Route::group(['middleware' => ['auth:api'],'prefix'=>'v1' ,'namspace'=>'API'], f
 );
 
 
-Route::group(['middleware' => ['api', 'auth:api_player'], 'prefix' => 'v1/player'], function ($router) {
+Route::group(['middleware' => ['api', 'auth:api_player'], 'prefix' => 'v1'], function ($router) {
 
-    Route::post('login', 'App\Http\Controllers\API\player\PlayerController@login')->withoutMiddleware('auth:api_player');;
-    Route::post('register', 'App\Http\Controllers\API\player\PlayerController@register')->withoutMiddleware('auth:api_player');
-    Route::post('logout', 'App\Http\Controllers\API\player\PlayerController@logout');
-    Route::post('refresh', 'App\Http\Controllers\API\player\PlayerController@refresh');
-    Route::post('myData', 'App\Http\Controllers\API\player\PlayerController@myData');
+    Route::post('login/player', 'App\Http\Controllers\API\player\PlayerController@login')->withoutMiddleware('auth:api_player');;
+    Route::post('register/player', 'App\Http\Controllers\API\player\PlayerController@register')->withoutMiddleware('auth:api_player');
+    Route::post('logout/player', 'App\Http\Controllers\API\player\PlayerController@logout');
+    Route::post('refresh/player', 'App\Http\Controllers\API\player\PlayerController@refresh');
+    Route::post('myData/player', 'App\Http\Controllers\API\player\PlayerController@myData');
 });
 
 
-Route::group(['middleware' => ['api', 'auth:api_coach'], 'prefix' => 'v1/coach'], function ($router) {
+Route::group(['middleware' => ['api', 'auth:api_coach'], 'prefix' => 'v1'], function ($router) {
 
-    Route::post('login', 'App\Http\Controllers\API\coach\CoachController@login')->withoutMiddleware('auth:api_coach');;
-    Route::post('register', 'App\Http\Controllers\API\coach\CoachController@register')->withoutMiddleware('auth:api_coach');
-    Route::post('logout', 'App\Http\Controllers\API\coach\CoachController@logout');
-    Route::post('refresh', 'App\Http\Controllers\API\coach\CoachController@refresh');
-    Route::post('myData', 'App\Http\Controllers\API\coach\CoachController@myData');
+    Route::post('login/coach', 'App\Http\Controllers\API\coach\CoachController@login')->withoutMiddleware('auth:api_coach');;
+    Route::post('register/coach', 'App\Http\Controllers\API\coach\CoachController@register')->withoutMiddleware('auth:api_coach');
+    Route::post('logout/coach', 'App\Http\Controllers\API\coach\CoachController@logout');
+    Route::post('refresh/coach', 'App\Http\Controllers\API\coach\CoachController@refresh');
+    Route::post('myData/coach', 'App\Http\Controllers\API\coach\CoachController@myData');
 });
 
-Route::group(['middleware' => ['api', 'auth:api_employe'], 'prefix' => 'v1/employee'], function ($router) {
+Route::group(['middleware' => ['api', 'auth:api_employe'], 'prefix' => 'v1'], function ($router) {
 
-    Route::post('login', 'App\Http\Controllers\API\employee\EmployeeController@login')->withoutMiddleware('auth:api_employe');;
-    Route::post('register', 'App\Http\Controllers\API\employee\EmployeeController@register')->withoutMiddleware('auth:api_employe');
-    Route::post('logout', 'App\Http\Controllers\API\employee\EmployeeController@logout');
-    Route::post('refresh', 'App\Http\Controllers\API\employee\EmployeeController@refresh');
-    Route::post('myData', 'App\Http\Controllers\API\employee\EmployeeController@myData');
+    Route::post('login/employee', 'App\Http\Controllers\API\employee\EmployeeController@login')->withoutMiddleware('auth:api_employe');;
+    Route::post('register/employee', 'App\Http\Controllers\API\employee\EmployeeController@register')->withoutMiddleware('auth:api_employe');
+    Route::post('logout/employee', 'App\Http\Controllers\API\employee\EmployeeController@logout');
+    Route::post('refresh/employee', 'App\Http\Controllers\API\employee\EmployeeController@refresh');
+    Route::post('myData/employee', 'App\Http\Controllers\API\employee\EmployeeController@myData');
 });
 

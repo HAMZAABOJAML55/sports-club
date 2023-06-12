@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\AttachFilesTrait;
+use App\Http\Traits\imageTrait;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
-    use AttachFilesTrait;
+    use imageTrait;
     public function index(){
 
         $collection = Setting::all();

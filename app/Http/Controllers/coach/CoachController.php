@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\coach;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCoachRequest;
+use App\Http\Traits\imageTrait;
 use App\Models\Coach;
 use App\Models\Employment_type;
 use App\Models\Gender;
@@ -11,7 +12,6 @@ use App\Models\Natinality;
 use App\Models\Prof;
 use App\Models\Sub_Location;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class CoachController extends Controller
@@ -37,10 +37,12 @@ class CoachController extends Controller
         return view('pages.coach.create', compact('profs_degrees','Employment_Types','nationals','Genders','locations','sub_locations'));
     }
 
+    use imageTrait;
 
     public function store(StoreCoachRequest $request)
     {
         try {
+            $coach_image = $this->saveImage($request->image,'attachments/coachs/'.$request->user_name);
             $coach = new Coach();
             $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $coach->user_name = $request->user_name;
@@ -63,6 +65,7 @@ class CoachController extends Controller
             $coach->coach_description = $request->coach_description;
             $coach->nationality_id = $request->nationality_id;
             $coach->genders_id = $request->genders_id;
+            $coach->image_path = $coach_image;
             $coach->save();
             session()->flash('Add', trans('notifi.add'));
             return redirect()->route('coach.index');
@@ -128,8 +131,8 @@ class CoachController extends Controller
     public function destroy(Request $request)
     {
         try {
+            $this->deleteFile('coachs',$request->user_name);
             Coach::destroy($request->id);
-
             session()->flash('delete', trans('notifi.delete'));
             return redirect()->route('coach.index');
         } catch (\Exception $e) {

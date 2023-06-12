@@ -14,7 +14,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees=Employe::all();
-        return view('pages.Employee.index' , compact('employees'));
+        return view('pages.employee.index' , compact('employees'));
     }
 
 
@@ -27,6 +27,7 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         try {
+
             $employees  = new Employe();
             $employees->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $employees->email = $request->email;

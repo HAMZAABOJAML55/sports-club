@@ -49,19 +49,29 @@ class CoachController extends Controller
 
             $token = auth('api_coach')->login($coach);
 
-            return $this->returnData('token', $token, 'Here Is Your Token');
+            return response()->json([
+                'message' => 'coach successfully registered',
+                'token'=>$token,
+                'user' => $coach,
+
+            ], 201);
         } catch (\Throwable $ex) {
             return $this->returnError($ex->getCode(), $ex->getMessage());
         }
     }
-    public function login()
-    {
-        $credentials = request()->only('email', 'password');
-
-        if (!$token = auth('api_coach')->attempt($credentials)) {
-            return $this->returnError('401', 'Unauthorized');
+    public function login(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        if (!$token = auth('api_coach')->attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
         return $this->returnData('token', $token, 'Here Is Your Token');
+
     }
 
     public function myData()

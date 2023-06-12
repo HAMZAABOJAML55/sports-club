@@ -89,7 +89,12 @@
                             </div>
                             <div class="row">
 
-
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="academic_year">{{trans('product_trans.Attachments')}} : <span class="text-danger">*</span></label>
+                                        <input type="file" accept="image/*" name="image">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <br>

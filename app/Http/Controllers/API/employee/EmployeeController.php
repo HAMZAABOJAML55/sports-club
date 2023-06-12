@@ -9,6 +9,7 @@ use App\Http\Traits\GeneralTrait;
 use App\Http\Traits\imageTrait;
 use App\Models\Coach;
 use App\Models\Employe;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -25,31 +26,42 @@ class EmployeeController extends Controller
     public function register(StoreEmployeeRequest $request)
     {
         try {
-            $employees  = new Employe();
-            $employees->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
-            $employees->email = $request->email;
-            $employees->password = Hash::make($request->password);
-            $employees->number = $request->number;
-            $employees->section_id = $request->section_id;
-            $employees->description = $request->description;
-            $employees->full_description = $request->full_description;
-            $employees->date_of_birth = $request->date_of_birth;
-            $employees->emp_id = $request->emp_id;
-            $employees->save();
+            $Section = Section::findOrFail($request->section_id);
+            if ($Section)
+                $employees  = new Employe();
+                $employees->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+                $employees->email = $request->email;
+                $employees->password = Hash::make($request->password);
+                $employees->number = $request->number;
+                $employees->section_id = $request->section_id;
+                $employees->description = $request->description;
+                $employees->full_description = $request->full_description;
+                $employees->date_of_birth = $request->date_of_birth;
+                $employees->emp_id = $request->emp_id;
+                $employees->save();
 
-            $token = auth('api_employe')->login($employees);
+                $token = auth('api_employe')->login($employees);
+                return response()->json([
+                    'message' => 'User successfully registered',
+                    'token'=>$token,
+                    'user' => $employees,
 
-            return $this->returnData('token', $token, 'Here Is Your Token');
+                ], 201);
+
         } catch (\Throwable $ex) {
             return $this->returnError($ex->getCode(), $ex->getMessage());
         }
     }
-    public function login()
-    {
-        $credentials = request()->only('email', 'password');
-
-        if (!$token = auth('api_employe')->attempt($credentials)) {
-            return $this->returnError('401', 'Unauthorized');
+    public function login(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        if (!$token = auth('api_employe')->attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
         return $this->returnData('token', $token, 'Here Is Your Token');
     }
