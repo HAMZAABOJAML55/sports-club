@@ -27,7 +27,6 @@ class CoachController extends Controller
 
     public function create()
     {
-
         $nationals=Natinality::all();
         $Genders=Gender::all();
         $locations=Location::all();
@@ -42,7 +41,6 @@ class CoachController extends Controller
     public function store(StoreCoachRequest $request)
     {
         try {
-            $coach_image = $this->saveImage($request->image,'attachments/coachs/'.$request->user_name);
             $coach = new Coach();
             $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $coach->user_name = $request->user_name;
@@ -65,6 +63,8 @@ class CoachController extends Controller
             $coach->coach_description = $request->coach_description;
             $coach->nationality_id = $request->nationality_id;
             $coach->genders_id = $request->genders_id;
+            $coach->save();
+            $coach_image = $this->saveImage($request->image,'attachments/coachs/'.$coach->id);
             $coach->image_path = $coach_image;
             $coach->save();
             session()->flash('Add', trans('notifi.add'));
@@ -131,7 +131,7 @@ class CoachController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $this->deleteFile('coachs',$request->user_name);
+            $this->deleteFile('coachs',$request->id);
             Coach::destroy($request->id);
             session()->flash('delete', trans('notifi.delete'));
             return redirect()->route('coach.index');

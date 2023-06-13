@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\food;
+namespace App\Http\Controllers\coach\dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFoodRequest;
@@ -19,7 +19,7 @@ class FoodController extends Controller
     {
         $foodsystems = Foodsystem::all();
         $foods = Food::all();
-        return view('pages.food.index' , compact('foodsystems', 'foods'));
+        return view('pages.coach.dashboard.food.index' , compact('foodsystems', 'foods'));
     }
 
     /**
@@ -29,9 +29,10 @@ class FoodController extends Controller
      */
     public function create()
     {
+
         $foodsystems = Foodsystem::all();
         $foods = Food::all();
-        return view('pages.food.create', compact('foodsystems', 'foods'));
+        return view('pages.coach.dashboard.food.create', compact('foodsystems', 'foods'));
     }
 
     /**
@@ -52,7 +53,7 @@ class FoodController extends Controller
             $food->description = $request->description;
             $food->save();
             session()->flash('Add', trans('notifi.add'));
-            return redirect()->route('food.index');
+            return redirect()->route('coach.food.index','test');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
@@ -78,10 +79,9 @@ class FoodController extends Controller
      */
     public function edit($id)
     {
-
         $food=Food::findorfail($id);
         $foodsystems = Foodsystem::all();
-        return view('pages.food.edit', compact('foodsystems', 'food'));
+        return view('pages.coach.dashboard.food.edit', compact('foodsystems', 'food'));
     }
 
     /**
@@ -103,7 +103,7 @@ class FoodController extends Controller
             $food->description = $request->description;
             $food->save();
             session()->flash('update', trans('notifi.update'));
-            return redirect()->route('food.index');
+            return redirect()->route('coach.food.index','test');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
@@ -115,7 +115,7 @@ class FoodController extends Controller
         try {
             Food::destroy($request->id);
             session()->flash('delete', trans('notifi.delete'));
-            return redirect()->route('food.index');
+            return redirect()->route('coach.food.index','test');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }

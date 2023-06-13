@@ -30,20 +30,22 @@ class StoreFoodRequest extends FormRequest
         return [
             'name_en'          => 'required|string|max:255',
             'name_ar'          => 'required|string|max:255',
-            'description'         => 'required|string',
-            'number'         => 'required',
+            'foodsystem_id'         => 'required|integer',
+            'number'         => 'required|integer',
+            'start_time'         => 'required|date',
             'end_time'         => 'required|date',
+            'description'         => 'required|string',
 
         ];
     }
     protected function failedValidation(Validator $validator)
     {
-        $response = new JsonResponse([
-            'data' => [],
-            'message' => 'Validation Error',
-            'errors' => $validator->messages()->all(),
-        ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+//        $response = new JsonResponse([
+//            'data' => [],
+//            'message' => 'Validation Error',
+//            'errors' => $validator->messages()->all(),
+//        ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
 
-        throw new ValidationException($validator, $response);
+        throw new ValidationException($validator);
     }
 }

@@ -42,7 +42,7 @@
                                 <div class="form-group">
                                     <label>{{trans('food_trans.name_en')}} : <span
                                             class="text-danger">*</span></label>
-                                    <input  type="text" value="{{$food->getTranslation('name','ar')}}" name="name_ar"   class="form-control">
+                                    <input  type="text" value="{{$food->getTranslation('name','en')}}" name="name_en"   class="form-control">
 
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>{{trans('coach_trans.start_time')}}:</label>
-                                    <input class="form-control" type="text"  id="datepicker-action"value="{{$food->start_time}}" name="start_time" data-date-format="yyyy-mm-dd">
+                                    <input class="form-control" type="text"  id="datepicker-action" value="{{$food->start_time}}" name="start_time" data-date-format="yyyy-mm-dd">
                                 </div>
                             </div>
 
@@ -88,7 +88,7 @@
                                     <select class="custom-select mr-sm-2" name="foodsystem_id">
                                         <option selected disabled>{{trans('food_trans.Choose')}}...</option>
                                         @foreach($foodsystems as $p)
-                                            <option value="{{ $p->id }}"  {{$p->id == $food->foodsystem_id ? 'selected' : ""}}>>{{ $p->name }}</option>
+                                            <option value="{{ $p->id }}"  {{$p->id == $food->foodsystem_id ? 'selected' : ""}}>{{ $p->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -100,7 +100,7 @@
 
                             </div>
                         </div>
-                           
+
 
 
                         <div class="row">

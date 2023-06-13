@@ -2,7 +2,7 @@
 @section('css')
 
     @section('title')
-        {{trans('main_sidebar.food_system')}}
+        {{trans('main_sidebar.food')}}
     @stop
 @endsection
 @section('page-header')
@@ -21,7 +21,7 @@
 
                     @include('sessions')
 
-                    <form method="post" action="{{ route('food.store') }}" autocomplete="off"
+                    <form method="post" action="{{ route('coach.food.store','test') }}" autocomplete="off"
                           enctype="multipart/form-data">
                         @csrf
 
@@ -60,8 +60,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>{{trans('food_trans.start_time')}}:</label>
-                                    <label>***y-m-d</label>
+                                    <label>{{trans('food_trans.start_time')}}:     **y-m-d</label>
                                     <input class="form-control" type="text"  id="datepicker-action" name="start_time" data-date-format="yyyy-mm-dd" >
                                 </div>
                             </div>

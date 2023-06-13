@@ -12,7 +12,18 @@
         <!-- menu title -->
         <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">{{trans('main_trans.Programname')}} </li>
 
-
+        <!-- food-->
+        <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#food-menu">
+                <div class="pull-left"><i class="fas fa-school"></i><span
+                        class="right-nav-text">{{trans('main_sidebar.food_system')}}</span></div>
+                <div class="pull-right"><i class="ti-plus"></i></div>
+                <div class="clearfix"></div>
+            </a>
+            <ul id="food-menu" class="collapse" data-parent="#sidebarnav">
+                <li><a href="{{route('coach.food.index','test')}}">{{trans('main_sidebar.food_system')}}</a></li>
+            </ul>
+        </li>
 
 
 

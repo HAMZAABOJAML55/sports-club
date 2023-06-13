@@ -25,7 +25,7 @@
 
                             @include('sessions')
 
-                            <a href="{{route('food.create')}}" class="btn btn-success btn-sm" role="button"
+                            <a href="{{route('coach.food.create','test')}}" class="btn btn-success btn-sm" role="button"
                                aria-pressed="true">{{trans('main_sidebar.add_food_system')}}</a><br><br>
                             <div class="table-responsive">
                                 <table id="datatable" class="table  table-hover table-sm table-bordered p-0"
@@ -64,14 +64,14 @@
                                                         العمليات
                                                     </a>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" href="{{route('food.edit',$food->id)}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;  تعديل بيانات الطالب</a>
+                                                        <a class="dropdown-item" href="{{route('coach.food.edit',[$food->id,'coach'])}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;  تعديل بيانات الطالب</a>
                                                         <a class="dropdown-item" data-target="#Delete_Student{{ $food->id }}" data-toggle="modal" href="#Delete_Student{{ $food->id }}"><i style="color: red" class="fa fa-trash"></i>&nbsp;  حذف بيانات الطالب</a>
                                                     </div>
                                                 </div>
                                             </td>
 
                                         </tr>
-                                    @include('pages.food.Delete')
+                                    @include('pages.coach.dashboard.food.Delete')
                                     @endforeach
                                 </table>
                             </div>

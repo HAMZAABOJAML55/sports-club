@@ -158,18 +158,21 @@
                                 </div>
                             </div>
 
+
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>{{trans('coach_trans.start_time')}}:</label>
-                                    <input class="form-control" type="text"  id="datepicker-action" name="start_time" data-date-format="yyyy-mm-dd">
+                                    <label>{{trans('food_trans.start_time')}}:</label>
+                                    <label>***y-m-d</label>
+                                    <input class="form-control" type="text"  id="datepicker-action" name="start_time" data-date-format="yyyy-mm-dd" >
                                 </div>
                             </div>
 
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>{{trans('coach_trans.end_time')}}:</label>
-                                    <input class="form-control" type="text"  id="datepicker-action" name="end_time" data-date-format="yyyy-mm-dd">
+                                    <label>{{trans('food_trans.end_time')}} :</label>
+                                    <label>***y-m-d</label>
+                                    <input class="form-control" type="text"  id="datepicker-bottom-right" name="end_time" data-date-format="yyyy-mm-dd" >
                                 </div>
                             </div>
 

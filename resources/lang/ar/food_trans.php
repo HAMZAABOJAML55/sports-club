@@ -23,6 +23,7 @@ return [
     'sub_location' => 'المدينه',
     'Choose'=>'اختر',
     'submit'=>'التسجيل',
+    'Close'=>'اغلاق',
     'coach'=>'المدرب',
     'weight'=>'الوزن',
     'height'=>'الطول',
