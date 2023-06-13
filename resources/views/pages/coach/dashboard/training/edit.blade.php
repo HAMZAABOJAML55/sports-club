@@ -20,7 +20,8 @@
                 <div class="card-body">
 
                     @include('sessions')
-                    <form method="post" action="{{ route('training.update','test') }}" autocomplete="off"
+
+                    <form method="post" action="{{ route('coach.training.update',['test','coach']) }}" autocomplete="off"
                           enctype="multipart/form-data">
                         @csrf
                         @method('PUT')

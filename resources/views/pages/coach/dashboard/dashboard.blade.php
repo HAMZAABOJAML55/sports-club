@@ -49,8 +49,75 @@ preloader -->
                 </div>
             </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <!-- widgets -->
+        <div class="row" >
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-30">
+                <div class="card card-statistics h-100">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                    <span class="text-success">
+                                        <i class="fas fa-chalkboard highlight-icon" aria-hidden="true"></i>
+                                    </span>
+                            </div>
+                            <div class="float-right text-right">
+                                <p class="card-text text-dark">Count Of Players </p>
+                                <h4>{{\App\Models\Player::where('coachs_id',\Illuminate\Support\Facades\Auth::user()->id)->count()}}</h4>
+                            </div>
+                        </div>
+                        <p class="text-muted pt-3 mb-0 mt-2 border-top">
+                            <i class="fas fa-binoculars mr-1" aria-hidden="true"></i><a href="{{route('coach.player.index','test')}}" target="_blank"><span class="text-danger">عرض البيانات</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-30">
+                <div class="card card-statistics h-100">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                    <span class="text-primary">
+                                        <i class="fas fa-chalkboard highlight-icon" aria-hidden="true"></i>
+                                    </span>
+                            </div>
+                            <div class="float-right text-right">
+                                <p class="card-text text-dark">Count Of Food System</p>
+                                <h4>{{\App\Models\Food::count()}}</h4>
+                            </div>
+                        </div>
+                        <p class="text-muted pt-3 mb-0 mt-2 border-top">
+                            <i class="fas fa-binoculars mr-1" aria-hidden="true"></i><a href="{{route('coach.food.index','test')}}" target="_blank"><span class="text-danger">عرض البيانات</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-30">
+                <div class="card card-statistics h-100">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                    <span class="text-warning">
+                                        <i class="fas fa-chalkboard-teacher highlight-icon" aria-hidden="true"></i>
+                                    </span>
+                            </div>
+                            <div class="float-right text-right">
+                                <p class="card-text text-dark">Count Of Training</p>
+                                <h4>{{\App\Models\Trainee::count()}}</h4>
+                            </div>
+                        </div>
+                        <p class="text-muted pt-3 mb-0 mt-2 border-top">
+                            <i class="fas fa-binoculars mr-1" aria-hidden="true"></i><a href="{{ route('coach.training.index','test') }}" target="_blank"><span class="text-danger">عرض البيانات</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         <!--=================================
 wrapper -->
 

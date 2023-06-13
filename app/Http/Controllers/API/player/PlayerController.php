@@ -45,7 +45,7 @@ class PlayerController extends Controller
 
         } else {
             try {
-                $coach=Coach::findorfail('$request->coachs_id');
+                $coach=Coach::findorfail($request->coachs_id);
                 if ($coach)
                 $player = new Player();
                 $player->name = ['en' => $request->name_en, 'ar' => $request->name_ar];

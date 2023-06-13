@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\training;
+namespace App\Http\Controllers\coach\dashboard;
+
 use App\Http\Controllers\Controller;
 use App\Models\Trainee;
 use App\Models\TrainingGroup;
@@ -16,7 +17,7 @@ class TrainingController extends Controller
     public function index()
     {
         $trainings =Trainee::all();
-        return view('pages.training.index' , compact('trainings'));
+        return view('pages.coach.dashboard.training.index' , compact('trainings'));
 
     }
 
@@ -28,7 +29,7 @@ class TrainingController extends Controller
     public function create()
     {
         $training_group = TrainingGroup::all();
-        return view('pages.training.create', compact('training_group'));
+        return view('pages.coach.dashboard.training.create', compact('training_group'));
     }
 
     /**
@@ -41,6 +42,7 @@ class TrainingController extends Controller
     {
 
         try {
+
             $training_groupsroup = new Trainee();
             $training_groupsroup->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $training_groupsroup->link_website = $request->link_website;
@@ -52,7 +54,7 @@ class TrainingController extends Controller
             $training_groupsroup->number_of_iterations = $request->number_of_iterations;
             $training_groupsroup->save();
             session()->flash('Add', trans('notifi.add'));
-            return redirect()->route('training.index');
+            return redirect()->route('coach.training.index','test');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
@@ -79,7 +81,7 @@ class TrainingController extends Controller
     {
         $trainings=Trainee::findorfail($id);
         $training_group = TrainingGroup::all();
-        return view('pages.training.edit', compact('trainings' , 'training_group'));
+        return view('pages.coach.dashboard.training.edit', compact('trainings' , 'training_group'));
     }
 
 
@@ -104,7 +106,7 @@ class TrainingController extends Controller
             $training_groupsroup->number_of_iterations = $request->number_of_iterations;
             $training_groupsroup->save();
             session()->flash('update', trans('notifi.update'));
-            return redirect()->route('training.index');
+            return redirect()->route('coach.training.index','test');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
@@ -121,7 +123,7 @@ class TrainingController extends Controller
         try {
             Trainee::destroy($request->id);
             session()->flash('delete', trans('notifi.delete'));
-            return redirect()->route('training.index');
+            return redirect()->route('coach.training.index','test');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }

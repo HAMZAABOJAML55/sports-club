@@ -61,13 +61,14 @@
                                     <input  type="url" name="link_website" class="form-control" >
                                 </div>
                             </div>
-    
+
+
 
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>{{trans('training_trans.duration_of_training')}}:</label>
-                                    <input class="form-control" type="text"  id="datepicker-action" name="duration_of_training" data-date-format="yyyy-mm-dd" >
+                                    <input class="form-control" type="text" name="duration_of_training"  >
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -79,10 +80,9 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>{{trans('training_trans.number_of_iterations')}}:</label>
-                                    <input class="form-control" type="text"  id="datepicker-action" name="number_of_iterations" data-date-format="yyyy-mm-dd">
+                                    <input class="form-control" type="text"  name="number_of_iterations" >
                                 </div>
                             </div>
-
 
                             <div class="col-md-3">
                                 <div class="form-group">

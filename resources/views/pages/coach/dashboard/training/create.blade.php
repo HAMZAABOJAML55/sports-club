@@ -20,24 +20,24 @@
                 <div class="card-body">
 
                     @include('sessions')
-                    <form method="post" action="{{ route('training.update','test') }}" autocomplete="off"
+
+                    <form method="post" action="{{ route('coach.training.store','test') }}" autocomplete="off"
                           enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
-                        <input value="{{$trainings->id}}" type="hidden" name="id"  class="form-control">
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('training_trans.name_ar')}} : <span
                                             class="text-danger">*</span></label>
-                                    <input type="text" value="{{$trainings->getTranslation('name','ar')}}" name="name_ar" class="form-control">
+                                    <input type="text" name="name_ar" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('training_trans.name_en')}} : <span class="text-danger">*</span></label>
-                                    <input  class="form-control" value="{{$trainings->getTranslation('name','en')}}" name="name_en" type="text" >
+                                    <input  class="form-control" name="name_en" type="text" >
                                 </div>
                             </div>
 
@@ -45,20 +45,20 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('training_trans.number')}} :</label>
-                                    <input type="number" value="{{$trainings->number}}" name="number" class="form-control">
+                                    <input type="number" name="number" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('training_trans.description')}} :</label>
-                                    <input type="text" value="{{$trainings->description}}" name="description" class="form-control">
+                                    <input type="text" name="description" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('training_trans.link_website')}} :</label>
-                                    <input  type="url" value="{{$trainings->link_website}}" name="link_website" class="form-control" >
+                                    <input  type="url" name="link_website" class="form-control" >
                                 </div>
                             </div>
 
@@ -67,19 +67,19 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>{{trans('training_trans.duration_of_training')}}:</label>
-                                    <input class="form-control" type="text"   value="{{$trainings->duration_of_training}}" name="duration_of_training"  >
+                                    <input class="form-control" type="text" name="duration_of_training"  >
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>{{trans('training_trans.training_number')}}:</label>
-                                    <input class="form-control" type="text"   value="{{$trainings->training_number}}" name="training_number" >
+                                    <input class="form-control" type="text"  id="datepicker-action" name="training_number" data-date-format="yyyy-mm-dd">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>{{trans('training_trans.number_of_iterations')}}:</label>
-                                    <input class="form-control" type="text"   value="{{$trainings->number_of_iterations}}" name="number_of_iterations" >
+                                    <input class="form-control" type="text"  name="number_of_iterations" >
                                 </div>
                             </div>
 
@@ -91,11 +91,12 @@
                                     <select class="custom-select mr-sm-2" name="training_group_id">
                                         <option selected disabled>{{trans('training_trans.Choose')}}...</option>
                                         @foreach($training_group as $p)
-                                            <option value="{{ $p->id }}" {{$p->id == $trainings->training_group_id ? 'selected' : ""}}>{{ $p->name }}</option>
+                                            <option value="{{ $p->id }}">{{ $p->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
+
 
                             <div class="row">
 
@@ -118,5 +119,3 @@
 @section('js')
 
 @endsection
-
-
