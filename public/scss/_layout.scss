@@ -563,7 +563,7 @@ footer {
   background: $white;
   padding: 1.25rem;
   @include box-shadow(1px, 1px, 15px, rgba(0, 0, 0, .1));
-  .modal { 
+  .modal {
     .btn {
       padding: 0.875rem .75rem;
     }
@@ -1976,12 +1976,12 @@ select.form-control-sm:not([size]):not([multiple]) {
 
 }
 
-.dropdown-item.active { 
+.dropdown-item.active {
  background-color: $light;
  color: $dark;
  }
 
- .dropdown-item:active { 
+ .dropdown-item:active {
   background-color: $light;
   color: $dark;
   }
@@ -2071,7 +2071,7 @@ select.form-control-sm:not([size]):not([multiple]) {
      margin-top:0 !important;
   }
   .table.dataTable {
-    margin:15px 0px !important; 
+    margin:15px 0px !important;
   }
 }
 

@@ -29,7 +29,7 @@
 preloader -->
 
     <div id="pre-loader">
-        <img src="{{URL::asset('assets/images/pre-loader/loader-01.svg')}}" alt="">
+        <img src="{{URL::asset('assets/images/pre-loader/loader-0133.svg')}}" alt="">
     </div>
 
     <!--=================================
@@ -39,7 +39,7 @@ preloader -->
 login-->
 
     <section class="height-100vh d-flex align-items-center page-section-ptb login"
-             style="background-image: url('{{ asset('assets/images/sativa1.jpg')}}');">
+             style="background-image: url('{{ asset('assets/images/red-light-round-podium-black-background-mock-up.jpg')}}'); ">
         <div class="container">
             <div class="row justify-content-center no-gutters vertical-align">
                 <div class="col-lg-4 col-md-6 login-fancy-bg bg"

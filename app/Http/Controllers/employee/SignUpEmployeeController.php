@@ -37,8 +37,8 @@ class SignUpEmployeeController extends Controller
             $employees->date_of_birth = $request->date_of_birth;
             $employees->emp_id = $request->emp_id;
             $employees->save();
-            session()->flash('Add', trans('notifi.add'));
-            return redirect()->route('employee.index');
+            session()->flash('Add','Welcome: '.$employees->email );
+            return redirect()->route('login.show','employe');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
@@ -63,6 +63,6 @@ class SignUpEmployeeController extends Controller
 
     public function destroy(Request $request)
     {
-        
+
     }
 }

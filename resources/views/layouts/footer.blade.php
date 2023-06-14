@@ -2,7 +2,7 @@
 <footer class="bg-white p-4">
    <div class="row">
        <div class="col-md-6">
-           <div class="text-center text-md-left" style="padding-right: 330px">
+           <div class="text-center text-md-left" style="padding-right: 330px;color: black; margin: auto; text-align: center; ">
                <p class="mb-0"> &copy; {{trans('main_trans.Copyright')}} <span id="copyright">
                        <script>
                            document.getElementById('copyright').appendChild(document

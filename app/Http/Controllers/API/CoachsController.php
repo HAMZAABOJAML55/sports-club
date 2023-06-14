@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCoachRequest;
+use App\Http\Traits\imageTrait;
 use App\Models\Coach;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -22,7 +23,7 @@ class CoachsController extends Controller
         ]);
     }
 
-
+use imageTrait;
     public function store(StoreCoachRequest $request)
     {
         $coach = new Coach();
@@ -47,6 +48,9 @@ class CoachsController extends Controller
         $coach->coach_description = $request->coach_description;
         $coach->nationality_id = $request->nationality_id;
         $coach->genders_id = $request->genders_id;
+        $coach->save();
+        $coach_image = $this->saveImage($request->image_path,'attachments/coachs/'.$coach->id);
+        $coach->image_path = $coach_image;
         $coach->save();
    if ($coach){
        return response()->json([
@@ -112,11 +116,17 @@ class CoachsController extends Controller
 
     public function destroy(Request $request)
     {
-        Coach::find($request->id)->delete();
+        try {
+            $this->deleteFile('coachs',$request->id);
+            Coach::destroy($request->id);
             return response()->json([
-            'status'=>true,
-            'message' => 'Coach Information deleted Successfully',
-        ]);
+                'status'=>true,
+                'message' => 'Coach Information deleted Successfully',
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+
     }
 }
 

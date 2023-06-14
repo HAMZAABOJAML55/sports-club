@@ -56,7 +56,7 @@ class StoreCoachRequest extends FormRequest
             'errors' => $validator->messages()->all(),
         ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
 
-        throw new ValidationException($validator, $response);
+        throw new ValidationException($validator);
     }
 
 }

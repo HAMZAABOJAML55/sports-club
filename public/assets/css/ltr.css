@@ -93,7 +93,9 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff; }
+  background-color: #fff;
+
+}
 
 [tabindex="-1"]:focus {
   outline: 0 !important; }
@@ -14981,7 +14983,7 @@ button.toast-close-button {
 
 /*# sourceMappingURL=bootstrap-datepicker.css.map */
 /*
-    Common 
+    Common
 */
 .wizard,
 .tabcontrol {
@@ -20734,7 +20736,7 @@ a.button-toggle-nav {
              Loading
 *******************************************/
 #pre-loader {
-  background-color: #ffffff;
+  background-color: #212121;
   height: 100%;
   width: 100%;
   position: fixed;

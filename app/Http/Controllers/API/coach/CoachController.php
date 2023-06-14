@@ -18,7 +18,7 @@ class CoachController extends Controller
     {
         $this->middleware('auth:api_coach', ['except' => ['login', 'register']]);
     }
-
+    use imageTrait;
 
     public function register(StoreCoachRequest $request)
     {
@@ -46,7 +46,9 @@ class CoachController extends Controller
             $coach->nationality_id = $request->nationality_id;
             $coach->genders_id = $request->genders_id;
             $coach->save();
-
+            $coach_image = $this->saveImage($request->image_path,'attachments/coachs/'.$coach->id);
+            $coach->image_path = $coach_image;
+            $coach->save();
             $token = auth('api_coach')->login($coach);
 
             return response()->json([

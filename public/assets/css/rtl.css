@@ -21625,7 +21625,7 @@ a.button-toggle-nav {
              Loading
 *******************************************/
 #pre-loader {
-  background-color: #ffffff;
+  background-color: #212121;
   height: 100%;
   width: 100%;
   position: fixed;

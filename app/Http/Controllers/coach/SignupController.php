@@ -4,6 +4,7 @@ namespace App\Http\Controllers\coach;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCoachRequest;
+use App\Http\Traits\imageTrait;
 use App\Models\Coach;
 use App\Models\Employment_type;
 use App\Models\Gender;
@@ -48,9 +49,9 @@ class SignupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    use imageTrait;
     public function store(StoreCoachRequest $request)
     {
-//        return $request;
         try {
             $coach = new Coach();
             $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
@@ -75,8 +76,11 @@ class SignupController extends Controller
             $coach->nationality_id = $request->nationality_id;
             $coach->genders_id = $request->genders_id;
             $coach->save();
-            session()->flash('Add', trans('notifi.add'));
-            return redirect()->route('coach.index');
+            $coach_image = $this->saveImage($request->image,'attachments/coachs/'.$coach->id);
+            $coach->image_path = $coach_image;
+            $coach->save();
+            session()->flash('Add','Welcome: '.$coach->email );
+            return redirect()->route('login.show','coach');
         }catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
