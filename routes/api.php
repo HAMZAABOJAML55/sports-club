@@ -34,6 +34,15 @@ Route::get('/login', function () {
     echo 'some thing went wrong';
 });
 
+Route::group(['middleware' => ['api', 'auth:api'], 'prefix' => 'v1/club'], function ($router) {
+    Route::post('add_club' ,'App\Http\Controllers\API\club\ClubController@store')->withoutMiddleware('auth:api');
+//    Route::post('login' ,'App\Http\Controllers\API\club\ClubController@login')->withoutMiddleware('auth:api');
+    Route::post('update/{id}', 'App\Http\Controllers\API\club\ClubController@update')->withoutMiddleware('auth:api');
+//    Route::post('refresh', 'App\Http\Controllers\API\club\ClubController@refresh');
+//    Route::get('userProfile', 'App\Http\Controllers\API\club\ClubController@userProfile');
+
+});
+
 Route::group(['middleware' => ['api', 'auth:api'], 'prefix' => 'v1'], function ($router) {
     Route::post('login/admin' ,'App\Http\Controllers\API\AuthController@login')->withoutMiddleware('auth:api');
     Route::post('logout/admin', 'App\Http\Controllers\API\AuthController@logout');

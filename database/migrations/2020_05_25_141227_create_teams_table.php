@@ -15,6 +15,8 @@ class CreateTeamsTable extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('club_id')->unsigned()->nullable();
+            $table->foreign('club_id')->references('id')->on('clubs');
             $table->string('name');
             $table->string('number');
             $table->text('description');

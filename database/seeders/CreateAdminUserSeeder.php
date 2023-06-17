@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Admin;
+use App\Models\Club;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -17,11 +18,25 @@ class CreateAdminUserSeeder extends Seeder
      */
     public function run()
     {
-      User::create([
+
+        $club = Club::create([
+
             'name' => 'admin',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('12345678')
+            'user_name' => 'admin_admin',
+            'email' =>'admin@admin.com',
+            'phone' => '1233333',
+            'subscribes_id' => 1,
+            'password' =>bcrypt('12345678'),
+            'image_path' => 'Null',
         ]);
+         User::create([
+            'club_id' => $club->id,
+            'name' => $club->name,
+            'email' => $club->email,
+            'password' => $club->password,
+            'permission' => 'admin',
+        ]);
+
 
 //         $role = Role::create(['name' => 'Admin']);
 //         $permissions = Permission::pluck('id','id')->all();

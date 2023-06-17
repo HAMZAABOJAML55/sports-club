@@ -15,6 +15,8 @@ class CreateAccountingsTable extends Migration
     {
         Schema::create('accountings', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('club_id')->unsigned()->nullable();
+            $table->foreign('club_id')->references('id')->on('clubs');
             $table->string('number');
             $table->foreignId('coach_id')->references('id')->on('coachs');
             $table->foreignId('player_id')->references('id')->on('players');

@@ -15,6 +15,8 @@ class CreateCoachsTable extends Migration
     {
         Schema::create('coachs', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('club_id')->unsigned()->nullable();
+            $table->foreign('club_id')->references('id')->on('clubs');
             $table->string('name');
             $table->string('user_name');
             $table->text('phone');

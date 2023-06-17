@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 //        $this->call(PermissionTableSeeder::class);
+        $this->call(SubscribeTableSeeder::class);
         $this->call(CreateAdminUserSeeder::class);
         $this->call(GenderSeeder::class);
         $this->call(NationalitiesTableSeeder::class);
@@ -26,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PrizeTypeTableSeeder::class);
         $this->call(ChampionshipLevelTableSeeder::class);
         $this->call(PaymentsTraineeTableSeeder::class);
-        $this->call(SubscribeTableSeeder::class);
+
 
 
 

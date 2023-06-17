@@ -63,7 +63,6 @@ class ProductController extends Controller
 
     public function show($id)
     {
-
         $img=Image::where('imageable_id',$id)->get();
         return view('pages.product.show', compact('img','id'));
     }
