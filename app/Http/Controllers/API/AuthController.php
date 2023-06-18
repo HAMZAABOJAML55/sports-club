@@ -80,7 +80,6 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function userProfile() {
-//        dd('hghhh');
         return response()->json(auth()->user());
     }
     /**

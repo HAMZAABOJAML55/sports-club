@@ -36,11 +36,7 @@ Route::get('/login', function () {
 
 Route::group(['middleware' => ['api', 'auth:api'], 'prefix' => 'v1/club'], function ($router) {
     Route::post('add_club' ,'App\Http\Controllers\API\club\ClubController@store')->withoutMiddleware('auth:api');
-//    Route::post('login' ,'App\Http\Controllers\API\club\ClubController@login')->withoutMiddleware('auth:api');
-    Route::post('update/{id}', 'App\Http\Controllers\API\club\ClubController@update')->withoutMiddleware('auth:api');
-//    Route::post('refresh', 'App\Http\Controllers\API\club\ClubController@refresh');
-//    Route::get('userProfile', 'App\Http\Controllers\API\club\ClubController@userProfile');
-
+//    Route::post('update/{id}', 'App\Http\Controllers\API\club\ClubController@update')->withoutMiddleware('auth:api');
 });
 
 Route::group(['middleware' => ['api', 'auth:api'], 'prefix' => 'v1'], function ($router) {
@@ -54,7 +50,7 @@ Route::group(['middleware' => ['api', 'auth:api'], 'prefix' => 'v1'], function (
 
 Route::group(['middleware' => ['api','auth:api'],'prefix'=>'v1' ,'namspace'=>'API'], function()
 {
-    Route::get('location',[LocationController::class ,'index']);
+    Route::get('location',[LocationController::class ,'index'])->withoutMiddleware('auth:api');
     Route::get('location/show',[LocationController::class ,'show']);
     Route::delete('location/delete',[LocationController::class ,'delete']);
 
@@ -129,6 +125,13 @@ Route::group(['middleware' => ['api','auth:api'],'prefix'=>'v1' ,'namspace'=>'AP
     Route::put('Food/update',[FoodsController::class ,'update']);
     Route::get('Food/show',[FoodsController::class ,'show']);
     Route::delete('Food/delete',[FoodsController::class ,'destroy']);
+
+    Route::get('product',[\App\Http\Controllers\API\ProductController::class ,'index']);
+    Route::post('product/add',[\App\Http\Controllers\API\ProductController::class ,'store']);
+    Route::put('product/update',[\App\Http\Controllers\API\ProductController::class ,'update']);
+    Route::get('product/show',[\App\Http\Controllers\API\ProductController::class ,'show']);
+    Route::delete('product/delete',[\App\Http\Controllers\API\ProductController::class ,'destroy']);
+
 
 }
 
