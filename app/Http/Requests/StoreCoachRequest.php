@@ -30,14 +30,14 @@ class StoreCoachRequest extends FormRequest
         return [
             'name_ar' => 'required',
             'name_en' => 'required',
-            'email' => 'required|email|unique:players|unique:coachs|unique:users|unique:employes',
+            "email" => "required|email|unique:players,email|unique:clubs,email|unique:employes,email|unique:coachs,email," . $this->id,
             'date_of_birth'    => 'required|date',
             'start_time'    => 'required|date',
             'end_time'      => 'required|date',
             'user_name'         => 'required|string',
             'phone'         => 'required|string',
             'password'         => 'required|string',
-            'subscription_number'         => 'required|integer',
+            'subscription_number'  => 'required|integer',
             'salary'         => 'required|string',
             'genders_id'         => 'required|integer',
             'nationality_id'         => 'required|integer',
@@ -45,7 +45,10 @@ class StoreCoachRequest extends FormRequest
             'sub_location_id'         => 'required|integer',
             'employment_type_id'         => 'required|integer',
             'profs_id'         => 'required|integer',
-            'coach_description'         => 'required|string',
+            'height'         => 'required|integer',
+            'weight'         => 'required|integer',
+            'postal_code'         => 'required|string',
+            'coach_description'         => 'string',
         ];
     }
     protected function failedValidation(Validator $validator)

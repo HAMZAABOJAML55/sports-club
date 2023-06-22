@@ -12,6 +12,7 @@ use App\Http\Controllers\API\PlayersController;
 use App\Http\Controllers\API\PrizesController;
 use App\Http\Controllers\API\SectionController;
 use App\Http\Controllers\API\Sub_LocationController;
+use App\Http\Controllers\API\SubscribeController;
 use App\Http\Controllers\API\SubscripesController;
 use App\Http\Controllers\API\TeamController;
 use App\Http\Controllers\API\TournamentController;
@@ -36,7 +37,7 @@ Route::get('/login', function () {
 
 Route::group(['middleware' => ['api', 'auth:api'], 'prefix' => 'v1/club'], function ($router) {
     Route::post('add_club' ,'App\Http\Controllers\API\club\ClubController@store')->withoutMiddleware('auth:api');
-//    Route::post('update/{id}', 'App\Http\Controllers\API\club\ClubController@update')->withoutMiddleware('auth:api');
+    Route::post('update', 'App\Http\Controllers\API\club\ClubController@update')->withoutMiddleware('auth:api');
 });
 
 Route::group(['middleware' => ['api', 'auth:api'], 'prefix' => 'v1'], function ($router) {
@@ -64,7 +65,7 @@ Route::group(['middleware' => ['api','auth:api'],'prefix'=>'v1' ,'namspace'=>'AP
 
     Route::get('team',[TeamController::class ,'index']);
     Route::post('team/add',[TeamController::class ,'store']);
-    Route::put('team/update',[TeamController::class ,'update']);
+    Route::post('team/update',[TeamController::class ,'update']);
     Route::get('team/show',[TeamController::class ,'show']);
     Route::delete('team/delete',[TeamController::class ,'delete']);
 
@@ -86,49 +87,49 @@ Route::group(['middleware' => ['api','auth:api'],'prefix'=>'v1' ,'namspace'=>'AP
 
     Route::get('coach',[CoachsController::class ,'index']);
     Route::post('coach/add',[CoachsController::class ,'store']);
-    Route::put('coach/update',[CoachsController::class ,'update']);
+    Route::post('coach/update',[CoachsController::class ,'update']);
     Route::get('coach/show',[CoachsController::class ,'show']);
     Route::delete('coach/delete',[CoachsController::class ,'destroy']);
 
     Route::get('player' , [PlayersController::class , 'index']);
     Route::get('player/show' , [PlayersController::class , 'show']);
     Route::post('player/add' , [PlayersController::class , 'store']);
-    Route::put('player/update' , [PlayersController::class , 'update']);
+    Route::post('player/update' , [PlayersController::class , 'update']);
     Route::delete('player/delete' , [PlayersController::class , 'destroy']);
 
     Route::get('accounting',[AccountingController::class ,'index']);
     Route::post('accounting/add',[AccountingController::class ,'store']);
-    Route::put('accounting/update',[AccountingController::class ,'update']);
+    Route::post('accounting/update',[AccountingController::class ,'update']);
     Route::get('accounting/show',[AccountingController::class ,'show']);
     Route::delete('accounting/delete',[AccountingController::class ,'destroy']);
 
     Route::get('section' , [SectionController::class , 'index']);
     Route::get('section/show' , [SectionController::class , 'show']);
     Route::post('section/add' , [SectionController::class , 'store']);
-    Route::put('section/update' , [SectionController::class , 'update']);
+    Route::post('section/update' , [SectionController::class , 'update']);
     Route::delete('section/delete' , [SectionController::class , 'destroy']);
 
-    Route::get('subscripe',[SubscripesController::class ,'index']);
-//        Route::post('subscripe/add',[SubscripesController::class ,'store']);
-//        Route::put('subscripe/update/{id}',[SubscripesController::class ,'update']);
-    Route::get('subscripe/show',[SubscripesController::class ,'show']);
-    Route::delete('subscripe/delete',[SubscripesController::class ,'destroy']);
+    Route::get('subscripe',[SubscribeController::class ,'index']);
+    Route::post('subscripe/add',[SubscribeController::class ,'store']);
+    Route::post('subscripe/update',[SubscribeController::class ,'update']);
+    Route::get('subscripe/show',[SubscribeController::class ,'show']);
+    Route::delete('subscripe/delete',[SubscribeController::class ,'destroy']);
 
     Route::get('employee',[EmployeeController::class ,'index']);
     Route::get('employee/show',[EmployeeController::class ,'show']);
     Route::post('employee/add',[EmployeeController::class ,'store']);
-    Route::put('employee/update',[EmployeeController::class ,'update']);
+    Route::post('employee/update',[EmployeeController::class ,'update']);
     Route::delete('employee/delete',[EmployeeController::class ,'destroy']);
 
     Route::get('Food',[FoodsController::class ,'index']);
     Route::post('Food/add',[FoodsController::class ,'store']);
-    Route::put('Food/update',[FoodsController::class ,'update']);
+    Route::post('Food/update',[FoodsController::class ,'update']);
     Route::get('Food/show',[FoodsController::class ,'show']);
     Route::delete('Food/delete',[FoodsController::class ,'destroy']);
 
     Route::get('product',[\App\Http\Controllers\API\ProductController::class ,'index']);
     Route::post('product/add',[\App\Http\Controllers\API\ProductController::class ,'store']);
-    Route::put('product/update',[\App\Http\Controllers\API\ProductController::class ,'update']);
+    Route::post('product/update',[\App\Http\Controllers\API\ProductController::class ,'update']);
     Route::get('product/show',[\App\Http\Controllers\API\ProductController::class ,'show']);
     Route::delete('product/delete',[\App\Http\Controllers\API\ProductController::class ,'destroy']);
 

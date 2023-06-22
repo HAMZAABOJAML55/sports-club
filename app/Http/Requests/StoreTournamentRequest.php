@@ -26,14 +26,12 @@ class StoreTournamentRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {$id = $this->route('id');
+    {
         return [
-            'name_ar' => 'required|max:100|unique:tournaments,name,'.$id,
-            'name_en' => 'required|max:100|unique:tournaments,name,'.$id,
-            'description'     =>'required',
+            'description'     =>'string',
             'start_time'    =>'date',
             'end_time'      =>'date',
-            'prize_type_id'    =>'required',
+            'prize_type_id'    =>'required|integer',
         ];
     }
     protected function failedValidation(Validator $validator)

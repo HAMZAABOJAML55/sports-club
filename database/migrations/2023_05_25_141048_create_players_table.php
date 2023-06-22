@@ -22,10 +22,9 @@ class CreatePlayersTable extends Migration
             $table->string('email' ,128)->unique();
             $table->string('password');
             $table->string('subscription_number');
-            $table->date('date_of_birth');
+            $table->date('date_of_birth')->nullable();
             $table->text('phone');
-            $table->string('image_path')->nullable();
-            $table->text('player_description');
+            $table->text('player_description')->nullable();
             $table->string('link_website')->nullable();
             $table->string('link_facebook')->nullable();
             $table->string('link_instagram')->nullable();
@@ -43,11 +42,12 @@ class CreatePlayersTable extends Migration
             $table->foreign('location_id')->references('id')->on('locations');
             $table->bigInteger('sub_location_id')->unsigned();
             $table->foreign('sub_location_id')->references('id')->on('sub_locations');
-            $table->string('postal_code');
+            $table->string('postal_code')->nullable();
             $table->string('weight')->nullable();
             $table->string('height')->nullable();
             $table->string('salary_month')->nullable();
             $table->string('total')->nullable();
+            $table->string('image_path')->nullable();
             $table->bigInteger('coachs_id')->unsigned();
             $table->foreign('coachs_id')->references('id')->on('coachs');
             $table->timestamps();

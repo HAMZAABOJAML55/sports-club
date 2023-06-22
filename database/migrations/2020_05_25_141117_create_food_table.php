@@ -21,6 +21,7 @@ class CreateFoodTable extends Migration
             $table->integer('number');
             $table->text('description');
             $table->string('image_path')->nullable();
+            $table->string('components_of_the_diet')->nullable();
             $table->bigInteger('club_id')->unsigned()->nullable();
             $table->foreign('club_id')->references('id')->on('clubs');
 //            $table->foreign('components_id')->references('id')->on('components');

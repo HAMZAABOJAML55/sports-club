@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Trainee;
 use App\Models\TrainingGroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TrainingController extends Controller
 {
@@ -42,6 +43,7 @@ class TrainingController extends Controller
 
         try {
             $training_groupsroup = new Trainee();
+            $training_groupsroup->club_id = Auth::user()->club_id;
             $training_groupsroup->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $training_groupsroup->link_website = $request->link_website;
             $training_groupsroup->training_group_id = $request->training_group_id;

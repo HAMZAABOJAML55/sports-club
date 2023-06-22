@@ -22,6 +22,7 @@ class CreateTournamentsTable extends Migration
             $table->text('description');
             $table->date('start_time');
             $table->date('end_time');
+            $table->string('the_winner')->nullable();
             $table->bigInteger('tournament_type_id')->unsigned();
             $table->foreign('tournament_type_id')->references('id')->on('tournament_types');
             $table->bigInteger('prize_type_id')->unsigned();

@@ -3,102 +3,141 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-
 use App\Http\Requests\StoreFoodRequest;
+use App\Http\Traits\GeneralTrait;
+use App\Http\Traits\imageTrait;
 use App\Models\Food;
+use App\Models\Coach;
+use App\Models\Player;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class FoodsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    use GeneralTrait;
+    use imageTrait;
     public function index()
     {
         $foods = Food::all();
-        return response()->json($foods);
+        return response()->json([
+            'status' => 'successfully',
+            'status_code'=>ResponseAlias::HTTP_OK,
+            'data' => $foods ?:[]
+        ], ResponseAlias::HTTP_OK);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreFoodRequest $request)
     {
-        $food = new Food();
-        $food->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
-        $food->foodsystem_id = $request->foodsystem_id;
-        $food->number = $request->number;
-        $food->start_time = $request->start_time;
-        $food->end_time = $request->end_time;
-        $food->description = $request->description;
-        $food->save();
-        return response()->json([
-            'status'=>true,
-            'date' => $food,
-            'message' => 'Food Information Added Successfully',
-        ]);
-    }
+        DB::beginTransaction();
+        try {
+            $food = new Food();
+            $food->club_id = Auth::user()->club_id;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request)
-    {
-        $food = Food::findOrFail($request->id);
-        return response()->json($food);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(StoreFoodRequest $request)
-    {   $food = Food::findOrFail($request->id);
-        if($food){
-            $food->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
-            $food->foodsystem_id = $request->foodsystem_id;
-            $food->number = $request->number;
+            $food->name =  ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $food->description = $request->description;
             $food->start_time = $request->start_time;
             $food->end_time = $request->end_time;
-            $food->description = $request->description;
-            $food->save();
-            return response()->json([
-                'status'=>true,
-                'data' => $food,
-                'message' => 'Food Information Updated Successfully',
-            ]);
+            $food->components_of_the_diet = $request->components_of_the_diet;
+            $food->foodsystem_id = $request->foodsystem_id;
+            $food->number = $request->number;
 
+            $food->save();
+            if ($request->hasfile('image_path')) {
+                $_image = $this->saveImage($request->image_path, 'attachments/foods/' . $food->id);
+                $food->image_path = $_image;
+                $food->save();
+            }
+            DB::commit();  // insert data
+            return response()->json([
+                'status' => true,
+                'date' => $food ?:[],
+                'message' => 'Food Information Added Successfully',
+            ]);
+        } catch (\Throwable $ex) {
+            //            وهنا يعمل رجوع عن الحفظ
+            DB::rollback();
+            return $this->returnError($ex->getCode(), $ex->getMessage());
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request)
+    public function show(Request $request)
     {
-        Food::find($request->id)->delete();
+        $food= Food::find($request->id);
+        if (!$food) {
+            return response()->json([
+                'status' => 'Error',
+                'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                'message' => 'food not found',
+            ], ResponseAlias::HTTP_NOT_FOUND);
+        }
         return response()->json([
-        'status'=>true,
-        'message' => 'food Information deleted Successfully',
+            'status' => true,
+            'data' => $food
         ]);
     }
 
+    public function update(StoreFoodRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $food = Food::find($request->id);
+            if (!$food) {
+                return response()->json([
+                    'status' => 'Error',
+                    'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                    'message' => 'food not found',
+                    'data' => []
+                ], ResponseAlias::HTTP_NOT_FOUND);
+            }
+
+            $food->club_id = Auth::user()->club_id;
+            $food->name =  ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $food->description = $request->description;
+            $food->start_time = $request->start_time;
+            $food->end_time = $request->end_time;
+            $food->components_of_the_diet = $request->components_of_the_diet;
+            $food->foodsystem_id = $request->foodsystem_id;
+            $food->number = $request->number;
+            $food->save();
+            if ($request->hasfile('image_path')) {
+                $this->deleteFile('foods',$request->id);
+                $_image = $this->saveImage($request->image_path, 'attachments/foods/' . $food->id);
+                $food->image_path = $_image;
+                $food->save();
+            }
+            DB::commit();  // insert data
+            return response()->json([
+                'status' => true,
+                'date' => $food,
+                'message' => 'Food Information Updated Successfully',
+            ]);
+        } catch (\Throwable $ex) {
+            //            وهنا يعمل رجوع عن الحفظ
+            DB::rollback();
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+    }
+
+
+    public function destroy(Request $request)
+    {
+        $food= Food::find($request->id);
+        if (!$food) {
+            return response()->json([
+                'status' => 'Error',
+                'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                'message' => 'food not found',
+                'data' => []
+            ], ResponseAlias::HTTP_NOT_FOUND);
+        }
+        $this->deleteFile('foods',$request->id);
+        $food->delete();
+        return response()->json([
+            'status' => true,
+            'message' => 'Food Information deleted Successfully',
+        ]);
+    }
 }
-
-
-

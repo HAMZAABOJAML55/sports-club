@@ -39,8 +39,12 @@ class SubscribeTableSeeder extends Seeder
         ];
 
         foreach ($nationals as $n) {
-            Subscribe::create(['name' => $n]);
+//            Subscribe::create(['name' => $n]);
+            $sub=new Subscribe();
+            $sub->name= $n;
+            $sub->save();
         }
 
     }
+
 }

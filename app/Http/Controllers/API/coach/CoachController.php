@@ -24,6 +24,7 @@ class CoachController extends Controller
     {
         try {
             $coach = new Coach();
+            $coach->club_id = $request->club_id;
             $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $coach->user_name = $request->user_name;
             $coach->phone = $request->phone;
@@ -45,6 +46,10 @@ class CoachController extends Controller
             $coach->coach_description = $request->coach_description;
             $coach->nationality_id = $request->nationality_id;
             $coach->genders_id = $request->genders_id;
+            $coach->height = $request->height;
+            $coach->weight = $request->weight;
+            $coach->postal_code = $request->postal_code;
+            $coach->link_Instagram = $request->link_Instagram;
             $coach->save();
             $coach_image = $this->saveImage($request->image_path,'attachments/coachs/'.$coach->id);
             $coach->image_path = $coach_image;

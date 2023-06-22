@@ -28,14 +28,14 @@ class StoreAccountingRequest extends FormRequest
     public function rules()
     {
         return [
-            'number'   => 'required',
-            'coach_id' =>'required',
-            'player_id' =>'required',
-            'subtype_id' => 'required',
-            'discounts' => 'required',
-            'draws' => 'required',
-            'Payment_trainee_id'=>'required'
-
+            'number'   => 'required|integer',
+            'coach_id' =>'required|integer',
+            'player_id' =>'required|integer',
+            'subtype_id' => 'required|integer',
+            'discounts' => 'required|string',
+            'draws' => 'required|string',
+            'Payment_trainee_id'=>'required|integer',
+            'total_salary'=>'integer'
         ];
     }
 

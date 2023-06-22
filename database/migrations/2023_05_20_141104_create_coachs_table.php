@@ -17,12 +17,14 @@ class CreateCoachsTable extends Migration
             $table->id();
             $table->bigInteger('club_id')->unsigned()->nullable();
             $table->foreign('club_id')->references('id')->on('clubs');
+
             $table->string('name');
             $table->string('user_name');
             $table->text('phone');
             $table->string('email' ,128)->unique();
             $table->string('password');
             $table->string('salary');
+            $table->boolean('coach_status')->default(0);
             $table->string('image_path')->nullable();
             $table->string('subscription_number');
             $table->date('date_of_birth');
@@ -45,6 +47,10 @@ class CreateCoachsTable extends Migration
             $table->foreign('genders_id')->references('id')->on('genders')->onDelete('cascade');
             $table->bigInteger('nationality_id')->unsigned();
             $table->foreign('nationality_id')->references('id')->on('nationalitys')->onDelete('cascade');
+            $table->string('height')->nullable();
+            $table->string('weight')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('link_Instagram')->nullable();
             $table->timestamps();
         });
     }

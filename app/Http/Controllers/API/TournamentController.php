@@ -5,67 +5,52 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTournamentRequest;
 use App\Http\Requests\UpdateTournamentRequest;
+use App\Http\Traits\GeneralTrait;
+use App\Models\Coach;
+use App\Models\Player;
 use App\Models\Tournament;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 
 class TournamentController extends Controller
 {
-
+use GeneralTrait;
     public function index()
     {
         $professions = Tournament::all();
         return response()->json($professions);
     }
-
     public function store(StoreTournamentRequest $request)
     {
-        $tournament = new Tournament();
-        $tournament->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
-        $tournament->description = $request->description;
-        $tournament->number = $request->number;
-        $tournament->start_time = $request->start_time;
-        $tournament->end_time = $request->end_time;
-        $tournament->tournament_type_id = $request->tournament_type_id;
-        $tournament->prize_type_id = $request->prize_type_id;
-        $tournament->championship_levels_id = $request->championship_levels_id;
-        $tournament->save();
-        $tournament->player()->attach($request->player_id);
-        $tournament->coach()->attach($request->coach_id);
-        return response()->json([
-            'status'=>true,
-            'message'=>'created Tournament successfully',
-            'data'=>$tournament
-        ]);
-    }
+        try {
+            #to check if id found
+            if(isset($request->player_id)) {
+                $Player = Player::find($request->player_id);
+                if(!$Player)
+                {
+                    return response()->json([
+                        'status' => 'Error',
+                        'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                        'message' => 'player id not found'
+                    ], ResponseAlias::HTTP_NOT_FOUND);
+                }
+            }
+            if(isset($request->coach_id)) {
+                $coach = Coach::find($request->coach_id);
+                if(!$coach)
+                {
+                    return response()->json([
+                        'status' => 'Error',
+                        'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                        'message' => 'coach id id not found'
+                    ], ResponseAlias::HTTP_NOT_FOUND);
+                }
+            }
 
-
-    public function show(Request $request)
-    {
-        $Tournament = Tournament::findOrFail($request->id);
-        if($Tournament)
-        {
-            return response()->json([
-                'status'=>true,
-                'message'=>'update Tournament',
-                'data'=>$Tournament
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>false,
-                'message' => 'Tournament Information Updated error',
-            ]);
-        }
-    }
-
-
-    public function update(Request $request)
-    {
-        $tournament = Tournament::findOrFail($request->id);
-
-        if($tournament)
-        {
+            $tournament = new Tournament();
+            $tournament->club_id = Auth::user()->club_id;
             $tournament->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $tournament->description = $request->description;
             $tournament->number = $request->number;
@@ -74,6 +59,98 @@ class TournamentController extends Controller
             $tournament->tournament_type_id = $request->tournament_type_id;
             $tournament->prize_type_id = $request->prize_type_id;
             $tournament->championship_levels_id = $request->championship_levels_id;
+            $tournament->the_winner = $request->the_winner;
+            $tournament->save();
+            //important to update player
+            if(isset($request->player_id)) {
+//            dd("hgyhg");
+                $tournament->player()->attach($request->player_id);
+            }
+            //important to update coach
+            if(isset($request->coach_id)) {
+                $tournament->coach()->attach($request->coach_id);
+            }
+
+            return response()->json([
+                'status'=>true,
+                'message'=>'created $tournament successfully',
+                'data'=>$tournament
+            ]);
+        } catch (\Throwable $ex) {
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+
+
+    }
+
+
+
+    public function show(Request $request)
+    {
+        #to check if id found
+        $tournament = Tournament::find($request->id);
+        if(!$tournament){
+            return response()->json([
+                'status' => 'Error',
+                'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                'message' => 'Team id not found'
+            ], ResponseAlias::HTTP_NOT_FOUND);
+        }
+
+            return response()->json([
+                'status'=>true,
+                'message'=>'update Tournament',
+                'data'=>$tournament
+            ]);
+
+    }
+
+    public function update(StoreTournamentRequest $request)
+    {
+        try {
+
+            #to check if id found
+            $tournament = Tournament::find($request->id);
+            if(!$tournament){
+                return response()->json([
+                    'status' => 'Error',
+                    'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                    'message' => 'Team id not found'
+                ], ResponseAlias::HTTP_NOT_FOUND);
+            }
+            if(isset($request->player_id)) {
+                $Player = Player::find($request->player_id);
+                if(!$Player)
+                {
+                    return response()->json([
+                        'status' => 'Error',
+                        'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                        'message' => 'player id not found'
+                    ], ResponseAlias::HTTP_NOT_FOUND);
+                }
+            }
+            if(isset($request->coach_id)) {
+                $coach = Coach::find($request->coach_id);
+                if(!$coach)
+                {
+                    return response()->json([
+                        'status' => 'Error',
+                        'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                        'message' => 'coach id id not found'
+                    ], ResponseAlias::HTTP_NOT_FOUND);
+                }
+            }
+
+            $tournament->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $tournament->description = $request->description;
+            $tournament->number = $request->number;
+            $tournament->start_time = $request->start_time;
+            $tournament->end_time = $request->end_time;
+            $tournament->tournament_type_id = $request->tournament_type_id;
+            $tournament->prize_type_id = $request->prize_type_id;
+            $tournament->championship_levels_id = $request->championship_levels_id;
+            $tournament->the_winner = $request->the_winner;
+
             //important to update player
             if(isset($request->player_id)) {
                 $tournament->player()->sync($request->player_id);
@@ -91,34 +168,38 @@ class TournamentController extends Controller
 
             return response()->json([
                 'status'=>true,
-                'message'=>'update Tournament',
-                'data'=>$tournament
+                'data' => $tournament,
+                'message' => '$tournament Information Updated Successfully',
             ]);
+        } catch (\Throwable $ex) {
+            return $this->returnError($ex->getCode(), $ex->getMessage());
         }
-        else{
-            return response()->json([
-                'status'=>false,
-                'message' => 'Tournament Information Updated error',
-            ]);
-        }
+
+
     }
 
     public function destroy(Request $request)
     {
-        $profession = Tournament::findOrFail($request->id);
-        if($profession)
-        {
-            $profession->delete();
+        try {
+            $Tournament = Tournament::find($request->id);
+            if(!$Tournament)
+            {
+                return response()->json([
+                    'status' => 'Error',
+                    'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                    'message' => 'Employee not found'
+                ], ResponseAlias::HTTP_NOT_FOUND);
+            }
+            $Tournament->delete();
             return response()->json([
                 'status'=>true,
-                'message' => 'Tournament Information deleted Successfully',
-            ]);
+                'message' => 'Tournament deleted Successfully',
+            ],200);
+
+
+        } catch (\Throwable $ex) {
+            return $this->returnError($ex->getCode(), $ex->getMessage());
         }
-        else{
-            return response()->json([
-                'status'=>false,
-                'message' => 'not found Tournament',
-            ]);
-        }
+
     }
 }

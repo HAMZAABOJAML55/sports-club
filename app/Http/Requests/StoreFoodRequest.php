@@ -35,7 +35,7 @@ class StoreFoodRequest extends FormRequest
             'start_time'         => 'required|date',
             'end_time'         => 'required|date',
             'description'         => 'required|string',
-
+            'components_of_the_diet'         => 'string'
         ];
     }
     protected function failedValidation(Validator $validator)

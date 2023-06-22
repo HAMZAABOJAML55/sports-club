@@ -4,34 +4,76 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Traits\GeneralTrait;
+use App\Http\Traits\imageTrait;
+use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ProductController extends Controller
 {
-
+        use GeneralTrait;
+        use imageTrait;
     public function index()
     {
         $prodects = Product::all();
         return response()->json($prodects);
     }
 
-
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
-        $product = new Product();
-        $product->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->product_types_id = $request->product_types_id;
-        $product->save();
+        DB::beginTransaction();
+        try {
+            $rules = [
+                'name_ar'   => 'required|string|max:12',
+                'name_en'   => 'required|string|max:12',
+                'product_types_id'   => 'required',
+                'description'   => 'required|string|max:100',
+                'price'   => 'integer',
+            ];
+            $validator = Validator::make($request->all(), $rules);
 
-        return response()->json([
-            'status'=>true,
-            'date' => $product,
-            'message' => 'Player Information Added Successfully',
-        ]);
+            if ($validator->fails()) {
+                $code = $this->returnCodeAccordingToInput($validator);
+                return $this->returnValidationError($code, $validator);
+            }
+            $product = new Product();
+            $product->club_id = Auth::user()->club_id;
 
+            $product->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $product->description = $request->description;
+            $product->price = $request->price;
+            $product->product_types_id = $request->product_types_id;
+            $product->save();
+
+            // insert img
+            if ($request->hasfile('image_path')) {
+                foreach ($request->file('image_path') as $file) {
+                    $name = $file->getClientOriginalName();
+                    $file->storeAs('attachments/product/' . $product->id, $file->getClientOriginalName(), 'upload_attachments');
+                    $images = new Image();
+                    $images->file_name = $name;
+                    $images->imageable_id = $product->id;
+                    $images->imageable_type = 'App\Models\Product';
+                    $images->save();
+                }
+            }
+
+            DB::commit();  // insert data
+            return response()->json([
+                'status'=>true,
+                'date' =>$product,
+                'message' => 'product  Added Successfully',
+            ]);
+        } catch (\Throwable $ex) {
+            //            وهنا يعمل رجوع عن الحفظ
+            DB::rollback();
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
     }
 
 
@@ -44,29 +86,72 @@ class ProductController extends Controller
 
     public function update(StoreProductRequest $request)
     {
-        $product = Product::findOrFail($request->id);
 
-        if($product){
+        DB::beginTransaction();
+        try {
+            $product = Product::findOrFail($request->id);
+            $product->club_id = Auth::user()->club_id;
             $product->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $product->description = $request->description;
             $product->price = $request->price;
             $product->product_types_id = $request->product_types_id;
             $product->save();
-        return response()->json([
-            'status'=>true,
-            'data' => $product,
-            'message' => 'product Information Updated Successfully',
-        ]);
+
+            // insert img
+            if($request->hasfile('image_path')) {
+                $images=Image::where('imageable_id',$request->id);
+                if ($images){
+                    $this->deleteFile('product',$request->id);
+                    $images->delete();
+                }
+                foreach ($request->file('image_path') as $file) {
+                    $name = $file->getClientOriginalName();
+                    $file->storeAs('attachments/product/' . $product->id, $file->getClientOriginalName(), 'upload_attachments');
+                    $images = new Image();
+                    $images->file_name = $name;
+                    $images->imageable_id = $product->id;
+                    $images->imageable_type = 'App\Models\Product';
+                    $images->save();
+                }
+            }
+
+            DB::commit();  // insert data
+            return response()->json([
+                'status'=>true,
+                'date' =>$product,
+                'message' => 'product  Updated Successfully',
+            ]);
+        } catch (\Throwable $ex) {
+            //            وهنا يعمل رجوع عن الحفظ
+            DB::rollback();
+            return $this->returnError($ex->getCode(), $ex->getMessage());
         }
+
+
     }
 
 
     public function destroy(Request $request)
     {
-        Product::find($request->id)->delete();
-        return response()->json([
-        'status'=>true,
-        'message' => 'Product Information deleted Successfully',
-        ]);
+            $products = Product::find($request->id);
+            if (!$products) {
+                return response()->json([
+                    'status' => 'Error',
+                    'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                    'message' => 'couch not found',
+                    'data' => []
+                ], ResponseAlias::HTTP_NOT_FOUND);
+            }
+            $images=Image::where('imageable_id',$request->id);
+            if ($images){
+                $this->deleteFile('product',$request->id);
+                $images->delete();
+            }
+            $products->delete();
+            return response()->json([
+                'status'=>true,
+                'message' => 'product deleted Successfully',
+            ]);
+
     }
 }

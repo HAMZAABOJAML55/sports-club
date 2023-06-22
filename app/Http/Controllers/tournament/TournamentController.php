@@ -9,6 +9,7 @@ use App\Models\Prize;
 use App\Models\Tournament;
 use App\Models\TournamentType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TournamentController extends Controller
 {
@@ -35,6 +36,7 @@ class TournamentController extends Controller
         try {
 //            return $request;
             $tournament = new Tournament();
+            $tournament->club_id = Auth::user()->club_id;
             $tournament->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $tournament->description = $request->description;
             $tournament->number = $request->number;

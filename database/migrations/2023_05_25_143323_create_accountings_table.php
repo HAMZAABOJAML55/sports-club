@@ -28,6 +28,8 @@ class CreateAccountingsTable extends Migration
 //  نظام السحوبات
             $table->string('draws');
             $table->string('discounts');
+            $table->string('total_salary')->nullable();
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

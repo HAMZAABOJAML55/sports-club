@@ -8,6 +8,7 @@ use App\Http\Traits\imageTrait;
 use App\Models\Club;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -57,11 +58,11 @@ use GeneralTrait;
                 $Club->subscription_period = $request->subscription_period;
                 $Club->password =Hash::make($request->password);
                 $Club->save();
-
-                $image = $this->saveImage($request->image_path, 'images/logos/clubs'.$Club->id);
-                $Club->image_path = $image;
-                $Club->save();
-
+                if ($request->hasFile('image_path')) {
+                    $image = $this->saveImage($request->image_path, 'images/logos/clubs' . $Club->id);
+                    $Club->image_path = $image;
+                    $Club->save();
+                }
 
                 $admin=new User();
                 $admin->club_id = $Club->id;
@@ -73,8 +74,6 @@ use GeneralTrait;
                 DB::commit();
                 $token = auth('api')->login($admin);
                 return $this->returnData('token', $token, 'Here Is Your Token');
-
-
             }
         } catch (\Exception $ex) {
             DB::rollback();
@@ -95,20 +94,25 @@ use GeneralTrait;
     }
 
 
-    public function update(Request $request,$id)
+    public function update(Request $request)
     {
         DB::beginTransaction();
         try {
-//            $id = auth('api')->user()->club_id;
-            $club =Club::findorfail($id);
-//            dd($request);
-            if ($club) {
-//                $admin = $club->users()->where('permission', 'admin');
-
-
+            $id = Auth::user()->club_id;
+            $club =Club::find($id);
+//            dd($club->id);
+            if (!$club) {
+                return $this->returnError(404, "The requested Admin not found club_id is null");
+            }
+            $admin = User::where('club_id', '=', $id)->where('permission', 'admin')->get();
+            if (!$admin){
+                return $this->returnError(404, "The requested Admin not found club_id is null");
+            }
+//                                dd($admin);
                 $rules = [
                     "name" => "required|string",
                     "user_name" => "required|string",
+                    "email" => "required|email|unique:employes,email|unique:coachs,email|unique:players,email|unique:clubs,email," . $this->id,
                     "subscribes_id" => "required|integer",
                     "subscription_period" => "required|string",
                     "password" => "required"
@@ -122,29 +126,23 @@ use GeneralTrait;
                 } else {
                     $club->name = $request->name;
                     $club->user_name = $request->user_name;
-//                    $club->email = $request->email;
+                    $club->email = $request->email;
                     $club->phone = $request->phone;
                     $club->subscribes_id = $request->subscribes_id;
                     $club->subscription_period = $request->subscription_period;
                     $club->password =Hash::make($request->password);
                     $club->save();
-                    $admin = User::findorfail($club->id);
-                    if ($admin){
-                        $admin->club_id = $club->id;
-                        $admin->name = $club->name;
-                        $admin->email = $club->email;
-                        $admin->password = $club->password;
-                        $admin->permission = 'admin';
-                        $admin->save();
-                        DB::commit();
-                        return $this->returnData('club', $club);
-                    }else{
-                        return $this->returnError(404, "The requested Admin not found club_id is null");
-                    }
+                   #update in table users #admin
+                    $admin = User::find($club->id);
+                    $admin->club_id = $club->id;
+                    $admin->name = $club->name;
+                    $admin->email = $club->email;
+                    $admin->password = $club->password;
+                    $admin->permission = 'admin';
+                    $admin->save();
+                    DB::commit();
+                    return $this->returnData('club', $club);
                 }
-            }else {
-                return $this->returnError(404, "The requested club does not exist !");
-            }
         } catch (\Exception $ex) {
             DB::rollback();
             return $this->returnError($ex->getCode(), $ex->getMessage());

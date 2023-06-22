@@ -30,13 +30,13 @@ class StoreEmployeeRequest extends FormRequest
         return [
             'name_ar' => 'required',
             'name_en' => 'required',
-            'email' => 'required|email|unique:players|unique:coachs|unique:users|unique:employes',
+            "email" => "required|email|unique:coachs,email|unique:players,email|unique:clubs,email|unique:employes,email," . $this->id,
             'number'    => 'required|integer',
             'description'    => 'required|string',
             'full_description'      => 'required|string',
             'section_id'         => 'required|integer',
             'emp_id'         => 'required|string',
-            'password'         => 'required|string',
+            'password'         => 'string',
             'date_of_birth'         => 'required|date',
         ];
     }

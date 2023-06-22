@@ -20,6 +20,7 @@ class CreateTeamsTable extends Migration
             $table->string('name');
             $table->string('number');
             $table->text('description');
+            $table->string('team_member')->nullable();
             $table->string('image_path')->nullable();
             $table->timestamps();
         });

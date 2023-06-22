@@ -11,9 +11,9 @@ class CreatePlayerHasTeamTable extends Migration
     {
         Schema::create('player_has_team', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('player_id')->unsigned();
+            $table->bigInteger('player_id')->unsigned()->nullable();;
             $table->foreign('player_id')->references('id')->on('players')->onDelete('cascade')->onUpdate('cascade');
-            $table->bigInteger('team_id')->unsigned();
+            $table->bigInteger('team_id')->unsigned()->nullable();;
             $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

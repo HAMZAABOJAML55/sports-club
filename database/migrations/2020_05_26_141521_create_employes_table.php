@@ -15,8 +15,6 @@ class CreateEmployesTable extends Migration
     {
         Schema::create('employes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('club_id')->unsigned()->nullable();
-            $table->foreign('club_id')->references('id')->on('clubs');
             $table->string('name')->nullable();
             $table->string('email' ,128)->unique();
             $table->string('password');
@@ -26,8 +24,13 @@ class CreateEmployesTable extends Migration
             $table->bigInteger('section_id')->unsigned();
             $table->foreign('section_id')->references('id')->on('sections');
             $table->integer('number')->nullable();
-             $table->integer('emp_id')->nullable();
-
+            $table->integer('emp_id')->nullable();
+            //////
+            $table->bigInteger('club_id')->unsigned()->nullable();
+            $table->foreign('club_id')->references('id')->on('clubs');
+            $table->string('image_path')->nullable();
+            $table->string('start_time_shift')->nullable();
+            $table->string('end_time_shift')->nullable();
             $table->timestamps();
         });
     }

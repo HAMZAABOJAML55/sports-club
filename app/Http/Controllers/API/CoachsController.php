@@ -4,14 +4,20 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCoachRequest;
+use App\Http\Traits\GeneralTrait;
 use App\Http\Traits\imageTrait;
 use App\Models\Coach;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class CoachsController extends Controller
 {
+    use imageTrait;
+    use GeneralTrait;
 
     public function index()
     {
@@ -23,10 +29,13 @@ class CoachsController extends Controller
         ]);
     }
 
-use imageTrait;
+
     public function store(StoreCoachRequest $request)
     {
+        DB::beginTransaction();
+        try {
         $coach = new Coach();
+        $coach->club_id = Auth::user()->club_id;
         $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
         $coach->user_name = $request->user_name;
         $coach->phone = $request->phone;
@@ -48,33 +57,51 @@ use imageTrait;
         $coach->coach_description = $request->coach_description;
         $coach->nationality_id = $request->nationality_id;
         $coach->genders_id = $request->genders_id;
+        $coach->height = $request->height;
+        $coach->weight = $request->weight;
+        $coach->postal_code = $request->postal_code;
+        $coach->link_Instagram = $request->link_Instagram;
         $coach->save();
-        $coach_image = $this->saveImage($request->image_path,'attachments/coachs/'.$coach->id);
-        $coach->image_path = $coach_image;
-        $coach->save();
-   if ($coach){
-       return response()->json([
-           'status'=>true,
-           'date' =>$coach,
-           'message' => 'Coach Information Added Successfully',
-       ]);
-   }else{
-       return response()->json([
-           'status'=>false,
-           'date' =>$coach,
-           'message' => 'Coach Information Not Added Successfully',
-       ]);
-   }
+            if ($request->hasfile('image_path')) {
+                $coach_image = $this->saveImage($request->image_path, 'attachments/coachs/' . $coach->id);
+                $coach->image_path = $coach_image;
+                $coach->save();
+            }
+            DB::commit();  // insert data
+
+            if ($coach){
+               return response()->json([
+                   'status'=>true,
+                   'date' =>$coach,
+                   'message' => 'Coach Information Added Successfully',
+               ]);
+           }else{
+               return response()->json([
+                   'status'=>false,
+                   'date' =>$coach,
+                   'message' => 'Coach Information Not Added Successfully',
+               ]);
+           }
+    } catch (\Throwable $ex) {
+            DB::rollback();
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+}
 
     }
 
 
 
-    public function update(Request $request)
+    public function update(StoreCoachRequest $request)
     {
-        $coach = Coach::findOrFail($request->id);
-        if($coach)
+        $coach = Coach::find($request->id);
+        if(!$coach)
         {
+            return response()->json([
+                'status' => 'Error',
+                'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                'message' => 'Coach not found'
+            ], ResponseAlias::HTTP_NOT_FOUND);
+        }
             $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $coach->user_name = $request->user_name;
             $coach->phone = $request->phone;
@@ -96,35 +123,70 @@ use imageTrait;
             $coach->coach_description = $request->coach_description;
             $coach->nationality_id = $request->nationality_id;
             $coach->genders_id = $request->genders_id;
+            $coach->height = $request->height;
+            $coach->weight = $request->weight;
+            $coach->postal_code = $request->postal_code;
+            $coach->link_Instagram = $request->link_Instagram;
             $coach->save();
+            if ($request->hasfile('image_path')) {
+                $this->deleteFile('coachs',$request->id);
+
+                $coach_image = $this->saveImage($request->image_path, 'attachments/coachs/' . $coach->id);
+                $coach->image_path = $coach_image;
+                $coach->save();
+            }
             return response()->json([
                 'status'=>true,
                 'data' => $coach,
                 'message' => 'Coach Information Updated Successfully',
             ]);
 
-        }
+
     }
 
 
     public function show(Request $request)
     {
-        $coach = Coach::findOrFail($request->id);
-        return response()->json($coach);
+        try {
+            $coach = Coach::find($request->id);
+            if(!$coach)
+            {
+                return response()->json([
+                    'status' => 'Error',
+                    'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                    'message' => 'Coach not found'
+                ], ResponseAlias::HTTP_NOT_FOUND);
+            }
+            return response()->json($coach);
+
+        } catch (\Throwable $ex) {
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
     }
 
 
     public function destroy(Request $request)
     {
         try {
+            $emloyee = Coach::find($request->id);
+            if(!$emloyee)
+            {
+                return response()->json([
+                    'status' => 'Error',
+                    'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                    'message' => 'Coach not found'
+                ], ResponseAlias::HTTP_NOT_FOUND);
+            }
             $this->deleteFile('coachs',$request->id);
-            Coach::destroy($request->id);
+            $emloyee->delete();
             return response()->json([
                 'status'=>true,
-                'message' => 'Coach Information deleted Successfully',
+                'message' => 'Coach deleted Successfully',
             ]);
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+
+
+        } catch (\Throwable $ex) {
+            return $this->returnError($ex->getCode(), $ex->getMessage());
         }
 
     }

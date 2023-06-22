@@ -99,6 +99,10 @@ class Player extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Tournament::class, 'player_has_tournament', 'player_id', 'tournament_id');
     }
+    public function images()
+    {
+        return $this->morphMany('App\Models\Image', 'imageable');
+    }
 
 }
 
