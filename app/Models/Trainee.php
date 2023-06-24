@@ -17,5 +17,9 @@ class Trainee extends Model
     {
        return $this->belongsTo(TrainingGroup::class,'training_group_id','id');
     }
+    public function club()
+    {
+        return $this->belongsTo(Club::class, 'center_id');
+    }
 }
 

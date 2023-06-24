@@ -15,27 +15,19 @@ class Coach extends Authenticatable implements JWTSubject
     protected $table='coachs';
     protected $guarded = [''];
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
     public function getJWTIdentifier() {
         return $this->getKey();
     }
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
+
     public function getJWTCustomClaims() {
         return [];
     }
-    public function player()
-    {
-        return $this->belongsTo(Player::class, 'player_id', 'id');
-    }
 
+
+    public function players()
+    {
+        return $this->hasMany(Player::class, 'coachs_id');
+    }
     public function employment_type()
     {
         return $this->belongsTo(Employment_type::class, 'employment_type_id', 'id');
@@ -66,15 +58,21 @@ class Coach extends Authenticatable implements JWTSubject
         return $this->belongsTo(Gender::class, 'genders_id', 'id');
     }
 
+    public function club()
+    {
+        return $this->belongsTo(Club::class, 'center_id');
+    }
+
+    #many to many
 
     public function team()
     {
         return $this->belongsToMany(Team::class, 'player_has_team', 'coach_id', 'team_id');
     }
-
     public function tournament()
     {
         return $this->belongsToMany(Tournament::class, 'player_has_tournament', 'coach_id', 'tournament_id');
     }
+
 }
 

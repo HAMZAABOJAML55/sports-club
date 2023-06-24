@@ -18,18 +18,28 @@ class CreateAccountingsTable extends Migration
             $table->bigInteger('club_id')->unsigned()->nullable();
             $table->foreign('club_id')->references('id')->on('clubs');
             $table->string('number');
-            $table->foreignId('coach_id')->references('id')->on('coachs');
-            $table->foreignId('player_id')->references('id')->on('players');
-            $table->bigInteger('Payment_trainee_id')->unsigned();
+            $table->bigInteger('coach_id')->unsigned()->nullable();
+            $table->foreign('coach_id')->references('id')->on('coachs');
+            $table->bigInteger('player_id')->unsigned()->nullable();
+            $table->foreign('player_id')->references('id')->on('players');
+
+
+            $table->bigInteger('Payment_trainee_id')->unsigned()->nullable();
             $table->foreign('Payment_trainee_id')->references('id')->on('paymentstrainees');
 //            number_of_months
-            $table->bigInteger('subtype_id')->unsigned();
+            #طريقة الاشتراك للمتدرب
+            $table->bigInteger('subtype_id')->unsigned()->nullable();
             $table->foreign('subtype_id')->references('id')->on('subtypes');
 //  نظام السحوبات
             $table->string('draws');
             $table->string('discounts');
             $table->string('total_salary')->nullable();
             $table->string('image_path')->nullable();
+
+            $table->string('tax')->nullable();
+            $table->string('deposit')->nullable();
+            #نوع طريقة الدفع
+            $table->string('Payment_for_trainee')->nullable();
             $table->timestamps();
         });
     }

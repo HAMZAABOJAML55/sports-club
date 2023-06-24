@@ -22,22 +22,22 @@ class ProfDegreeTableSeeder extends Seeder
         $nationals = [
 
             [
-                'en'=> 'junior',
+                'en'=> 'Beginner',
                 'ar'=> 'مبتدئ'
             ],
             [
 
-                'en'=> 'middle_junior',
+                'en'=> 'Intermediate',
                 'ar'=> 'متوسط'
             ],
             [
 
-                'en'=> 'professional',
+                'en'=> 'Advance',
                 'ar'=> 'محترف'
             ],
             [
 
-                'en'=> 'Very professional',
+                'en'=> 'True Best',
                 'ar'=> 'محترف جدا'
             ],
 

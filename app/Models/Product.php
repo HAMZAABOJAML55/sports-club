@@ -23,4 +23,8 @@ class Product extends Model
     {
         $this->belongsTo(Image::class,'image_id','id');
     }
+    public function club()
+    {
+        return $this->belongsTo(Club::class, 'center_id');
+    }
 }

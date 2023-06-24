@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreFoodRequest;
+use App\Http\Requests\api\StoreFoodRequest;
 use App\Http\Traits\GeneralTrait;
 use App\Http\Traits\imageTrait;
 use App\Models\Food;
-use App\Models\Coach;
-use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class FoodsController extends Controller
@@ -21,7 +18,7 @@ class FoodsController extends Controller
     use imageTrait;
     public function index()
     {
-        $foods = Food::all();
+        $foods = Food::where('club_id',Auth::user()->club_id)->get();
         return response()->json([
             'status' => 'successfully',
             'status_code'=>ResponseAlias::HTTP_OK,
@@ -65,7 +62,7 @@ class FoodsController extends Controller
 
     public function show(Request $request)
     {
-        $food= Food::find($request->id);
+        $food= Food::where('club_id',Auth::user()->club_id)->find($request->id);
         if (!$food) {
             return response()->json([
                 'status' => 'Error',
@@ -83,7 +80,7 @@ class FoodsController extends Controller
     {
         DB::beginTransaction();
         try {
-            $food = Food::find($request->id);
+            $food = Food::where('club_id',Auth::user()->club_id)->find($request->id);
             if (!$food) {
                 return response()->json([
                     'status' => 'Error',
@@ -124,7 +121,7 @@ class FoodsController extends Controller
 
     public function destroy(Request $request)
     {
-        $food= Food::find($request->id);
+        $food= Food::where('club_id',Auth::user()->club_id)->find($request->id);
         if (!$food) {
             return response()->json([
                 'status' => 'Error',

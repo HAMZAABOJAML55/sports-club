@@ -2,14 +2,20 @@
 
 use App\Http\Controllers\API\AccountingController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\ChampionshipResultController;
 use App\Http\Controllers\API\CoachsController;
+use App\Http\Controllers\API\DietPlanController;
 use App\Http\Controllers\API\EmployeeController;
 use App\Http\Controllers\API\FoodsController;
+use App\Http\Controllers\API\ForgotPasswordController;
 use App\Http\Controllers\API\GenderController;
 use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\NationalityController;
+use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\PlayersController;
 use App\Http\Controllers\API\PrizesController;
+use App\Http\Controllers\API\ProfController;
 use App\Http\Controllers\API\SectionController;
 use App\Http\Controllers\API\Sub_LocationController;
 use App\Http\Controllers\API\SubscribeController;
@@ -37,7 +43,7 @@ Route::get('/login', function () {
 
 Route::group(['middleware' => ['api', 'auth:api'], 'prefix' => 'v1/club'], function ($router) {
     Route::post('add_club' ,'App\Http\Controllers\API\club\ClubController@store')->withoutMiddleware('auth:api');
-    Route::post('update', 'App\Http\Controllers\API\club\ClubController@update')->withoutMiddleware('auth:api');
+    Route::post('update', 'App\Http\Controllers\API\club\ClubController@update');
 });
 
 Route::group(['middleware' => ['api', 'auth:api'], 'prefix' => 'v1'], function ($router) {
@@ -45,6 +51,9 @@ Route::group(['middleware' => ['api', 'auth:api'], 'prefix' => 'v1'], function (
     Route::post('logout/admin', 'App\Http\Controllers\API\AuthController@logout');
     Route::post('refresh/admin', 'App\Http\Controllers\API\AuthController@refresh');
     Route::get('userProfile/admin', 'App\Http\Controllers\API\AuthController@userProfile');
+    Route::post('password/email', [ForgotPasswordController::class,'forgot'])->withoutMiddleware('auth:api');
+    Route::post('password/reset', [ForgotPasswordController::class,'reset'])->withoutMiddleware('auth:api');
+
 });
 
 
@@ -53,37 +62,48 @@ Route::group(['middleware' => ['api','auth:api'],'prefix'=>'v1' ,'namspace'=>'AP
 {
     Route::get('location',[LocationController::class ,'index'])->withoutMiddleware('auth:api');
     Route::get('location/show',[LocationController::class ,'show']);
-    Route::delete('location/delete',[LocationController::class ,'delete']);
+//    Route::delete('location/delete',[LocationController::class ,'delete']);
 
-    Route::get('nationality',[NationalityController::class ,'index']);
+    Route::get('nationality',[NationalityController::class ,'index'])->withoutMiddleware('auth:api');
     Route::get('nationality/show',[NationalityController::class ,'show']);
-    Route::delete('nationality/delete/$id',[NationalityController::class ,'delete']);
+//    Route::delete('nationality/delete/$id',[NationalityController::class ,'delete']);
 
-    Route::get('SubLocation',[Sub_LocationController::class ,'index']);
+    Route::get('SubLocation',[Sub_LocationController::class ,'index'])->withoutMiddleware('auth:api');
     Route::get('SubLocation/show',[Sub_LocationController::class ,'show']);
-    Route::delete('SubLocation/delete',[Sub_LocationController::class ,'delete']);
+//    Route::delete('SubLocation/delete',[Sub_LocationController::class ,'delete']);
 
     Route::get('team',[TeamController::class ,'index']);
     Route::post('team/add',[TeamController::class ,'store']);
     Route::post('team/update',[TeamController::class ,'update']);
     Route::get('team/show',[TeamController::class ,'show']);
-    Route::delete('team/delete',[TeamController::class ,'delete']);
+    Route::delete('team/delete',[TeamController::class ,'destroy']);
 
-    Route::get('Prize',[PrizesController::class ,'index']);
+
+
+    Route::get('Prize',[PrizesController::class ,'index'])->withoutMiddleware('auth:api');
     Route::get('Prize/show',[PrizesController::class ,'show']);
-    Route::delete('Prize/delete',[PrizesController::class ,'destroy']);
+//    Route::delete('Prize/delete',[PrizesController::class ,'destroy']);
 
     Route::get('tournament',[TournamentController::class ,'index']);
     Route::post('tournament/add',[TournamentController::class ,'store']);
-    Route::put('tournament/update',[TournamentController::class ,'update']);
+    Route::post('tournament/update',[TournamentController::class ,'update']);
     Route::get('tournament/show',[TournamentController::class ,'show']);
     Route::delete('tournament/delete',[TournamentController::class ,'destroy']);
 
-    Route::get('gender',[GenderController::class ,'index']);
-    Route::post('gender/add',[GenderController::class ,'store']);
-    Route::put('gender/update',[GenderController::class ,'update']);
+    Route::get('ChampionshipResult',[ChampionshipResultController::class ,'index']);
+    Route::post('ChampionshipResult/add',[ChampionshipResultController::class ,'store']);
+    Route::post('ChampionshipResult/update',[ChampionshipResultController::class ,'update']);
+    Route::get('ChampionshipResult/show',[ChampionshipResultController::class ,'show']);
+    Route::delete('ChampionshipResult/delete',[ChampionshipResultController::class ,'destroy']);
+
+    Route::get('gender',[GenderController::class ,'index'])->withoutMiddleware('auth:api');
+//    Route::post('gender/add',[GenderController::class ,'store']);
+//    Route::put('gender/update',[GenderController::class ,'update']);
     Route::get('gender/show',[GenderController::class ,'show']);
-    Route::delete('gender/delete',[GenderController::class ,'delete']);
+//    Route::delete('gender/delete',[GenderController::class ,'delete']);
+
+    Route::get('prof',[ProfController::class ,'index'])->withoutMiddleware('auth:api');
+    Route::get('prof/show',[ProfController::class ,'show']);
 
     Route::get('coach',[CoachsController::class ,'index']);
     Route::post('coach/add',[CoachsController::class ,'store']);
@@ -109,11 +129,11 @@ Route::group(['middleware' => ['api','auth:api'],'prefix'=>'v1' ,'namspace'=>'AP
     Route::post('section/update' , [SectionController::class , 'update']);
     Route::delete('section/delete' , [SectionController::class , 'destroy']);
 
-    Route::get('subscripe',[SubscribeController::class ,'index']);
+    Route::get('subscripe',[SubscribeController::class ,'index'])->withoutMiddleware('auth:api');
     Route::post('subscripe/add',[SubscribeController::class ,'store']);
     Route::post('subscripe/update',[SubscribeController::class ,'update']);
     Route::get('subscripe/show',[SubscribeController::class ,'show']);
-    Route::delete('subscripe/delete',[SubscribeController::class ,'destroy']);
+//    Route::delete('subscripe/delete',[SubscribeController::class ,'destroy']);
 
     Route::get('employee',[EmployeeController::class ,'index']);
     Route::get('employee/show',[EmployeeController::class ,'show']);
@@ -133,7 +153,21 @@ Route::group(['middleware' => ['api','auth:api'],'prefix'=>'v1' ,'namspace'=>'AP
     Route::get('product/show',[\App\Http\Controllers\API\ProductController::class ,'show']);
     Route::delete('product/delete',[\App\Http\Controllers\API\ProductController::class ,'destroy']);
 
+    Route::get('notifications', [NotificationController::class, 'index']);
+    Route::get('notifications/{notification}', [NotificationController::class, 'show']);
 
+
+    Route::get('DietPlan',[DietPlanController::class ,'index'])->withoutMiddleware('auth:api');;
+    Route::post('DietPlan/add',[DietPlanController::class ,'store']);
+    Route::post('DietPlan/update',[DietPlanController::class ,'update']);
+    Route::get('DietPlan/show',[DietPlanController::class ,'show'])->withoutMiddleware('auth:api');;
+    Route::delete('DietPlan/delete',[DietPlanController::class ,'destroy']);
+
+    Route::get('Category',[CategoryController::class ,'index'])->withoutMiddleware('auth:api');;
+    Route::post('Category/add',[CategoryController::class ,'store']);
+    Route::post('Category/update',[CategoryController::class ,'update']);
+    Route::get('Category/show',[CategoryController::class ,'show'])->withoutMiddleware('auth:api');;
+    Route::delete('Category/delete',[CategoryController::class ,'destroy']);
 }
 
 );

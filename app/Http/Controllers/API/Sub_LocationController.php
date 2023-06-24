@@ -3,10 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreLocationRequest;
-use App\Http\Requests\StoreSubLocationRequest;
-use App\Http\Requests\UpdateCompanyRequest;
-use App\Models\Location;
 use App\Models\Sub_Location;
 use Illuminate\Http\Request;
 

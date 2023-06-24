@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\player;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePlayerRequest;
+use App\Http\Requests\api\StorePlayerRequest;
 use App\Models\Coach;
 use App\Models\Gender;
 use App\Models\Location;

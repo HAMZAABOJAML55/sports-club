@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\coach;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCoachRequest;
+use App\Http\Requests\api\StoreCoachRequest;
 use App\Http\Traits\imageTrait;
 use App\Models\Coach;
 use App\Models\Employment_type;

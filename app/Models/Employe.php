@@ -36,5 +36,8 @@ class Employe extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(Section::class, 'section_id', 'id');
     }
-
+    public function club()
+    {
+        return $this->belongsTo(Club::class, 'center_id');
+    }
 }

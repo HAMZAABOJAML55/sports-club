@@ -18,11 +18,11 @@ class CreateTournamentsTable extends Migration
             $table->bigInteger('club_id')->unsigned()->nullable();
             $table->foreign('club_id')->references('id')->on('clubs');
             $table->string('name');
-            $table->string('number');
+            $table->string('number')->nullable();
             $table->text('description');
             $table->date('start_time');
             $table->date('end_time');
-            $table->string('the_winner')->nullable();
+//            $table->string('the_winner')->nullable();
             $table->bigInteger('tournament_type_id')->unsigned();
             $table->foreign('tournament_type_id')->references('id')->on('tournament_types');
             $table->bigInteger('prize_type_id')->unsigned();

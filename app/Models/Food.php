@@ -19,5 +19,8 @@ class Food extends Model
     {
       return  $this->belongsTo(Foodsystem::class,'foodsystem_id','id');
     }
-
+    public function club()
+    {
+        return $this->belongsTo(Club::class, 'center_id');
+    }
 }

@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCoachRequest;
+use App\Http\Requests\api\StoreCoachRequest;
 use App\Http\Traits\GeneralTrait;
 use App\Http\Traits\imageTrait;
 use App\Models\Coach;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +20,7 @@ class CoachsController extends Controller
 
     public function index()
     {
-        $coachs = Coach::all();
+        $coachs = Coach::where('club_id',Auth::user()->club_id)->get();
         return response()->json([
             'status'=>true,
             'date' =>$coachs,
@@ -61,7 +60,9 @@ class CoachsController extends Controller
         $coach->weight = $request->weight;
         $coach->postal_code = $request->postal_code;
         $coach->link_Instagram = $request->link_Instagram;
-        $coach->save();
+        $coach->coach_status = $request->coach_status;
+
+            $coach->save();
             if ($request->hasfile('image_path')) {
                 $coach_image = $this->saveImage($request->image_path, 'attachments/coachs/' . $coach->id);
                 $coach->image_path = $coach_image;
@@ -93,7 +94,7 @@ class CoachsController extends Controller
 
     public function update(StoreCoachRequest $request)
     {
-        $coach = Coach::find($request->id);
+        $coach = Coach::where('club_id',Auth::user()->club_id)->find($request->id);
         if(!$coach)
         {
             return response()->json([
@@ -126,6 +127,7 @@ class CoachsController extends Controller
             $coach->height = $request->height;
             $coach->weight = $request->weight;
             $coach->postal_code = $request->postal_code;
+            $coach->coach_status = $request->coach_status;
             $coach->link_Instagram = $request->link_Instagram;
             $coach->save();
             if ($request->hasfile('image_path')) {
@@ -148,7 +150,7 @@ class CoachsController extends Controller
     public function show(Request $request)
     {
         try {
-            $coach = Coach::find($request->id);
+            $coach = Coach::where('club_id',Auth::user()->club_id)->find($request->id);
             if(!$coach)
             {
                 return response()->json([
@@ -168,7 +170,7 @@ class CoachsController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $emloyee = Coach::find($request->id);
+            $emloyee = Coach::where('club_id',Auth::user()->club_id)->find($request->id);
             if(!$emloyee)
             {
                 return response()->json([

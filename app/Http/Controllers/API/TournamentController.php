@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTournamentRequest;
+use App\Http\Requests\api\StoreTournamentRequest;
 use App\Http\Requests\UpdateTournamentRequest;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Coach;
@@ -19,7 +19,7 @@ class TournamentController extends Controller
 use GeneralTrait;
     public function index()
     {
-        $professions = Tournament::all();
+        $professions = Tournament::where('club_id',Auth::user()->club_id)->get();
         return response()->json($professions);
     }
     public function store(StoreTournamentRequest $request)
@@ -27,7 +27,7 @@ use GeneralTrait;
         try {
             #to check if id found
             if(isset($request->player_id)) {
-                $Player = Player::find($request->player_id);
+                $Player = Player::where('club_id',Auth::user()->club_id)->find($request->player_id);
                 if(!$Player)
                 {
                     return response()->json([
@@ -38,7 +38,7 @@ use GeneralTrait;
                 }
             }
             if(isset($request->coach_id)) {
-                $coach = Coach::find($request->coach_id);
+                $coach = Coach::where('club_id',Auth::user()->club_id)->find($request->coach_id);
                 if(!$coach)
                 {
                     return response()->json([
@@ -59,7 +59,6 @@ use GeneralTrait;
             $tournament->tournament_type_id = $request->tournament_type_id;
             $tournament->prize_type_id = $request->prize_type_id;
             $tournament->championship_levels_id = $request->championship_levels_id;
-            $tournament->the_winner = $request->the_winner;
             $tournament->save();
             //important to update player
             if(isset($request->player_id)) {
@@ -88,12 +87,12 @@ use GeneralTrait;
     public function show(Request $request)
     {
         #to check if id found
-        $tournament = Tournament::find($request->id);
+        $tournament = Tournament::where('club_id',Auth::user()->club_id)->find($request->id);
         if(!$tournament){
             return response()->json([
                 'status' => 'Error',
                 'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
-                'message' => 'Team id not found'
+                'message' => 'Tournament id not found'
             ], ResponseAlias::HTTP_NOT_FOUND);
         }
 
@@ -110,16 +109,16 @@ use GeneralTrait;
         try {
 
             #to check if id found
-            $tournament = Tournament::find($request->id);
+            $tournament = Tournament::where('club_id',Auth::user()->club_id)->find($request->id);
             if(!$tournament){
                 return response()->json([
                     'status' => 'Error',
                     'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
-                    'message' => 'Team id not found'
+                    'message' => 'Tournament id not found'
                 ], ResponseAlias::HTTP_NOT_FOUND);
             }
             if(isset($request->player_id)) {
-                $Player = Player::find($request->player_id);
+                $Player = Player::where('club_id',Auth::user()->club_id)->find($request->player_id);
                 if(!$Player)
                 {
                     return response()->json([
@@ -130,7 +129,7 @@ use GeneralTrait;
                 }
             }
             if(isset($request->coach_id)) {
-                $coach = Coach::find($request->coach_id);
+                $coach = Coach::where('club_id',Auth::user()->club_id)->find($request->coach_id);
                 if(!$coach)
                 {
                     return response()->json([
@@ -149,7 +148,6 @@ use GeneralTrait;
             $tournament->tournament_type_id = $request->tournament_type_id;
             $tournament->prize_type_id = $request->prize_type_id;
             $tournament->championship_levels_id = $request->championship_levels_id;
-            $tournament->the_winner = $request->the_winner;
 
             //important to update player
             if(isset($request->player_id)) {
@@ -181,13 +179,13 @@ use GeneralTrait;
     public function destroy(Request $request)
     {
         try {
-            $Tournament = Tournament::find($request->id);
+            $Tournament = Tournament::where('club_id',Auth::user()->club_id)->find($request->id);
             if(!$Tournament)
             {
                 return response()->json([
                     'status' => 'Error',
                     'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
-                    'message' => 'Employee not found'
+                    'message' => 'Tournament not found'
                 ], ResponseAlias::HTTP_NOT_FOUND);
             }
             $Tournament->delete();

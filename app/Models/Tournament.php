@@ -34,4 +34,8 @@ class Tournament extends Model
     {
         return $this->belongsTo(ChampionshipLevel::class,'championship_levels_id','id');
     }
+    public function club()
+    {
+        return $this->belongsTo(Club::class, 'center_id');
+    }
 }

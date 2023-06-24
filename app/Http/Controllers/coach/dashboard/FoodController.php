@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\coach\dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreFoodRequest;
+use App\Http\Requests\api\StoreFoodRequest;
 use App\Models\Food;
 use App\Models\Foodsystem;
 use Illuminate\Http\Request;

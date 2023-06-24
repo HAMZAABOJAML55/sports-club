@@ -3,52 +3,100 @@
 namespace App\Http\Controllers\API\employee;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCoachRequest;
-use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\api\StoreEmployeeRequest;
 use App\Http\Traits\GeneralTrait;
 use App\Http\Traits\imageTrait;
-use App\Models\Coach;
+use App\Models\Club;
 use App\Models\Employe;
 use App\Models\Section;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class EmployeeController extends Controller
 {
     use GeneralTrait;
+    use imageTrait;
+
     public function __construct()
     {
         $this->middleware('auth:api_employe', ['except' => ['login', 'register']]);
     }
 
-
-    public function register(StoreEmployeeRequest $request)
+    public function register(StoreEmployeeRequest $request):  JsonResponse
     {
+        DB::beginTransaction();
         try {
-            $Section = Section::findOrFail($request->section_id);
-            if ($Section)
-                $employees  = new Employe();
-                $employees->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
-                $employees->email = $request->email;
-                $employees->password = Hash::make($request->password);
-                $employees->number = $request->number;
-                $employees->section_id = $request->section_id;
-                $employees->description = $request->description;
-                $employees->full_description = $request->full_description;
-                $employees->date_of_birth = $request->date_of_birth;
-                $employees->emp_id = $request->emp_id;
-                $employees->save();
+            $rules = [
+                "club_id" => "required|integer",
+            ];
+            $validator = Validator::make($request->all(), $rules);
 
-                $token = auth('api_employe')->login($employees);
+            if ($validator->fails()) {
+                $response = new JsonResponse([
+                    'data' => [],
+                    'message' => 'Validation Error',
+                    'errors' => $validator->messages()->all(),
+                ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+
+                throw new ValidationException($validator, $response);
+
+            }
+
+            $Club=Club::find($request->club_id);
+            if (!$Club) {
                 return response()->json([
-                    'message' => 'User successfully registered',
-                    'token'=>$token,
-                    'user' => $employees,
+                    'status' => 'Error',
+                    'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                    'message' => 'Club not found',
+                    'data' => []
+                ], ResponseAlias::HTTP_NOT_FOUND);
+            }
 
-                ], 201);
+            $section=Section::where('club_id',$request->club_id)->find($request->section_id);
+            if (!$section){
+                return response()->json([
+                    'status' => 'Error',
+                    'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                    'message' => 'Section not found id'
+                ], ResponseAlias::HTTP_NOT_FOUND);
+            }
+            $employee = new Employe();
+            $employee->club_id =$request->club_id;
+            $employee->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $employee->email = $request->email;
+            $employee->national_id = $request->national_id;
+            $employee->description = $request->description;
+            $employee->full_description = $request->full_description;
+            $employee->section_id = $request->section_id;
+            $employee->emp_id = $request->emp_id;
+            $employee->password = Hash::make($request->password);
+            $employee->date_of_birth = $request->date_of_birth;
+            $employee->save();
+
+            if ($request->hasfile('image_path')) {
+                $employee_image = $this->saveImage($request->image_path, 'attachments/employees/' . $employee->id);
+                $employee->image_path = $employee_image;
+                $employee->save();
+            }
+            DB::commit();  // insert data
+
+            $token = auth('api_employe')->login($employee);
+            return response()->json([
+                'message' => 'User successfully registered',
+                'token'=>$token,
+                'user' => $employee,
+
+            ], 201);
+
 
         } catch (\Throwable $ex) {
+            DB::rollback();
             return $this->returnError($ex->getCode(), $ex->getMessage());
         }
     }
@@ -87,52 +135,6 @@ class EmployeeController extends Controller
             'access_token' => $token,
             'expires_in' => auth('api_employe')->factory()->getTTL() * 60
         ]);
-    }
-
-
-
-
-
-
-
-    public function index()
-    {
-        //
-    }
-
-
-    public function create()
-    {
-        //
-    }
-
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-
-    public function show($id)
-    {
-        //
-    }
-
-
-    public function edit($id)
-    {
-        //
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 
 

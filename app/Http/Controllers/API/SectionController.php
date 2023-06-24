@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreSectionRequest;
-use App\Http\Requests\UpdateSectionRequest;
 use App\Http\Traits\GeneralTrait;
 use App\Http\Traits\imageTrait;
 use App\Models\Section;
@@ -21,7 +19,7 @@ use GeneralTrait;
 use imageTrait;
     public function index()
     {
-        $items = Section::all();
+        $items = Section::where('club_id',Auth::user()->club_id)->get();
         return response()->json($items);
     }
 
@@ -66,7 +64,7 @@ use imageTrait;
 
     public function show(Request $request)
     {
-        $sections = Section::find($request->id);
+        $sections = Section::where('club_id',Auth::user()->club_id)->find($request->id);
         if (!$sections) {
             return response()->json([
                 'status' => 'Error',
@@ -93,7 +91,7 @@ use imageTrait;
                 $code = $this->returnCodeAccordingToInput($validator);
                 return $this->returnValidationError($code, $validator);
             }
-                $sections = Section::find($request->id);
+                $sections = Section::where('club_id',Auth::user()->club_id)->find($request->id);
 //            dd($request);
                 if (!$sections) {
                     return response()->json([
@@ -109,6 +107,7 @@ use imageTrait;
                 $sections->department_address = $request->department_address;
                 $sections->save();
                 if ($request->hasfile('image_path')) {
+                    $this->deleteFile('sections',$request->id);
                     $section_image = $this->saveImage($request->image_path, 'attachments/sections/' . $sections->id);
                     $sections->image_path = $section_image;
                     $sections->save();
@@ -128,10 +127,9 @@ use imageTrait;
         }
     }
 
-
     public function destroy(Request $request)
     {
-        $sections = Section::find($request->id);
+        $sections = Section::where('club_id',Auth::user()->club_id)->find($request->id);
         if (!$sections) {
             return response()->json([
                 'status' => 'Error',

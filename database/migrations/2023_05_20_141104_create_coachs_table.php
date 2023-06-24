@@ -18,7 +18,7 @@ class CreateCoachsTable extends Migration
             $table->bigInteger('club_id')->unsigned()->nullable();
             $table->foreign('club_id')->references('id')->on('clubs');
 
-            $table->string('name');
+            $table->string('name');  #full name
             $table->string('user_name');
             $table->text('phone');
             $table->string('email' ,128)->unique();
@@ -35,6 +35,8 @@ class CreateCoachsTable extends Migration
             $table->string('link_facebook')->nullable();
             $table->string('link_twitter')->nullable();
             $table->string('link_youtupe')->nullable();
+            $table->string('link_Instagram')->nullable();
+
             $table->bigInteger('profs_id')->unsigned();
             $table->foreign('profs_id')->references('id')->on('profs');
             $table->bigInteger('employment_type_id')->unsigned();
@@ -43,14 +45,13 @@ class CreateCoachsTable extends Migration
             $table->foreign('location_id')->references('id')->on('locations');
             $table->bigInteger('sub_location_id')->unsigned();
             $table->foreign('sub_location_id')->references('id')->on('sub_locations');
+            $table->string('postal_code')->nullable();
             $table->bigInteger('genders_id')->unsigned();
             $table->foreign('genders_id')->references('id')->on('genders')->onDelete('cascade');
             $table->bigInteger('nationality_id')->unsigned();
             $table->foreign('nationality_id')->references('id')->on('nationalitys')->onDelete('cascade');
             $table->string('height')->nullable();
             $table->string('weight')->nullable();
-            $table->string('postal_code')->nullable();
-            $table->string('link_Instagram')->nullable();
             $table->timestamps();
         });
     }

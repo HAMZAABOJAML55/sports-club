@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\player\SignupPlayerController;
-use App\Http\Requests\StorePlayerRequest;
+use App\Http\Requests\api\StorePlayerRequest;
 use App\Http\Traits\GeneralTrait;
 use App\Http\Traits\imageTrait;
 use App\Models\Coach;
 use App\Models\Player;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +20,7 @@ class PlayersController extends Controller
     use imageTrait;
     public function index()
     {
-        $players = Player::all();
+        $players = Player::where('club_id',Auth::user()->club_id)->get();
         return response()->json($players);
     }
 
@@ -31,7 +29,7 @@ class PlayersController extends Controller
     {
         DB::beginTransaction();
         try {
-            $couch=Coach::find($request->coachs_id);
+            $couch=Coach::where('club_id',Auth::user()->club_id)->find($request->coachs_id);
             if (!$couch) {
                 return response()->json([
                     'status' => 'Error',
@@ -68,7 +66,9 @@ class PlayersController extends Controller
         $player->player_description = $request->player_description;
         $player->nationality_id = $request->nationality_id;
         $player->genders_id = $request->genders_id;
-        $player->save();
+        $player->player_status = $request->player_status;
+
+            $player->save();
             if ($request->hasfile('image_path')) {
                 $player_image = $this->saveImage($request->image_path, 'attachments/players/' . $player->id);
                 $player->image_path = $player_image;
@@ -90,7 +90,7 @@ class PlayersController extends Controller
 
     public function show(Request $request)
     {
-        $player= Player::find($request->id);
+        $player= Player::where('club_id',Auth::user()->club_id)->find($request->id);
         if (!$player) {
             return response()->json([
                 'status' => 'Error',
@@ -106,22 +106,27 @@ class PlayersController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(StorePlayerRequest $request)
     {
         DB::beginTransaction();
         try {
-            $couch=Coach::find($request->coachs_id);
+            $couch=Coach::where('club_id',Auth::user()->club_id)->find($request->coachs_id);
             if (!$couch) {
                 return response()->json([
                     'status' => 'Error',
                     'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
                     'message' => 'couch not found',
-                    'data' => []
                 ], ResponseAlias::HTTP_NOT_FOUND);
             }
-        $player = Player::findOrFail($request->id);
+        $player = Player::where('club_id',Auth::user()->club_id)->find($request->id);
 
-        if ($player) {
+        if (!$player) {
+            return response()->json([
+                'status' => 'Error',
+                'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                'message' => 'player not found',
+            ], ResponseAlias::HTTP_NOT_FOUND);
+        }
             $player->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $player->user_name = $request->user_name;
             $player->phone = $request->phone;
@@ -147,6 +152,8 @@ class PlayersController extends Controller
             $player->player_description = $request->player_description;
             $player->nationality_id = $request->nationality_id;
             $player->genders_id = $request->genders_id;
+            $player->player_status = $request->player_status;
+
             $player->save();
             if ($request->hasfile('media_path')) {
                 $player_image = $this->saveImage($request->image_path, 'attachments/players/' . $player->id);
@@ -159,7 +166,6 @@ class PlayersController extends Controller
                 'data' => $player,
                 'message' => 'Player Information Updated Successfully',
             ]);
-        }
         } catch (\Throwable $ex) {
             //            وهنا يعمل رجوع عن الحفظ
             DB::rollback();
@@ -170,7 +176,7 @@ class PlayersController extends Controller
 
     public function destroy(Request $request)
     {
-       $player= Player::find($request->id);
+       $player= Player::where('club_id',Auth::user()->club_id)->find($request->id);
         if (!$player) {
             return response()->json([
                 'status' => 'Error',

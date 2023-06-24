@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\player;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePlayerRequest;
+use App\Http\Requests\api\StorePlayerRequest;
 use App\Models\Coach;
-use App\Models\Player;
 use App\Models\Gender;
 use App\Models\Location;
 use App\Models\Natinality;
+use App\Models\Player;
 use App\Models\Prof;
 use App\Models\Sub_Location;
 use App\Models\Subtype;

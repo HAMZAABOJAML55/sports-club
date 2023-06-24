@@ -23,7 +23,7 @@ class CreateClubsTable extends Migration
             $table->string('image_path')->nullable();
 //            $table->string('subscription_type')->nullable();
             $table->string('subscription_period')->nullable();
-            $table->bigInteger('subscribes_id')->unsigned();
+            $table->bigInteger('subscribes_id')->unsigned()->nullable();
             $table->foreign('subscribes_id')->references('id')->on('subscribes');
             $table->timestamps();
         });

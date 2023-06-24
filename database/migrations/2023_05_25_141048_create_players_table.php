@@ -48,7 +48,9 @@ class CreatePlayersTable extends Migration
             $table->string('salary_month')->nullable();
             $table->string('total')->nullable();
             $table->string('image_path')->nullable();
-            $table->bigInteger('coachs_id')->unsigned();
+            $table->boolean('player_status')->default(0);
+
+            $table->bigInteger('coachs_id')->unsigned()->nullable();
             $table->foreign('coachs_id')->references('id')->on('coachs');
             $table->timestamps();
         });

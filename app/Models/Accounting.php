@@ -15,7 +15,10 @@ class Accounting extends Model
 
     protected $guarded = [''];
 
-
+    public function club()
+    {
+        return $this->belongsTo(Club::class, 'center_id');
+    }
     public function player()
     {
         return $this->belongsTo(Player::class,'player_id','id');

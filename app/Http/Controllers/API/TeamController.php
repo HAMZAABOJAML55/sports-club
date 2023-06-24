@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTeamRequest;
-use App\Http\Requests\UpdateTeamRequest;
+use App\Http\Requests\api\StoreTeamRequest;
 use App\Http\Traits\GeneralTrait;
 use App\Http\Traits\imageTrait;
 use App\Models\Coach;
@@ -21,17 +20,17 @@ class TeamController extends Controller
     use imageTrait;
     public function index()
     {
-        $invoices = Team::all();
+        $invoices = Team::where('club_id',Auth::user()->club_id)->get();
         return response()->json($invoices);
     }
 
-    public function store(UpdateTeamRequest $request)
+    public function store(StoreTeamRequest $request)
     {
         DB::beginTransaction();
         try {
             #to check if id found
             if(isset($request->player_id)) {
-                $Player = Player::find($request->player_id);
+                $Player = Player::where('club_id',Auth::user()->club_id)->find($request->player_id);
                 if(!$Player)
                 {
                     return response()->json([
@@ -42,7 +41,7 @@ class TeamController extends Controller
                 }
             }
             if(isset($request->coach_id)) {
-                $coach = Coach::find($request->coach_id);
+                $coach = Coach::where('club_id',Auth::user()->club_id)->find($request->coach_id);
                 if(!$coach)
                 {
                     return response()->json([
@@ -90,12 +89,12 @@ class TeamController extends Controller
         }
     }
 
-    public function update(UpdateTeamRequest $request)
+    public function update(StoreTeamRequest $request)
     {
         DB::beginTransaction();
         try {
             #to check if id found
-            $team = Team::findOrFail($request->id);
+            $team = Team::where('club_id',Auth::user()->club_id)->find($request->id);
             if(!$team){
                 return response()->json([
                     'status' => 'Error',
@@ -104,7 +103,7 @@ class TeamController extends Controller
                 ], ResponseAlias::HTTP_NOT_FOUND);
             }
             if(isset($request->player_id)) {
-                $Player = Player::find($request->player_id);
+                $Player = Player::where('club_id',Auth::user()->club_id)->find($request->player_id);
                 if(!$Player)
                 {
                     return response()->json([
@@ -115,7 +114,7 @@ class TeamController extends Controller
                 }
             }
             if(isset($request->coach_id)) {
-                $coach = Coach::find($request->coach_id);
+                $coach = Coach::where('club_id',Auth::user()->club_id)->find($request->coach_id);
                 if(!$coach)
                 {
                     return response()->json([
@@ -169,7 +168,7 @@ class TeamController extends Controller
     public function show(Request $request)
     {
         try {
-            $team = Team::find($request->id);
+            $team = Team::where('club_id',Auth::user()->club_id)->find($request->id);
             if(!$team){
                 return response()->json([
                     'status' => 'Error',
@@ -184,7 +183,7 @@ class TeamController extends Controller
 
     }
 
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         try {
             $team = Team::find($request->id);

@@ -34,4 +34,69 @@ class Club extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims() {
         return [];
     }
+
+    public function admins()
+    {
+        return $this->hasMany(User::class, 'club_id');
+    }
+
+    public function accountings()
+    {
+        return $this->hasMany(Accounting::class, 'club_id');
+    }
+
+    public function coachs()
+    {
+        return $this->hasMany(Coach::class, 'club_id');
+    }
+
+    public function employees()
+    {
+        return $this->hasMany(Employe::class, 'club_id');
+    }
+
+    public function foods()
+    {
+        return $this->hasMany(Food::class, 'club_id');
+    }
+
+
+    public function players()
+    {
+        return $this->hasMany(Player::class, 'club_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'club_id');
+    }
+
+    public function sections()
+    {
+        return $this->hasMany(Section::class, 'club_id');
+    }
+
+    public function teams()
+    {
+        return $this->hasMany(Team::class, 'club_id');
+    }
+
+    public function tournaments()
+    {
+        return $this->hasMany(Tournament::class, 'club_id');
+    }
+    public function championshipResult()
+    {
+        return $this->hasMany(ChampionshipResult::class, 'club_id');
+    }
+
+    public function Training()
+    {
+        return $this->hasMany(Trainee::class, 'club_id');
+    }
+
+    public function subscribes()
+    {
+        return $this->belongsTo(Subscribe::class, 'subscribes_id');
+    }
 }

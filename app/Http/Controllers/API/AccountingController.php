@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAccountingRequest;
+use App\Http\Requests\api\StoreAccountingRequest;
 use App\Http\Traits\GeneralTrait;
 use App\Http\Traits\imageTrait;
 use App\Models\Accounting;
@@ -12,7 +12,6 @@ use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class AccountingController extends Controller
@@ -21,7 +20,7 @@ use GeneralTrait;
 use imageTrait;
     public function index()
     {
-        $accountings = Accounting::all();
+        $accountings = Accounting::where('club_id',Auth::user()->club_id)->get();
         return response()->json($accountings);
     }
 
@@ -29,35 +28,41 @@ use imageTrait;
     {
         DB::beginTransaction();
         try {
-            $couch=Coach::find($request->coach_id);
-            if (!$couch) {
-                return response()->json([
-                    'status' => 'Error',
-                    'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
-                    'message' => 'couch not found',
-                    'data' => []
-                ], ResponseAlias::HTTP_NOT_FOUND);
+            if(isset($request->coach_id)) {
+                $couch = Coach::where('club_id', Auth::user()->club_id)->find($request->coach_id);
+                if (!$couch) {
+                    return response()->json([
+                        'status' => 'Error',
+                        'status_code' => ResponseAlias::HTTP_NOT_FOUND,
+                        'message' => 'couch not found',
+                        'data' => []
+                    ], ResponseAlias::HTTP_NOT_FOUND);
+                }
             }
-            $player=Player::find($request->player_id);
-            if (!$player) {
-                return response()->json([
-                    'status' => 'Error',
-                    'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
-                    'message' => 'Player not found',
-                    'data' => []
-                ], ResponseAlias::HTTP_NOT_FOUND);
+            if(isset($request->player_id)) {
+                $player = Player::where('club_id', Auth::user()->club_id)->find($request->player_id);
+                if (!$player) {
+                    return response()->json([
+                        'status' => 'Error',
+                        'status_code' => ResponseAlias::HTTP_NOT_FOUND,
+                        'message' => 'Player not found',
+                        'data' => []
+                    ], ResponseAlias::HTTP_NOT_FOUND);
+                }
             }
             $accounting = new Accounting();
             $accounting->club_id = Auth::user()->club_id;
-
             $accounting->number = $request->number;
-            $accounting->Payment_trainee_id = $request->Payment_trainee_id;
+//            $accounting->Payment_trainee_id = $request->Payment_trainee_id;
+            $accounting->Payment_for_trainee = $request->Payment_for_trainee;
             $accounting->draws = $request->draws;
             $accounting->discounts = $request->discounts;
             $accounting->subtype_id = $request->subtype_id;
             $accounting->player_id = $request->player_id;
             $accounting->coach_id = $request->coach_id;
             $accounting->total_salary = $request->total_salary;
+            $accounting->tax = $request->tax;
+            $accounting->deposit = $request->deposit;
             $accounting->save();
             if ($request->hasfile('image_path')) {
                 $_image = $this->saveImage($request->image_path, 'attachments/accountings/' . $accounting->id);
@@ -79,7 +84,7 @@ use imageTrait;
 
     public function show(Request $request)
     {
-        $accounting= Accounting::find($request->id);
+        $accounting= Accounting::where('club_id',Auth::user()->club_id)->find($request->id);
         if (!$accounting) {
             return response()->json([
                 'status' => 'Error',
@@ -97,25 +102,29 @@ use imageTrait;
     {
         DB::beginTransaction();
         try {
-            $couch=Coach::find($request->coach_id);
-            if (!$couch) {
-                return response()->json([
-                    'status' => 'Error',
-                    'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
-                    'message' => 'couch not found',
-                    'data' => []
-                ], ResponseAlias::HTTP_NOT_FOUND);
+            if(isset($request->coach_id)) {
+                $couch = Coach::where('club_id', Auth::user()->club_id)->find($request->coach_id);
+                if (!$couch) {
+                    return response()->json([
+                        'status' => 'Error',
+                        'status_code' => ResponseAlias::HTTP_NOT_FOUND,
+                        'message' => 'couch not found',
+                        'data' => []
+                    ], ResponseAlias::HTTP_NOT_FOUND);
+                }
             }
-            $player=Player::find($request->player_id);
-            if (!$player) {
-                return response()->json([
-                    'status' => 'Error',
-                    'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
-                    'message' => 'Player not found',
-                    'data' => []
-                ], ResponseAlias::HTTP_NOT_FOUND);
+            if(isset($request->player_id)) {
+                $player = Player::where('club_id', Auth::user()->club_id)->find($request->player_id);
+                if (!$player) {
+                    return response()->json([
+                        'status' => 'Error',
+                        'status_code' => ResponseAlias::HTTP_NOT_FOUND,
+                        'message' => 'Player not found',
+                        'data' => []
+                    ], ResponseAlias::HTTP_NOT_FOUND);
+                }
             }
-            $accounting = Accounting::find($request->id);
+            $accounting = Accounting::where('club_id',Auth::user()->club_id)->find($request->id);
             if (!$accounting) {
                 return response()->json([
                     'status' => 'Error',
@@ -127,13 +136,16 @@ use imageTrait;
 
             $accounting->club_id = Auth::user()->club_id;
             $accounting->number = $request->number;
-            $accounting->Payment_trainee_id = $request->Payment_trainee_id;
+//            $accounting->Payment_trainee_id = $request->Payment_trainee_id;
+            $accounting->Payment_for_trainee = $request->Payment_for_trainee;
             $accounting->draws = $request->draws;
             $accounting->discounts = $request->discounts;
             $accounting->subtype_id = $request->subtype_id;
             $accounting->player_id = $request->player_id;
             $accounting->coach_id = $request->coach_id;
             $accounting->total_salary = $request->total_salary;
+            $accounting->tax = $request->tax;
+            $accounting->deposit = $request->deposit;
             $accounting->save();
             if ($request->hasfile('image_path')) {
                 $this->deleteFile('accountings',$request->id);
@@ -157,7 +169,7 @@ use imageTrait;
 
     public function destroy(Request $request)
     {
-        $accounting= Accounting::find($request->id);
+        $accounting= Accounting::where('club_id',Auth::user()->club_id)->find($request->id);
         if (!$accounting) {
             return response()->json([
                 'status' => 'Error',

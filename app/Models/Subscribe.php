@@ -12,5 +12,12 @@ class Subscribe extends Model
     use HasTranslations;
     public $translatable =['name'];
     protected $guarded = [''];
-
+//    public function club()
+//    {
+//        return $this->belongsTo(Club::class, 'center_id');
+//    }
+    public function clubs()
+    {
+        return $this->hasMany(Club::class, 'subscribes_id');
+    }
 }

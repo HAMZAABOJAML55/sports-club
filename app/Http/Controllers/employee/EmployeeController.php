@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\employee;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\api\StoreEmployeeRequest;
 use App\Models\Employe;
 use App\Models\Section;
 use Illuminate\Http\Request;

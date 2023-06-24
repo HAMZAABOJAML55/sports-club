@@ -3,11 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreLocationRequest;
-use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Gender;
-use App\Models\Location;
-use App\Models\Natinality;
 use Illuminate\Http\Request;
 
 class GenderController extends Controller

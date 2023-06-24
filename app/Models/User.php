@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -42,7 +43,12 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function sendPasswordResetNotification($token)
+    {
+        $url = 'https://spa.test/reset-password?token=' . $token;
 
+        $this->notify(new ResetPasswordNotification($url));
+    }
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -58,5 +64,10 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims() {
         return [];
+    }
+
+    public function club()
+    {
+        return $this->belongsTo(Club::class, 'center_id');
     }
 }

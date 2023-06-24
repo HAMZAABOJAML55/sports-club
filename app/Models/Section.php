@@ -17,4 +17,8 @@ class Section extends Model
     {
         return $this->morphMany('App\Models\Image', 'imageable');
     }
+    public function club()
+    {
+        return $this->belongsTo(Club::class, 'center_id');
+    }
 }
