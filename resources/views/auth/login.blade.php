@@ -29,7 +29,7 @@
 preloader -->
 
     <div id="pre-loader">
-        <img src="{{URL::asset('assets/images/pre-loader/loader-0133.svg')}}" alt="">
+        <img src="{{URL::asset('assets/images/pre-loader/loader-0122.svg')}}" alt="">
     </div>
 
     <!--=================================
@@ -45,9 +45,8 @@ login-->
                 <div class="col-lg-4 col-md-6 login-fancy-bg bg"
                      style="background-image: url('{{ asset('assets/images/login-inner-bg.jpg')}}');">
                     <div class="login-fancy">
-                        <h2 class="text-white mb-20">Hello world!</h2>
-                        <p class="mb-20 text-white">Create tailor-cut websites with the exclusive multi-purpose
-                            responsive template along with powerful features.</p>
+                        <h2 class="text-white mb-20" style="text-align: center" >Welcome Back My Dear</h2>
+                        <p class="mb-20 text-white"></p>
                         <ul class="list-unstyled  pos-bot pb-30">
                             <li class="list-inline-item"><a class="text-white" href="#"> Terms of Use</a></li>
                             <li class="list-inline-item"><a class="text-white" href="#"> Privacy Policy</a></li>
