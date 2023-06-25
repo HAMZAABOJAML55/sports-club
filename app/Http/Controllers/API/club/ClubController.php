@@ -59,7 +59,7 @@ use GeneralTrait;
                 $Club->password =Hash::make($request->password);
                 $Club->save();
                 if ($request->hasFile('image_path')) {
-                    $image = $this->saveImage($request->image_path, 'images/logos/clubs' . $Club->id);
+                    $image = $this->saveImage($request->image_path, 'images/logos/clubs' .Auth::user()->club_id.'/'. $Club->id);
                     $Club->image_path = $image;
                     $Club->save();
                 }

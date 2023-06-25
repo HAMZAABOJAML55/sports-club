@@ -100,7 +100,7 @@ class PlayerController extends Controller
 
             $player->save();
             if ($request->hasfile('image_path')) {
-                $player_image = $this->saveImage($request->image_path, 'attachments/players/' . $player->id);
+                $player_image = $this->saveImage($request->image_path, 'attachments/players/' .Auth::user()->club_id.'/'. $player->id);
                 $player->image_path = $player_image;
                 $player->save();
             }

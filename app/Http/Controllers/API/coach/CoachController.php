@@ -84,7 +84,7 @@ class CoachController extends Controller
 
             $coach->save();
             if ($request->hasfile('image_path')) {
-                $coach_image = $this->saveImage($request->image_path, 'attachments/coachs/' . $coach->id);
+                $coach_image = $this->saveImage($request->image_path, 'attachments/coachs/'.Auth::user()->club_id.'/' . $coach->id);
                 $coach->image_path = $coach_image;
                 $coach->save();
             }
@@ -134,7 +134,7 @@ class CoachController extends Controller
             $coach->postal_code = $request->postal_code;
             $coach->link_Instagram = $request->link_Instagram;
             $coach->save();
-            $coach_image = $this->saveImage($request->image_path,'attachments/coachs/'.$coach->id);
+            $coach_image = $this->saveImage($request->image_path,'attachments/coachs/'.Auth::user()->club_id.'/'.$coach->id);
             $coach->image_path = $coach_image;
             $coach->save();
             $token = auth('api_coach')->login($coach);

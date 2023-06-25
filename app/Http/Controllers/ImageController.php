@@ -84,7 +84,7 @@ class ImageController extends Controller
     {
 //        return $request;
         // Delete img in server disk
-        Storage::disk('upload_attachments')->delete('attachments/product/' . $request->product_name . '/' . $request->file_name);
+        Storage::disk('upload_attachments')->delete('attachments/product/'.$request->product_id.'/'.$request->file_name);
         // Delete in data
         Image::where('id',$request->id)->where('file_name', $request->file_name)->delete();
         session()->flash('delete', trans('notifi.delete'));

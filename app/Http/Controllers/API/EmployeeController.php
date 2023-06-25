@@ -54,7 +54,7 @@ class EmployeeController extends Controller
             $employee->save();
 
             if ($request->hasfile('image_path')) {
-                $employee_image = $this->saveImage($request->image_path, 'attachments/employees/' . $employee->id);
+                $employee_image = $this->saveImage($request->image_path, 'attachments/employees/' .Auth::user()->club_id.'/'. $employee->id);
                 $employee->image_path = $employee_image;
                 $employee->save();
             }
@@ -137,7 +137,7 @@ class EmployeeController extends Controller
 
             if ($request->hasfile('image_path')) {
                 $this->deleteFile('employees',$request->id);
-                $employee_image = $this->saveImage($request->image_path, 'attachments/employees/' . $employee->id);
+                $employee_image = $this->saveImage($request->image_path, 'attachments/employees/' .Auth::user()->club_id.'/'. $employee->id);
                 $employee->image_path = $employee_image;
                 $employee->save();
             }

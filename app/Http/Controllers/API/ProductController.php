@@ -20,7 +20,7 @@ class ProductController extends Controller
         use imageTrait;
     public function index()
     {
-        $prodects = Product::all();
+        $prodects = Product::where('club_id',Auth::user()->club_id)->get();
         return response()->json($prodects);
     }
 
@@ -29,10 +29,10 @@ class ProductController extends Controller
         DB::beginTransaction();
         try {
             $rules = [
-                'name_ar'   => 'required|string|max:12',
-                'name_en'   => 'required|string|max:12',
+                'name_ar'   => 'required|string|max:60',
+                'name_en'   => 'required|string|max:60',
                 'product_types_id'   => 'required',
-                'description'   => 'required|string|max:100',
+                'description'   => 'string|max:200',
                 'price'   => 'integer',
             ];
             $validator = Validator::make($request->all(), $rules);
@@ -79,7 +79,7 @@ class ProductController extends Controller
 
     public function show(Request $request)
     {
-        $prodect = Product::findOrFail($request->id);
+        $prodect = Product::where('club_id',Auth::user()->club_id)->find($request->id);
         return response()->json($prodect);
     }
 
@@ -89,7 +89,7 @@ class ProductController extends Controller
 
         DB::beginTransaction();
         try {
-            $product = Product::findOrFail($request->id);
+            $product = Product::where('club_id',Auth::user()->club_id)->find($request->id);
             $product->club_id = Auth::user()->club_id;
             $product->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $product->description = $request->description;
@@ -133,7 +133,7 @@ class ProductController extends Controller
 
     public function destroy(Request $request)
     {
-            $products = Product::find($request->id);
+            $products = Product::where('club_id',Auth::user()->club_id)->find($request->id);
             if (!$products) {
                 return response()->json([
                     'status' => 'Error',

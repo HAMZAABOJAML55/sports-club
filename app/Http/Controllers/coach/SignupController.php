@@ -13,6 +13,7 @@ use App\Models\Natinality;
 use App\Models\Prof;
 use App\Models\Sub_Location;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class SignupController extends Controller
@@ -76,7 +77,7 @@ class SignupController extends Controller
             $coach->nationality_id = $request->nationality_id;
             $coach->genders_id = $request->genders_id;
             $coach->save();
-            $coach_image = $this->saveImage($request->image,'attachments/coachs/'.$coach->id);
+            $coach_image = $this->saveImage($request->image,'attachments/coachs/'.Auth::user()->club_id.'/'.$coach->id);
             $coach->image_path = $coach_image;
             $coach->save();
             session()->flash('Add','Welcome: '.$coach->email );

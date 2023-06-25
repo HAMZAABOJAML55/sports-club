@@ -43,7 +43,7 @@ class FoodsController extends Controller
 
             $food->save();
             if ($request->hasfile('image_path')) {
-                $_image = $this->saveImage($request->image_path, 'attachments/foods/' . $food->id);
+                $_image = $this->saveImage($request->image_path, 'attachments/foods/' .Auth::user()->club_id.'/'. $food->id);
                 $food->image_path = $_image;
                 $food->save();
             }
@@ -101,7 +101,7 @@ class FoodsController extends Controller
             $food->save();
             if ($request->hasfile('image_path')) {
                 $this->deleteFile('foods',$request->id);
-                $_image = $this->saveImage($request->image_path, 'attachments/foods/' . $food->id);
+                $_image = $this->saveImage($request->image_path, 'attachments/foods/'.Auth::user()->club_id.'/' . $food->id);
                 $food->image_path = $_image;
                 $food->save();
             }

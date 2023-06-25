@@ -60,7 +60,7 @@ class TeamController extends Controller
             $team->team_member = $request->team_member;
             $team->save();
             if ($request->hasfile('image_path')) {
-                $_image = $this->saveImage($request->image_path, 'attachments/teams/' . $team->id);
+                $_image = $this->saveImage($request->image_path, 'attachments/teams/' .Auth::user()->club_id.'/'. $team->id);
                 $team->image_path = $_image;
                 $team->save();
             }
@@ -145,7 +145,7 @@ class TeamController extends Controller
             $team->save();
             if ($request->hasfile('image_path')) {
                 $this->deleteFile('teams',$request->id);
-                $_image = $this->saveImage($request->image_path, 'attachments/teams/' . $team->id);
+                $_image = $this->saveImage($request->image_path, 'attachments/teams/' .Auth::user()->club_id.'/'. $team->id);
                 $team->image_path = $_image;
                 $team->save();
             }

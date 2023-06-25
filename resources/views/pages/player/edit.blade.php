@@ -72,7 +72,16 @@
                                 </div>
                             </div>
 
-
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="gender">Status : <span class="text-danger">*</span></label>
+                                    <select required class="custom-select mr-sm-2" name="player_status">
+                                        <option selected disabled>{{trans('coach_trans.Choose')}}...</option>
+                                        <option  value="1">Active</option>
+                                        <option  value="0">In Active</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('player_trans.subscription_number')}} :</label>
@@ -200,6 +209,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>{{trans('player_trans.Date_of_Birth')}}:</label>
+                                    <label>***y-m-d</label>
                                     <input class="form-control" type="text"  value="{{$player->date_of_birth}}" id="datepicker-action" name="date_of_birth" data-date-format="yyyy-mm-dd">
                                 </div>
                             </div>
@@ -212,17 +222,22 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{trans('player_trans.weight')}} :</label>
-                                <input  type="text" value="{{$player->weight}}" name="weight" class="form-control" >
+                                <input  type="number" value="{{$player->weight}}" name="weight" class="form-control" >
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{trans('player_trans.height')}} :</label>
-                                <input  type="text" value="{{$player->height}}" name="height" class="form-control" >
+                                <input  type="number" value="{{$player->height}}" name="height" class="form-control" >
                             </div>
                         </div>
-
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="academic_year">{{trans('product_trans.Attachments')}} : <span class="text-danger">*</span></label>
+                                <input type="file" accept="image/*" name="image_path">
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>{{trans('player_trans.link_website')}} :</label>

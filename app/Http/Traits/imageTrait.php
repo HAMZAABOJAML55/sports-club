@@ -2,6 +2,7 @@
 
 namespace App\Http\Traits;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 trait imageTrait
@@ -28,11 +29,11 @@ trait imageTrait
     public function deleteFile($folder,$name)
     {
 
-        $exists = Storage::disk('upload_attachments')->exists('attachments/'.$folder.'/'.$name);
+        $exists = Storage::disk('upload_attachments')->exists('attachments/'.$folder.'/'.Auth::user()->club_id.'/'.$name);
 
         if($exists)
         {
-            Storage::disk('upload_attachments')->deleteDirectory('attachments/'.$folder.'/'.$name);
+            Storage::disk('upload_attachments')->deleteDirectory('attachments/'.$folder.'/'.Auth::user()->club_id.'/'.$name);
         }
     }
 

@@ -39,7 +39,7 @@ class StorePlayerRequest extends FormRequest
             'total'         => 'required|string',
             'password'         => 'required|string',
             'subscription_number'         => 'required|integer',
-            'postal_code'         => 'required|string|max:7',
+            'postal_code'         => 'string',
             'salary_month'         => 'required|integer',
             'genders_id'         => 'required|integer',
             'nationality_id'         => 'required|integer',

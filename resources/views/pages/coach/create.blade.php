@@ -70,6 +70,37 @@
                             </div>
 
 
+{{--###--}}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>height :</label>
+                                    <input  type="number" name="height" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>weight :</label>
+                                    <input  type="number" name="weight" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>postal_code :</label>
+                                    <input  type="text" name="postal_code" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="gender">Status : <span class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="coach_status">
+                                        <option selected disabled>{{trans('coach_trans.Choose')}}...</option>
+                                        <option  value="1">Active</option>
+                                        <option  value="0">In Active</option>
+                                    </select>
+                                </div>
+                            </div>
+
+{{--####--}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('coach_trans.subscription_number')}} :</label>
@@ -196,7 +227,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="academic_year">{{trans('product_trans.Attachments')}} : <span class="text-danger">*</span></label>
-                                <input type="file" accept="image/*" name="image">
+                                <input type="file" accept="image/*" name="image_path">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -225,7 +256,12 @@
                             </div>
                         </div>
 
-
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Instagram :</label>
+                                <input  type="url" name="link_Instagram" class="form-control" >
+                            </div>
+                        </div>
                         <div class="row">
 
 

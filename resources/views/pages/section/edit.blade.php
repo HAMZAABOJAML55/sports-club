@@ -30,9 +30,10 @@
                                 <div class="form-group">
                                     <label>{{trans('section_trans.name_ar')}} : <span
                                             class="text-danger">*</span></label>
-                                    <input value="{{$section->id}}" type="text" name="name_ar" class="form-control">
+                                    <input value="{{$section->getTranslation('name','ar')}}" type="text" name="name_ar" class="form-control">
                                 </div>
                             </div>
+                            <input value="{{$section->id}}" type="hidden" name="id">
 
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -63,6 +64,12 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="academic_year">{{trans('section_trans.Attachments')}} : <span class="text-danger">*</span></label>
+                                    <input type="file" accept="image/*" name="image_path">
+                                </div>
+                            </div>
 
                         <div class="row">
 

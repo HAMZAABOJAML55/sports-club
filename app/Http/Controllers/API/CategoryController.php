@@ -44,7 +44,7 @@ class CategoryController extends Controller
             $category->save();
 
             if ($request->hasfile('image_path')) {
-                $category_image = $this->saveImage($request->image_path, 'attachments/categorys/' . $category->id);
+                $category_image = $this->saveImage($request->image_path, 'attachments/categorys/' .Auth::user()->club_id.'/'. $category->id);
                 $category->image_path = $category_image;
                 $category->save();
             }
@@ -111,7 +111,7 @@ class CategoryController extends Controller
 
             if ($request->hasfile('image_path')) {
                 $this->deleteFile('categorys',$request->id);
-                $category_image = $this->saveImage($request->image_path, 'attachments/categorys/' . $category->id);
+                $category_image = $this->saveImage($request->image_path, 'attachments/categorys/'.Auth::user()->club_id.'/' . $category->id);
                 $category->image_path = $category_image;
                 $category->save();
             }

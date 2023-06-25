@@ -34,8 +34,6 @@ class StoreTournamentRequest extends FormRequest
             'prize_type_id'    =>'required|integer',
             'championship_levels_id'    =>'required|integer',
             'tournament_type_id'    =>'required|integer',
-            'coach_id'    =>'integer',
-            'player_id'    =>'integer',
             'the_winner'    =>'string',
         ];
     }

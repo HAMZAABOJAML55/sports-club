@@ -45,7 +45,7 @@ use imageTrait;
         $sections->department_address = $request->department_address;
         $sections->save();
         if ($request->hasfile('image_path')) {
-            $section_image = $this->saveImage($request->image_path, 'attachments/sections/' . $sections->id);
+            $section_image = $this->saveImage($request->image_path, 'attachments/sections/'.Auth::user()->club_id.'/'. $sections->id);
             $sections->image_path = $section_image;
             $sections->save();
         }
@@ -108,7 +108,7 @@ use imageTrait;
                 $sections->save();
                 if ($request->hasfile('image_path')) {
                     $this->deleteFile('sections',$request->id);
-                    $section_image = $this->saveImage($request->image_path, 'attachments/sections/' . $sections->id);
+                    $section_image = $this->saveImage($request->image_path, 'attachments/sections/' .Auth::user()->club_id.'/'. $sections->id);
                     $sections->image_path = $section_image;
                     $sections->save();
                 }

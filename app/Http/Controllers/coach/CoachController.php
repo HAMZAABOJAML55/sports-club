@@ -12,6 +12,7 @@ use App\Models\Natinality;
 use App\Models\Prof;
 use App\Models\Sub_Location;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class CoachController extends Controller
@@ -19,7 +20,7 @@ class CoachController extends Controller
 
     public function index()
     {
-        $coachs=Coach::all();
+        $coachs=Coach::where('club_id',Auth::user()->club_id)->get();
         return view('pages.coach.index', compact('coachs'));
 
     }
@@ -42,6 +43,7 @@ class CoachController extends Controller
     {
         try {
             $coach = new Coach();
+            $coach->club_id = Auth::user()->club_id;
             $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $coach->user_name = $request->user_name;
             $coach->phone = $request->phone;
@@ -63,10 +65,18 @@ class CoachController extends Controller
             $coach->coach_description = $request->coach_description;
             $coach->nationality_id = $request->nationality_id;
             $coach->genders_id = $request->genders_id;
+
+            $coach->height = $request->height;#
+            $coach->weight = $request->weight;#
+            $coach->postal_code = $request->postal_code;#
+            $coach->link_Instagram = $request->link_Instagram;#
+            $coach->coach_status = $request->coach_status;#
             $coach->save();
-            $coach_image = $this->saveImage($request->image,'attachments/coachs/'.$coach->id);
-            $coach->image_path = $coach_image;
-            $coach->save();
+            if ($request->hasfile('image_path')) {
+                $coach_image = $this->saveImage($request->image_path, 'attachments/coachs/' .Auth::user()->club_id.'/'. $coach->id);
+                $coach->image_path = $coach_image;
+                $coach->save();
+            }
             session()->flash('Add', trans('notifi.add'));
             return redirect()->route('coach.index');
         } catch (\Exception $e) {
@@ -83,7 +93,7 @@ class CoachController extends Controller
 
     public function edit($id)
     {
-        $coach=Coach::findorfail($id);
+        $coach=Coach::where('club_id',Auth::user()->club_id)->find($id);
         $nationals=Natinality::all();
         $Genders=Gender::all();
         $locations=Location::all();
@@ -97,7 +107,7 @@ class CoachController extends Controller
     {
         try {
 //            return $request->id;
-            $coach =Coach::findorfail($request->id);
+            $coach =Coach::where('club_id',Auth::user()->club_id)->find($request->id);
             $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $coach->user_name = $request->user_name;
             $coach->phone = $request->phone;
@@ -119,7 +129,18 @@ class CoachController extends Controller
             $coach->coach_description = $request->coach_description;
             $coach->nationality_id = $request->nationality_id;
             $coach->genders_id = $request->genders_id;
+            $coach->height = $request->height;#
+            $coach->weight = $request->weight;#
+            $coach->postal_code = $request->postal_code;#
+            $coach->link_Instagram = $request->link_Instagram;#
+            $coach->coach_status = $request->coach_status;#
             $coach->save();
+            if ($request->hasfile('image_path')) {
+                $this->deleteFile('coachs',$request->id);
+                $coach_image = $this->saveImage($request->image_path, 'attachments/coachs/' .Auth::user()->club_id.'/'. $coach->id);
+                $coach->image_path = $coach_image;
+                $coach->save();
+            }
             session()->flash('update', trans('notifi.update'));
             return redirect()->route('coach.index');
         } catch (\Exception $e) {

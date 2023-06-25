@@ -53,7 +53,6 @@ Route::group(['middleware' => ['api', 'auth:api'], 'prefix' => 'v1'], function (
     Route::get('userProfile/admin', 'App\Http\Controllers\API\AuthController@userProfile');
     Route::post('password/email', [ForgotPasswordController::class,'forgot'])->withoutMiddleware('auth:api');
     Route::post('password/reset', [ForgotPasswordController::class,'reset'])->withoutMiddleware('auth:api');
-
 });
 
 

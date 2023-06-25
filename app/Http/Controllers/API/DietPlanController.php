@@ -42,7 +42,7 @@ class DietPlanController extends Controller
             $DietPlan->save();
 
             if ($request->hasfile('image_path')) {
-                $DietPlan_image = $this->saveImage($request->image_path, 'attachments/DietPlans/' . $DietPlan->id);
+                $DietPlan_image = $this->saveImage($request->image_path, 'attachments/DietPlans/' .Auth::user()->club_id.'/'. $DietPlan->id);
                 $DietPlan->image_path = $DietPlan_image;
                 $DietPlan->save();
             }
@@ -108,7 +108,7 @@ class DietPlanController extends Controller
 
             if ($request->hasfile('image_path')) {
                 $this->deleteFile('DietPlans',$request->id);
-                $DietPlan_image = $this->saveImage($request->image_path, 'attachments/DietPlans/' . $DietPlan->id);
+                $DietPlan_image = $this->saveImage($request->image_path, 'attachments/DietPlans/'.Auth::user()->club_id.'/' . $DietPlan->id);
                 $DietPlan->image_path = $DietPlan_image;
                 $DietPlan->save();
             }

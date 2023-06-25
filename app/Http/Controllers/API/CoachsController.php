@@ -61,10 +61,10 @@ class CoachsController extends Controller
         $coach->postal_code = $request->postal_code;
         $coach->link_Instagram = $request->link_Instagram;
         $coach->coach_status = $request->coach_status;
+        $coach->save();
 
-            $coach->save();
             if ($request->hasfile('image_path')) {
-                $coach_image = $this->saveImage($request->image_path, 'attachments/coachs/' . $coach->id);
+                $coach_image = $this->saveImage($request->image_path, 'attachments/coachs/' .Auth::user()->club_id.'/'. $coach->id);
                 $coach->image_path = $coach_image;
                 $coach->save();
             }
@@ -133,7 +133,7 @@ class CoachsController extends Controller
             if ($request->hasfile('image_path')) {
                 $this->deleteFile('coachs',$request->id);
 
-                $coach_image = $this->saveImage($request->image_path, 'attachments/coachs/' . $coach->id);
+                $coach_image = $this->saveImage($request->image_path, 'attachments/coachs/' .Auth::user()->club_id.'/'. $coach->id);
                 $coach->image_path = $coach_image;
                 $coach->save();
             }

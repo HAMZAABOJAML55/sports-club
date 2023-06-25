@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\player;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\StorePlayerRequest;
+use App\Http\Traits\imageTrait;
 use App\Models\Coach;
 use App\Models\Gender;
 use App\Models\Location;
@@ -12,14 +13,15 @@ use App\Models\Prof;
 use App\Models\Sub_Location;
 use App\Models\Subtype;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class PlayerController extends Controller
 {
-
+use imageTrait;
     public function index()
     {
-        $players=Player::all();
+        $players=Player::where('club_id',Auth::user()->club_id)->get();
         return view('pages.player.index', compact('players'));
     }
 
@@ -33,7 +35,7 @@ class PlayerController extends Controller
         $players=player::all();
         $subtypes=Subtype::all();
         $profs_degrees=Prof::all();
-        $coachs=Coach::all();
+        $coachs=Coach::where('club_id',Auth::user()->club_id)->get();
         return view('pages.player.create', compact('coachs','nationals','Genders','locations','sub_locations','players', 'subtypes' ,'profs_degrees' ));
     }
 
@@ -41,8 +43,8 @@ class PlayerController extends Controller
     public function store(StorePlayerRequest $request)
     {
         try {
-
             $player = new Player();
+            $player->club_id = Auth::user()->club_id;
             $player->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $player->user_name = $request->user_name;
             $player->phone = $request->phone;
@@ -68,7 +70,16 @@ class PlayerController extends Controller
             $player->player_description = $request->player_description;
             $player->nationality_id = $request->nationality_id;
             $player->genders_id = $request->genders_id;
+
+            $player->player_status = $request->player_status;
+
             $player->save();
+
+            if ($request->hasfile('image_path')) {
+                $player_image = $this->saveImage($request->image_path, 'attachments/players/' .Auth::user()->club_id.'/'. $player->id);
+                $player->image_path = $player_image;
+                $player->save();
+            }
             session()->flash('Add', trans('notifi.add'));
             return redirect()->route('player.index');
         } catch (\Exception $e) {
@@ -86,14 +97,14 @@ class PlayerController extends Controller
 
     public function edit($id)
     {
-        $player=Player::findorfail($id);
+        $player=Player::where('club_id',Auth::user()->club_id)->find($id);
         $nationals=Natinality::all();
         $Genders=Gender::all();
         $locations=Location::all();
         $sub_locations=Sub_Location::all();
         $profs_degrees=Prof::all();
         $subtypes =Subtype::all();
-        $coachs  =Coach::all();
+        $coachs  =Coach::where('club_id',Auth::user()->club_id)->get();
         return view('pages.player.edit', compact('coachs','subtypes','player','profs_degrees','nationals','Genders','locations','sub_locations'));
 
     }
@@ -102,8 +113,7 @@ class PlayerController extends Controller
     public function update(Request $request, $id)
     {
         try {
-//            return $request->id;
-            $player = Player::findorfail($request->id);
+            $player = Player::where('club_id',Auth::user()->club_id)->find($request->id);
             $player->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $player->user_name = $request->user_name;
             $player->phone = $request->phone;
@@ -129,7 +139,14 @@ class PlayerController extends Controller
             $player->player_description = $request->player_description;
             $player->nationality_id = $request->nationality_id;
             $player->genders_id = $request->genders_id;
+            $player->player_status = $request->player_status;
             $player->save();
+            if ($request->hasfile('image_path')) {
+                $this->deleteFile('players',$request->id);
+                $player_image = $this->saveImage($request->image_path, 'attachments/players/' .Auth::user()->club_id.'/'. $player->id);
+                $player->image_path = $player_image;
+                $player->save();
+            }
             session()->flash('update', trans('notifi.update'));
             return redirect()->route('player.index');
         } catch (\Exception $e) {
@@ -140,9 +157,8 @@ class PlayerController extends Controller
 
     public function destroy(Request $request)
     {
-
-
         try {
+            $this->deleteFile('players',$request->id);
             Player::destroy($request->id);
             session()->flash('delete', trans('notifi.delete'));
             return redirect()->route('player.index');

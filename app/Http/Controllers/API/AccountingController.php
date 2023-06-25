@@ -65,7 +65,7 @@ use imageTrait;
             $accounting->deposit = $request->deposit;
             $accounting->save();
             if ($request->hasfile('image_path')) {
-                $_image = $this->saveImage($request->image_path, 'attachments/accountings/' . $accounting->id);
+                $_image = $this->saveImage($request->image_path, 'attachments/accountings/'.Auth::user()->club_id.'/'. $accounting->id);
                 $accounting->image_path = $_image;
                 $accounting->save();
             }
@@ -149,7 +149,7 @@ use imageTrait;
             $accounting->save();
             if ($request->hasfile('image_path')) {
                 $this->deleteFile('accountings',$request->id);
-                $_image = $this->saveImage($request->image_path, 'attachments/accountings/' . $accounting->id);
+                $_image = $this->saveImage($request->image_path, 'attachments/accountings/' .Auth::user()->club_id.'/'. $accounting->id);
                 $accounting->image_path = $_image;
                 $accounting->save();
             }

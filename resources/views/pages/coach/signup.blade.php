@@ -222,7 +222,7 @@ preloader -->
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="academic_year">Image : <span class="text-danger">*</span></label>
-                            <input type="file" accept="image/*" name="image">
+                            <input type="file" accept="image/*" name="image_path">
                         </div>
                     </div>
                     <div class="col-md-6">

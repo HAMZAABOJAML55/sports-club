@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\section;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\imageTrait;
 use App\Models\Image;
 use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SectionController extends Controller
 {
+    use imageTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +20,7 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $sections = Section::all();
+        $sections = Section::where('club_id',Auth::user()->club_id)->get();
         return view('pages.section.index', compact('sections'));
 
     }
@@ -29,8 +33,7 @@ class SectionController extends Controller
     public function create()
     {
 
-        $sections = Section::all();
-        return view('pages.section.create', compact('sections'));
+        return view('pages.section.create');
     }
 
     /**
@@ -45,26 +48,17 @@ class SectionController extends Controller
         DB::beginTransaction();
 
         try {
-
             $sections = new Section();
+            $sections->club_id = Auth::user()->club_id;
             $sections->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $sections->number = $request->number;
             $sections->section_description = $request->section_description;
             $sections->department_address = $request->department_address;
             $sections->save();
-            // insert img
-            if ($request->hasfile('photos')) {
-                foreach ($request->file('photos') as $file) {
-                    $name = $file->getClientOriginalName();
-                    $file->storeAs('attachments/section/' . $sections->name, $file->getClientOriginalName(), 'upload_attachments');
-
-                    // insert in image_table
-                    $images = new Image();
-                    $images->file_name = $name;
-                    $images->imageable_id = $sections->id;
-                    $images->imageable_type = 'App\Models\Section';
-                    $images->save();
-                }
+            if ($request->hasfile('image_path')) {
+                $section_image = $this->saveImage($request->image_path, 'attachments/sections/'.Auth::user()->club_id.'/'.$sections->id);
+                $sections->image_path = $section_image;
+                $sections->save();
             }
 //هنا النهاية للكود بتاعي
             DB::commit();  // insert data
@@ -92,7 +86,7 @@ class SectionController extends Controller
 
     public function edit($id)
     {
-        $section=Section::findorfail($id);
+        $section=Section::where('club_id',Auth::user()->club_id)->find($id);
         return view('pages.section.edit', compact('section'));
     }
 
@@ -106,12 +100,19 @@ class SectionController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $sections = new Section();
+//            return $request;
+            $sections = Section::where('club_id',Auth::user()->club_id)->find($request->id);
             $sections->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $sections->number = $request->number;
             $sections->section_description = $request->section_description;
             $sections->department_address = $request->department_address;
             $sections->save();
+            if ($request->hasfile('image_path')) {
+                $this->deleteFile('sections',$request->id);
+                $section_image = $this->saveImage($request->image_path, 'attachments/sections/'.Auth::user()->club_id.'/'.$sections->id);
+                $sections->image_path = $section_image;
+                $sections->save();
+            }
             session()->flash('update', trans('notifi.update'));
             return redirect()->route('section.index');
         } catch (\Exception $e) {
@@ -128,6 +129,7 @@ class SectionController extends Controller
     public function destroy(Request $request ,$id)
     {
         try {
+            $this->deleteFile('sections',$request->id);
             Section::destroy($request->id);
             session()->flash('delete', trans('notifi.delete'));
             return redirect()->route('section.index');

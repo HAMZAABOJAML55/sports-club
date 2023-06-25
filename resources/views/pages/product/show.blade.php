@@ -58,7 +58,7 @@
                                         @foreach($img as $i)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td><img width="180px" height="180px" class="rounded avatar-lg" src="{{(! empty($i->imageable_id)) ? asset('/attachments/product/'.$i->imageable->name.'/'.$i->file_name) : asset('backend/assets/images/users/no_image.jpg') }}"  alt="not loading image"></td>
+                                                <td><img width="180px" height="180px" class="rounded avatar-lg" src="{{(! empty($i->imageable_id)) ? asset('/attachments/product/'.$i->imageable->id.'/'.$i->file_name) : asset('backend/assets/images/users/no_image.jpg') }}"  alt="not loading image"></td>
                                                 <td>
 {{--                                                    <a class="dropdown-item" href="{{route('image.edit',$i->id)}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;{{trans('product_trans.edit')}}</a>--}}
                                                     <a class="dropdown-item" data-target="#Delete_img{{ $i->id }}" data-toggle="modal" href="#Delete_img{{ $i->id }}"><i style="color: red" class="fa fa-trash"></i>&nbsp;{{trans('category_trans.delete')}}</a>
