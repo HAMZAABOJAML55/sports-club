@@ -15,6 +15,7 @@
         "mcamara/laravel-localization": "^1.8",
         "spatie/laravel-permission": "^5.10",
         "spatie/laravel-translatable": "^4.6",
+        "srmklive/paypal": "~1.0",
         "tymon/jwt-auth": "^1.0@dev"
     },
     "require-dev": {

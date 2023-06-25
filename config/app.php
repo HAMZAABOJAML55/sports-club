@@ -198,6 +198,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 //        App\Providers\RepoServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class
     ],
 
     /*
@@ -254,6 +255,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'PayPal' => Srmklive\PayPal\Facades\PayPal::class
+
     ],
 
 ];

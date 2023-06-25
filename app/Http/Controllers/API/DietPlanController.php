@@ -19,7 +19,6 @@ class DietPlanController extends Controller
     use imageTrait;
     public function index()
     {
-
         $DietPlan =Diet_Plan::where('club_id',Auth::user()->club_id)->get();
         return response()->json($DietPlan);
     }

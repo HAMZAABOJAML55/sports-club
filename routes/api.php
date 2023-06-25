@@ -13,6 +13,7 @@ use App\Http\Controllers\API\GenderController;
 use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\NationalityController;
 use App\Http\Controllers\API\NotificationController;
+use App\Http\Controllers\API\PaypalController;
 use App\Http\Controllers\API\PlayersController;
 use App\Http\Controllers\API\PrizesController;
 use App\Http\Controllers\API\ProfController;
@@ -156,16 +157,22 @@ Route::group(['middleware' => ['api','auth:api'],'prefix'=>'v1' ,'namspace'=>'AP
     Route::get('notifications/{notification}', [NotificationController::class, 'show']);
 
 
-    Route::get('DietPlan',[DietPlanController::class ,'index'])->withoutMiddleware('auth:api');;
+    Route::get('/payment', [PaypalController::class, 'payment'])->name('payment')->withoutMiddleware('auth:api');
+    Route::get('/cancel', [PaypalController::class, 'cancel'])->name('cancel')->withoutMiddleware('auth:api');
+    Route::get('/payment/success', [PaypalController::class, 'success'])->withoutMiddleware('auth:api')->name('payment.success');
+
+
+
+    Route::get('DietPlan',[DietPlanController::class ,'index']);
     Route::post('DietPlan/add',[DietPlanController::class ,'store']);
     Route::post('DietPlan/update',[DietPlanController::class ,'update']);
-    Route::get('DietPlan/show',[DietPlanController::class ,'show'])->withoutMiddleware('auth:api');;
+    Route::get('DietPlan/show',[DietPlanController::class ,'show']);
     Route::delete('DietPlan/delete',[DietPlanController::class ,'destroy']);
 
-    Route::get('Category',[CategoryController::class ,'index'])->withoutMiddleware('auth:api');;
+    Route::get('Category',[CategoryController::class ,'index']);
     Route::post('Category/add',[CategoryController::class ,'store']);
     Route::post('Category/update',[CategoryController::class ,'update']);
-    Route::get('Category/show',[CategoryController::class ,'show'])->withoutMiddleware('auth:api');;
+    Route::get('Category/show',[CategoryController::class ,'show'])->withoutMiddleware('auth:api');
     Route::delete('Category/delete',[CategoryController::class ,'destroy']);
 }
 
