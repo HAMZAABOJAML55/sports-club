@@ -35,6 +35,9 @@ return [
     'postal_code' => 'الرمز البريدي',
     'salary_month '=> 'الراتب الشهري',
     'total'=> 'المجموع',
+    'Deleted_tilte' => 'هل تريد الحذف',
+    'Deleted_Student '=> 'هل انت متأكد من الحذف',
+    'Close'=> 'اغلاق',
     'subtypes' => 'انواع الاشتراك',
 
 

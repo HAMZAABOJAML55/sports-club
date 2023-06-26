@@ -56,13 +56,24 @@
                                         <input  type="password" value="{{$employees->password}}" name="password" class="form-control" >
                                     </div>
                                 </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>{{trans('employee_trans.number')}} : <span class="text-danger">*</span></label>
-                                    <input  class="form-control" value="{{$employees->number}}" name="number" type="number" >
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="gender">Status : <span class="text-danger">*</span></label>
+                                        <select class="custom-select mr-sm-2" name="emp_status">
+                                            <option selected disabled>{{trans('coach_trans.Choose')}}...</option>
+                                            <option  value="1">Active</option>
+                                            <option  value="0">In Active</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{trans('employee_trans.national_id')}} : <span class="text-danger">*</span></label>
+                                        <input  class="form-control" value="{{$employees->national_id}}" name="national_id" type="number" >
+                                    </div>
+                                </div>
+
 
                             <div class="col-md-6">
                                 <div class="form-group">

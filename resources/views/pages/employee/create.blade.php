@@ -2,13 +2,13 @@
 @section('css')
 
     @section('title')
-        {{trans('main_sidebar.employee')}}
+        {{trans('main_sidebar.employees')}}
     @stop
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
     @section('PageTitle')
-        {{trans('main_sidebar.add_employee')}}
+        {{trans('main_sidebar.add_employees')}}
     @stop
     <!-- breadcrumb -->
 @endsection
@@ -55,10 +55,21 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="gender">Status : <span class="text-danger">*</span></label>
+                                        <select class="custom-select mr-sm-2" name="emp_status">
+                                            <option selected disabled>{{trans('coach_trans.Choose')}}...</option>
+                                            <option  value="1">Active</option>
+                                            <option  value="0">In Active</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>{{trans('employee_trans.number')}} : <span class="text-danger">*</span></label>
-                                    <input  class="form-control" name="number" type="number" >
+                                    <label>{{trans('employee_trans.national_id')}} : <span class="text-danger">*</span></label>
+                                    <input  class="form-control" name="national_id" type="number" >
                                 </div>
                             </div>
 
@@ -74,7 +85,7 @@
                                     <div class="form-group">
                                         <label for="gender">{{trans('employee_trans.section')}} : <span class="text-danger">*</span></label>
                                         <select class="custom-select mr-sm-2" name="section_id">
-                                            <option selected disabled>{{trans('employee_trans.Choose')}}...</option>
+                                            <option selected disabled>{{trans('coach_trans.Choose')}}...</option>
                                             @foreach($sections as $G)
                                                 <option  value="{{ $G->id }}">{{ $G->name }}</option>
                                             @endforeach

@@ -67,7 +67,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>{{trans('coach_trans.start_time')}}:</label>
-                                    <input class="form-control" type="text"  id="datepicker-action" value="{{$food->start_time}}" name="start_time" data-date-format="yyyy-mm-dd">
+                                    <input class="form-control" type="text"  id="datepicker-bottom-right" value="{{$food->start_time}}" name="start_time" data-date-format="yyyy-mm-dd">
                                 </div>
                             </div>
 
@@ -97,7 +97,12 @@
 
                             <div class="row">
 
-
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="academic_year">{{trans('product_trans.Attachments')}} : <span class="text-danger">*</span></label>
+                                        <input type="file" accept="image/*" name="image_path">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

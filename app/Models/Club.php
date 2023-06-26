@@ -92,7 +92,7 @@ class Club extends Authenticatable implements JWTSubject
 
     public function Training()
     {
-        return $this->hasMany(Trainee::class, 'club_id');
+        return $this->hasMany(Training::class, 'club_id');
     }
 
     public function subscribes()

@@ -51,7 +51,13 @@
                                 </div>
                             </div>
 
-
+{{--                            <div class="col-md-6">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label>{{trans('team_trans.team_member')}} : <span--}}
+{{--                                            class="text-danger">*</span></label>--}}
+{{--                                    <input class="form-control" name="team_member" type="number">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('team_trans.number')}} :</label>
@@ -65,7 +71,7 @@
                                 <div class="form-group">
                                     <label for="coachs">{{trans('team_trans.coachs')}} : <span
                                             class="text-danger">*</span></label>
-                                    <select class="custom-select mr-sm-2" name="coach_id">
+                                    <select multiple class="custom-select mr-sm-2" name="coach_id[]">
                                         <option selected disabled>{{trans('team_trans.Choose')}}...</option>
                                         @foreach($coachs as $p)
                                             <option value="{{ $p->id }}">{{ $p->name }}</option>
@@ -79,7 +85,7 @@
                                 <div class="form-group">
                                     <label for="players">{{trans('team_trans.players')}} : <span
                                             class="text-danger">*</span></label>
-                                    <select class="custom-select mr-sm-2" name="player_id">
+                                    <select multiple class="custom-select mr-sm-2" name="player_id[]">
                                         <option selected disabled>{{trans('team_trans.Choose')}}...</option>
                                         @foreach($players as $p)
                                             <option value="{{ $p->id }}">{{ $p->name }}</option>

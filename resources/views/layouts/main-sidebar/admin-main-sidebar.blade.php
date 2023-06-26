@@ -167,7 +167,7 @@
 
         <!-- Settings-->
         <li>
-            <a href="#"><i class="fas fa-cogs"></i><span class="right-nav-text">{{trans('main_sidebar.setting')}} </span></a>
+            <a href="{{route('setting.club')}}"><i class="fas fa-cogs"></i><span class="right-nav-text">{{trans('main_sidebar.setting')}} </span></a>
         </li>
 
 

@@ -26,6 +26,11 @@ return [
     'add_food_system'=> 'Add food system',
     'add_section'=> 'Add section',
     'add_accounting' => 'Add accounting',
+    'food' => 'Diet System',
+    'add_subscribe' => 'Add Subscribe',
+    'add_employee' => 'Add Employees',
+    'add_food' => 'Add Food',
+
 
 
 

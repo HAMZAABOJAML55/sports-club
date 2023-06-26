@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\coach\dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Trainee;
+use App\Models\Training;
 use App\Models\TrainingGroup;
 use Illuminate\Http\Request;
 
@@ -16,7 +16,7 @@ class TrainingController extends Controller
      */
     public function index()
     {
-        $trainings =Trainee::all();
+        $trainings =Training::all();
         return view('pages.coach.dashboard.training.index' , compact('trainings'));
 
     }
@@ -43,7 +43,7 @@ class TrainingController extends Controller
 
         try {
 
-            $training_groupsroup = new Trainee();
+            $training_groupsroup = new Training();
             $training_groupsroup->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $training_groupsroup->link_website = $request->link_website;
             $training_groupsroup->training_group_id = $request->training_group_id;
@@ -79,7 +79,7 @@ class TrainingController extends Controller
      */
     public function edit($id)
     {
-        $trainings=Trainee::findorfail($id);
+        $trainings=Training::findorfail($id);
         $training_group = TrainingGroup::all();
         return view('pages.coach.dashboard.training.edit', compact('trainings' , 'training_group'));
     }
@@ -95,7 +95,7 @@ class TrainingController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $training_groupsroup=Trainee::findorfail($request->id);
+            $training_groupsroup=Training::findorfail($request->id);
             $training_groupsroup->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $training_groupsroup->link_website = $request->link_website;
             $training_groupsroup->training_group_id = $request->training_group_id;
@@ -121,7 +121,7 @@ class TrainingController extends Controller
     public function destroy(Request $request ,$id)
     {
         try {
-            Trainee::destroy($request->id);
+            Training::destroy($request->id);
             session()->flash('delete', trans('notifi.delete'));
             return redirect()->route('coach.training.index','test');
         } catch (\Exception $e) {

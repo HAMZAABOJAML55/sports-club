@@ -10,13 +10,14 @@ use App\Models\Tournament;
 use App\Models\TournamentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TournamentController extends Controller
 {
 
     public function index()
     {
-        $tournaments=Tournament::all();
+        $tournaments=Tournament::where('club_id',Auth::user()->club_id)->get();
         return view('pages.tournament.index',compact('tournaments'));
 
     }
@@ -25,14 +26,15 @@ class TournamentController extends Controller
     {
         $tournament_types=TournamentType::all();
         $prizes=Prize::all();
-        $coachs=Coach::all();
-        $players=Player::all();
+        $coachs=Coach::where('club_id',Auth::user()->club_id)->get();
+        $players=Player::where('club_id',Auth::user()->club_id)->get();
         $championship_levels=ChampionshipLevel::all();
         return view('pages.tournament.create', compact('players','coachs','tournament_types','prizes','championship_levels'));
     }
 
     public function store(Request $request)
     {
+        DB::beginTransaction();
         try {
 //            return $request;
             $tournament = new Tournament();
@@ -46,11 +48,15 @@ class TournamentController extends Controller
             $tournament->prize_type_id = $request->prize_type_id;
             $tournament->championship_levels_id = $request->championship_levels_id;
             $tournament->save();
-            $tournament->player()->attach($request->player_id);
-            $tournament->coach()->attach($request->coach_id);
+            $tournament->player()->syncWithoutDetaching($request->player_id);
+            $tournament->coach()->syncWithoutDetaching($request->coach_id);
+            DB::commit();  // insert data
+
             session()->flash('Add', trans('notifi.add'));
             return redirect()->route('tournament.index');
         } catch (\Exception $e) {
+            //            وهنا يعمل رجوع عن الحفظ
+            DB::rollback();
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -71,19 +77,20 @@ class TournamentController extends Controller
     {
         $tournament_types=TournamentType::all();
         $prizes=Prize::all();
-        $coachs=Coach::all();
-        $players=Player::all();
+        $coachs=Coach::where('club_id',Auth::user()->club_id)->get();
+        $players=Player::where('club_id',Auth::user()->club_id)->get();
         $championship_levels=ChampionshipLevel::all();
-        $tournaments=Tournament::findorfail($id);
+        $tournaments=Tournament::where('club_id',Auth::user()->club_id)->find($id);
         return view('pages.tournament.edit', compact('players','coachs','prizes','tournament_types','tournaments','championship_levels'));
     }
 
 
     public function update(Request $request)
     {
+        DB::beginTransaction();
         try {
 //            $validated = $request->validated();
-            $tournament = Tournament::findOrFail($request->id);
+            $tournament = Tournament::where('club_id',Auth::user()->club_id)->find($request->id);
             $tournament->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $tournament->description = $request->description;
             $tournament->number = $request->number;
@@ -92,24 +99,24 @@ class TournamentController extends Controller
             $tournament->tournament_type_id = $request->tournament_type_id;
             $tournament->prize_type_id = $request->prize_type_id;
             $tournament->championship_levels_id = $request->championship_levels_id;
-
+            $tournament->save();
             //important to update player
             if(isset($request->player_id)) {
                 $tournament->player()->sync($request->player_id);
-            } else {
-                $tournament->player()->sync(array());
             }
 
             //important to update coach
             if(isset($request->coach_id)) {
                 $tournament->coach()->sync($request->coach_id);
-            } else {
-                $tournament->coach()->sync(array());
             }
-            $tournament->save();
+
+            DB::commit();  // insert data
+
             session()->flash('update', trans('update.add'));
             return redirect()->route('tournament.index');
         } catch (\Exception $e) {
+            //            وهنا يعمل رجوع عن الحفظ
+            DB::rollback();
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -117,11 +124,19 @@ class TournamentController extends Controller
 
     public function destroy(Request $request)
     {
+        DB::beginTransaction();
         try {
-            Tournament::destroy($request->id);
+            $tournament = Tournament::where('club_id',Auth::user()->club_id)->find($request->id);
+            $tournament->coach()->detach();
+            $tournament->player()->detach();
+            $tournament->delete();
+            DB::commit();  // insert data
+
             session()->flash('delete', trans('notifi.delete'));
             return redirect()->route('tournament.index');
         } catch (\Exception $e) {
+            //            وهنا يعمل رجوع عن الحفظ
+            DB::rollback();
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }

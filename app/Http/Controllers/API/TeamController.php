@@ -67,11 +67,11 @@ class TeamController extends Controller
             //important to update player
             if(isset($request->player_id)) {
 //            dd("hgyhg");
-                $team->player()->attach($request->player_id);
+                $team->player()->syncWithoutDetaching($request->player_id);
             }
             //important to update coach
             if(isset($request->coach_id)) {
-                $team->coach()->attach($request->coach_id);
+                $team->coach()->syncWithoutDetaching($request->coach_id);
             }
 
 
@@ -133,14 +133,12 @@ class TeamController extends Controller
             if(isset($request->player_id)) {
                 $team->player()->sync($request->player_id);
             } else {
-                $team->player()->sync(array());
+                $team->player()->syncWithoutDetaching(array());
             }
 
             //important to update coach
             if(isset($request->coach_id)) {
-                $team->coach()->sync($request->coach_id);
-            } else {
-                $team->coach()->sync(array());
+                $team->coach()->syncWithoutDetaching($request->coach_id);
             }
             $team->save();
             if ($request->hasfile('image_path')) {

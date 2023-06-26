@@ -61,61 +61,25 @@
                                 </div>
                             </div>
 
-
-                            {{--                            <div class="col-md-3">--}}
-                            {{--                                <div class="form-group">--}}
-                            {{--                                    <label for="coachs">{{trans('team_trans.coach')}} : <span--}}
-                            {{--                                            class="text-danger">*</span></label>--}}
-                            {{--                                    <select class="custom-select mr-sm-2" name="coach_id">--}}
-                            {{--                                        <option selected disabled>{{trans('team_trans.Choose')}}...</option>--}}
-                            {{--                                        @foreach($coachs as $p)--}}
-                            {{--                                            <option value="{{ $p->id }}" {{$p->id == $teams->coach_id ? 'selected' : ""}}>{{ $p->name }}</option>--}}
-                            {{--                                        @endforeach--}}
-                            {{--                                    </select>--}}
-                            {{--                                </div>--}}
-                            {{--                            </div>--}}
-
-
-
-
-                            {{--                            <div class="col-md-3">--}}
-                            {{--                                <div class="form-group">--}}
-                            {{--                                    <label for="players">{{trans('team_trans.players')}} : <span--}}
-                            {{--                                            class="text-danger">*</span></label>--}}
-                            {{--                                    <select class="custom-select mr-sm-2" name="player_id">--}}
-                            {{--                                        <option selected disabled>{{trans('team_trans.Choose')}}...</option>--}}
-                            {{--                                        @foreach($players as $p)--}}
-                            {{--                                            <option value="{{ $p->id }}" {{$p->id == $teams->player_id ? 'selected' : ""}}>{{ $p->name }}</option>--}}
-                            {{--                                        @endforeach--}}
-                            {{--                                    </select>--}}
-                            {{--                                </div>--}}
-                            {{--                            </div>--}}
-
-
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect2">{{trans('team_trans.players')}} : </label>
-                                <select multiple class="form-control"  name="player_id[]"  style="overflow: auto" id="exampleFormControlSelect2">
-                                    @foreach($teams->player as $c)
-                                        <option selected disabled >{{$c->name}}</option>
-                                    @endforeach
-
-                                    @foreach($players as $p)
-                                        <option   value="{{$p->id}}">{{$p->name}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="academic_year">{{trans('product_trans.Attachments')}} : <span class="text-danger">*</span></label>
+                                    <input type="file" accept="image/*" name="image_path">
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect2">{{trans('team_trans.coach')}} : </label>
-                                <select multiple class="form-control" name="coach_id[]" style="overflow: auto" id="exampleFormControlSelect2">
-                                    @foreach($teams->coach as $c)
-                                        <option selected disabled value="{{$c->id}}">{{$c->name}}</option>
-                                    @endforeach
 
-                                    @foreach($coachs as $p)
-                                        <option value="{{$p->id}}">{{$p->name}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="trainingsystem_id">{{trans('training_trans.group_exercises')}} : <span
+                                            class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="training_group_id">
+                                        <option selected disabled>{{trans('training_trans.Choose')}}...</option>
+                                        @foreach($training_group as $p)
+                                            <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="row">
 

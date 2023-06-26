@@ -119,7 +119,7 @@
                                 <div class="form-group">
                                     <label for="coachs">{{trans('tournament_trans.coachs')}} : <span
                                             class="text-danger">*</span></label>
-                                    <select class="custom-select mr-sm-2" name="coach_id">
+                                    <select multiple class="custom-select mr-sm-2" name="coach_id[]">
                                         <option selected disabled>{{trans('tournament_trans.Choose')}}...</option>
                                         @foreach($coachs as $p)
                                             <option value="{{ $p->id }}">{{ $p->name }}</option>
@@ -133,7 +133,7 @@
                                 <div class="form-group">
                                     <label for="players">{{trans('tournament_trans.players')}} : <span
                                             class="text-danger">*</span></label>
-                                    <select class="custom-select mr-sm-2" name="player_id">
+                                    <select multiple class="custom-select mr-sm-2" name="player_id[]">
                                         <option selected disabled>{{trans('tournament_trans.Choose')}}...</option>
                                         @foreach($players as $p)
                                             <option value="{{ $p->id }}">{{ $p->name }}</option>

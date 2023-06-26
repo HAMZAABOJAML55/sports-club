@@ -86,6 +86,13 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
+                                    <label for="academic_year">{{trans('product_trans.Attachments')}} : <span class="text-danger">*</span></label>
+                                    <input type="file" accept="image/*" name="image_path">
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
                                     <label for="trainingsystem_id">{{trans('training_trans.group_exercises')}} : <span
                                             class="text-danger">*</span></label>
                                     <select class="custom-select mr-sm-2" name="training_group_id">

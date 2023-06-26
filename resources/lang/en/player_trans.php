@@ -37,7 +37,9 @@ return [
     'salary_month' => 'salary_month',
     'total'=> 'total',
     'subtypes' => ' subtypes',
-
+    'Deleted_tilte' => 'Are You Sure',
+    'Deleted_Student'=> 'Are You Sure To Delete this',
+    'Close'=> 'close',
 
 
 

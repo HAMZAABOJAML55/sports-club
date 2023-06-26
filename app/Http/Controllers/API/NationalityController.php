@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class NationalityController extends Controller
 {
-    //
+
 
     public function index()
     {
