@@ -103,7 +103,7 @@ class CoachController extends Controller
         return view('pages.coach.edit', compact('coach','profs_degrees','Employment_Types','nationals','Genders','locations','sub_locations'));
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreCoachRequest $request, $id)
     {
         try {
 //            return $request->id;

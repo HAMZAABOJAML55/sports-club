@@ -12,6 +12,7 @@ trait imageTrait
         if ($photo) {
             //save photo in folder
             $file_extension = $photo->getClientOriginalExtension();
+//            $file_extension = $photo->getClientOriginalExtension();
             $file_name = time() . '.' . $file_extension;
             $path = $folder;
             $photo->move($path, $file_name);
@@ -30,7 +31,8 @@ trait imageTrait
     {
 
         $exists = Storage::disk('upload_attachments')->exists('attachments/'.$folder.'/'.Auth::user()->club_id.'/'.$name);
-
+//       $image_path = public_path(). 'attachments/'.$folder.'/'.Auth::user()->club_id.'/'.$name;
+//        unlink($image_path);
         if($exists)
         {
             Storage::disk('upload_attachments')->deleteDirectory('attachments/'.$folder.'/'.Auth::user()->club_id.'/'.$name);

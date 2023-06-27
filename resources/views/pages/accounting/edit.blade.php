@@ -54,7 +54,18 @@
                                     <input type="number" value="{{$accountings->number}}" name="number" class="form-control">
                                 </div>
                             </div>
-
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="coachs">{{trans('accounting_trans.employee')}} : <span
+                                            class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="employee_id">
+                                        <option selected disabled>{{trans('accounting_trans.Choose')}}...</option>
+                                        @foreach($employee as $p)
+                                            <option value="{{ $p->id }}"{{$p->id == $accountings->employee_id ? 'selected' : ""}}>{{ $p->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -121,7 +132,7 @@
                         </div>
 
                         <button class="btn btn-success btn-sm nextBtn btn-lg pull-right"
-                                type="submit">{{trans('accounting_trans.submit')}}</button>
+                                type="submit">{{trans('player_trans.submit')}}</button>
                     </form>
 
                 </div>

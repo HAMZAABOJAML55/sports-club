@@ -36,7 +36,7 @@ class StoreCoachRequest extends FormRequest
             'end_time'      => 'required|date',
             'user_name'         => 'required|string',
             'phone'         => 'required|string',
-            'password'         => 'required|string',
+//            'password'         => 'string',
             'subscription_number'  => 'required|integer',
             'salary'         => 'required|string',
             'genders_id'         => 'required|integer',

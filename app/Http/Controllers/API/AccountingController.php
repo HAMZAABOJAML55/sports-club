@@ -50,6 +50,17 @@ use imageTrait;
                     ], ResponseAlias::HTTP_NOT_FOUND);
                 }
             }
+            if(isset($request->employee_id)) {
+                $employee = Player::where('club_id', Auth::user()->club_id)->find($request->employee_id);
+                if (!$employee) {
+                    return response()->json([
+                        'status' => 'Error',
+                        'status_code' => ResponseAlias::HTTP_NOT_FOUND,
+                        'message' => 'employee not found',
+                        'data' => []
+                    ], ResponseAlias::HTTP_NOT_FOUND);
+                }
+            }
             $accounting = new Accounting();
             $accounting->club_id = Auth::user()->club_id;
             $accounting->number = $request->number;
@@ -60,6 +71,7 @@ use imageTrait;
             $accounting->subtype_id = $request->subtype_id;
             $accounting->player_id = $request->player_id;
             $accounting->coach_id = $request->coach_id;
+            $accounting->employee_id = $request->employee_id;
             $accounting->total_salary = $request->total_salary;
             $accounting->tax = $request->tax;
             $accounting->deposit = $request->deposit;

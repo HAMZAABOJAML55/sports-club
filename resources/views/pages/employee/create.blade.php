@@ -116,7 +116,12 @@
                                 </div>
                             </div>
 
-
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="academic_year">{{trans('product_trans.Attachments')}} : <span class="text-danger">*</span></label>
+                                    <input type="file" accept="image/*" name="image_path">
+                                </div>
+                            </div>
 
                         </div>
 
@@ -128,7 +133,7 @@
 
                         </div><br>
 
-                        <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">{{trans('employee_trans.submit')}}</button>
+                        <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">{{trans('player_trans.submit')}}</button>
                     </form>
 
                 </div>

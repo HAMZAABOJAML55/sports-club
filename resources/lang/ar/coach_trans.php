@@ -31,6 +31,7 @@ return [
     'Employment_Type'=>'نوع الوظيفة',
     'profs_degree'=>'درجة الإحتراف',
     'salary'=>'الراتب',
+    'photo'=>'الصورة',
 
 
 

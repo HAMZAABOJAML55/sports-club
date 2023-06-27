@@ -93,9 +93,9 @@ class EmployeeController extends Controller
             $employees->save();
             if ($request->hasfile('image_path')) {
                 $this->deleteFile('employees',$request->id);
-                $_image = $this->saveImage($request->image_path, 'attachments/employees/' .Auth::user()->club_id.'/'. $food->id);
-                $food->image_path = $_image;
-                $food->save();
+                $_image = $this->saveImage($request->image_path, 'attachments/employees/' .Auth::user()->club_id.'/'. $employees->id);
+                $employees->image_path = $_image;
+                $employees->save();
             }
             session()->flash('update', trans('notifi.update'));
             return redirect()->route('employee.index');

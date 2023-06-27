@@ -21,7 +21,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{trans('coach_trans.Close')}}</button>
-                        <button  class="btn btn-danger">{{trans('coach_trans.submit')}}</button>
+                        <button  class="btn btn-danger">{{trans('player_trans.submit')}}</button>
                     </div>
                 </form>
             </div>

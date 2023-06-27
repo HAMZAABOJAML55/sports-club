@@ -42,6 +42,7 @@ return [
     'players' => 'الاعبين',
     'subtype_id' => 'الفئة الفرعية',
     'Payment_trainee_id' => 'مبلغ التدريب',
+    'employee' => 'الموظف',
 
 
 

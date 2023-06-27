@@ -34,6 +34,7 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>{{trans('coach_trans.photo')}}</th>
                                         <th>{{trans('player_trans.name')}}</th>
                                         <th>{{trans('player_trans.email')}}</th>
                                         <th>{{trans('player_trans.phone')}}</th>
@@ -44,6 +45,7 @@
                                         <th>{{trans('player_trans.player_description')}}</th>
                                         <th>{{trans('player_trans.location')}}</th>
                                         <th>{{trans('player_trans.sub_location')}}</th>
+                                        <th>{{trans('employee_trans.status')}}</th>
                                         <th>{{trans('player_trans.link_website')}}</th>
                                         <th>{{trans('player_trans.link_facebook')}}</th>
                                         <th>{{trans('player_trans.link_twitter')}}</th>
@@ -63,6 +65,7 @@
                                     @foreach($players as $player)
                                         <tr>
                                             <td>{{ $loop->index+1 }}</td>
+                                            <td><img width="180px" height="180px" class="rounded avatar-lg" src="{{(! empty($player->image_path)) ? asset('/attachments/players/'.\Illuminate\Support\Facades\Auth::user()->id.'/'.$player->id.'/'.$player->image_path) : asset('backend/assets/images/users/no_image.jpg') }}"  alt="not loading image"></td>
                                             <td>{{$player->name}}</td>
                                             <td>{{$player->email}}</td>
                                             <td>{{$player->phone}}</td>
@@ -73,6 +76,14 @@
                                             <td>{{$player->player_description}}</td>
                                             <td>{{$player->location->name}}</td>
                                             <td>{{$player->sub_location->name}}</td>
+                                            <td>
+                                                @if ($player->player_status == 1)
+                                                    <span class='badge badge-success' >Active</span>
+                                                @else
+                                                    <span class='badge badge-danger'>InActive</span>
+                                                @endif
+
+                                            </td>
                                             <td>{{$player->link_website}}</td>
                                             <td>{{$player->link_facebook}}</td>
                                             <td>{{$player->link_twitter}}</td>
@@ -90,8 +101,8 @@
                                                         العمليات
                                                     </a>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" href="{{route('player.edit',$player->id)}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;  تعديل بيانات الطالب</a>
-                                                        <a class="dropdown-item" data-target="#Delete_Student{{ $player->id }}" data-toggle="modal" href="##Delete_Student{{ $player->id }}"><i style="color: red" class="fa fa-trash"></i>&nbsp;  حذف بيانات الطالب</a>
+                                                        <a class="dropdown-item" href="{{route('player.edit',$player->id)}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;Edit</a>
+                                                        <a class="dropdown-item" data-target="#Delete_Student{{ $player->id }}" data-toggle="modal" href="##Delete_Student{{ $player->id }}"><i style="color: red" class="fa fa-trash"></i>&nbsp;Delete</a>
                                                     </div>
                                                 </div>
                                             </td>

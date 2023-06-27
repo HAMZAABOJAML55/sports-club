@@ -67,8 +67,8 @@
                                                             العمليات
                                                         </a>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                            <a class="dropdown-item" href="{{route('tournament.edit',$tournament->id)}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;  تعديل بيانات الطالب</a>
-                                                            <a class="dropdown-item" data-target="#Delete_Student{{ $tournament->id }}" data-toggle="modal" href="##Delete_Student{{ $tournament->id }}"><i style="color: red" class="fa fa-trash"></i>&nbsp;  حذف بيانات الطالب</a>
+                                                            <a class="dropdown-item" href="{{route('tournament.edit',$tournament->id)}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;Edit</a>
+                                                            <a class="dropdown-item" data-target="#Delete_Student{{ $tournament->id }}" data-toggle="modal" href="##Delete_Student{{ $tournament->id }}"><i style="color: red" class="fa fa-trash"></i>&nbsp;Delete</a>
                                                         </div>
                                                     </div>
                                                 </td>

@@ -257,7 +257,7 @@ preloader -->
 
                     </div><br>
 
-                    <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">{{trans('coach_trans.submit')}}</button>
+                    <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">{{trans('player_trans.submit')}}</button>
                 </form>
 
             </div>

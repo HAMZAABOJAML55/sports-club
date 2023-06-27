@@ -60,7 +60,12 @@
                                     <div class="form-group">
                                         <label for="gender">Status : <span class="text-danger">*</span></label>
                                         <select class="custom-select mr-sm-2" name="emp_status">
-                                            <option selected disabled>{{trans('coach_trans.Choose')}}...</option>
+                                            <option selected disabled value="{{$employees->emp_status}}">
+                                                                                                         @if ($employees->emp_status == 1)
+                                                                                                             <span class='badge badge-success' >Active</span>
+                                                                                                         @else
+                                                                                                             <span class='badge badge-danger'>InActive</span>
+                                                                                                          @endif</option>
                                             <option  value="1">Active</option>
                                             <option  value="0">In Active</option>
                                         </select>
@@ -118,14 +123,19 @@
                             </div>
 
                         </div>
-
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="academic_year">{{trans('product_trans.Attachments')}} : <span class="text-danger">*</span></label>
+                                <input type="file" accept="image/*" name="image_path">
+                            </div>
+                        </div>
 
                         <div class="row">
 
 
                         </div><br>
 
-                        <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">{{trans('employee_trans.submit')}}</button>
+                        <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">{{trans('player_trans.submit')}}</button>
                     </form>
 
                 </div>

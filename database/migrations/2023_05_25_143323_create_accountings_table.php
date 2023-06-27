@@ -20,6 +20,8 @@ class CreateAccountingsTable extends Migration
             $table->string('number');
             $table->bigInteger('coach_id')->unsigned()->nullable();
             $table->foreign('coach_id')->references('id')->on('coachs');
+            $table->bigInteger('employee_id')->unsigned()->nullable();
+            $table->foreign('employee_id')->references('id')->on('employes');
             $table->bigInteger('player_id')->unsigned()->nullable();
             $table->foreign('player_id')->references('id')->on('players');
 

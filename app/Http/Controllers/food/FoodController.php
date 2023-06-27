@@ -55,12 +55,13 @@ class FoodController extends Controller
             $food->end_time = $request->end_time;
             $food->description = $request->description;
 //            $food->components_of_the_diet = $request->components_of_the_diet;
+            $food->save();
+
             if ($request->hasfile('image_path')) {
                 $_image = $this->saveImage($request->image_path, 'attachments/foods/' .Auth::user()->club_id.'/'. $food->id);
                 $food->image_path = $_image;
                 $food->save();
             }
-            $food->save();
             session()->flash('Add', trans('notifi.add'));
             return redirect()->route('food.index');
         } catch (\Exception $e) {

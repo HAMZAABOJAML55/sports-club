@@ -67,7 +67,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('coach_trans.password')}} :</label>
-                                    <input  type="password" value="{{$coach->password}}" name="password" class="form-control" >
+                                    <input  type="password"  name="password" class="form-control" >
                                 </div>
                             </div>
 
@@ -90,22 +90,24 @@
                                     <input  type="text" name="postal_code" value="{{$coach->postal_code}}" class="form-control" >
                                 </div>
                             </div>
-{{--                            <div class="col-md-6">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label>coach_status :</label>--}}
-{{--                                    <input  type="number" name="coach_status" value="{{$coach->coach_status}}" class="form-control" >--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="gender">Status : <span class="text-danger">*</span></label>
                                     <select class="custom-select mr-sm-2" name="coach_status">
-                                        <option selected disabled>{{trans('coach_trans.Choose')}}...</option>
+                                        <option selected disabled value="{{$coach->coach_status}}">
+                                            @if ($coach->coach_status == 1)
+                                                <span class='badge badge-success' >Active</span>
+                                            @else
+                                                <span class='badge badge-danger'>InActive</span>
+                                            @endif
+                                        </option>
                                         <option  value="1">Active</option>
-                                        <option  value="0">In Active</option>
+                                        <option  value="0">InActive</option>
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('coach_trans.subscription_number')}} :</label>
@@ -270,7 +272,7 @@
 
                         </div><br>
 
-                        <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">{{trans('coach_trans.submit')}}</button>
+                        <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">{{trans('player_trans.submit')}}</button>
                     </form>
 
                 </div>

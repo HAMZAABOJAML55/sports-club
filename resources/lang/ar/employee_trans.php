@@ -13,5 +13,8 @@ return [
     'full_description'=>'نبذة شاملة ',
     'emp_id'=>'الرقم الوطني ',
     'Processes'=>'العمليات',
+    'national_id'=>'الرقم القومي',
+    'status' => 'الحالة',
+
 
 ];

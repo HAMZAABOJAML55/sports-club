@@ -58,11 +58,7 @@ use GeneralTrait;
                 $Club->subscription_period = $request->subscription_period;
                 $Club->password =Hash::make($request->password);
                 $Club->save();
-                if ($request->hasFile('image_path')) {
-                    $image = $this->saveImage($request->image_path, 'images/logos/clubs/'. $Club->id);
-                    $Club->image_path = $image;
-                    $Club->save();
-                }
+
 
                 $admin=new User();
                 $admin->club_id = $Club->id;
@@ -71,6 +67,11 @@ use GeneralTrait;
                 $admin->password = $Club->password;
                 $admin->permission = 'admin';
                 $admin->save();
+                if ($request->hasfile('image_path')) {
+                    $club_image = $this->saveImage($request->image_path, 'attachments/club/' .Auth::user()->club_id);
+                    $Club->image_path = $club_image;
+                    $Club->save();
+                }
                 DB::commit();
                 $token = auth('api')->login($admin);
                 return $this->returnData('token', $token, 'Here Is Your Token');
@@ -140,6 +141,12 @@ use GeneralTrait;
                     $admin->password = $club->password;
                     $admin->permission = 'admin';
                     $admin->save();
+                    if ($request->hasfile('image_path')) {
+                        $this->deleteFile('club',$request->id);
+                        $club_image = $this->saveImage($request->image_path, 'attachments/club/' .Auth::user()->club_id);
+                        $club->image_path = $club_image;
+                        $club->save();
+                    }
                     DB::commit();
                     return $this->returnData('club', $club);
                 }

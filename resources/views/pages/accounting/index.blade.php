@@ -61,8 +61,8 @@
                                                             العمليات
                                                         </a>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                            <a class="dropdown-item" href="{{route('accounting.edit',$accounting->id)}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;  تعديل بيانات الطالب</a>
-                                                            <a class="dropdown-item" data-target="#Delete{{ $accounting->id }}" data-toggle="modal" href="#Delete{{ $accounting->id }}"><i style="color: red" class="fa fa-trash"></i>&nbsp;  حذف بيانات الطالب</a>
+                                                            <a class="dropdown-item" href="{{route('accounting.edit',$accounting->id)}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;Edit</a>
+                                                            <a class="dropdown-item" data-target="#Delete{{ $accounting->id }}" data-toggle="modal" href="#Delete{{ $accounting->id }}"><i style="color: red" class="fa fa-trash"></i>&nbsp;Delete</a>
                                                         </div>
                                                     </div>
                                                 </td>

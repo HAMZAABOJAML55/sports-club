@@ -11,9 +11,6 @@ return [
     'subscription_number' => 'subscription_number',
     'gender' => 'gender',
     'Nationality' => 'Nationality',
-    'Date_of_Birth' => 'Date_of_Birth',
-    'start_time' => 'start_time',
-    'end_time' => 'end_time',
     'coach_description' => 'coach_description',
     'link_website' => 'link_website',
     'link_facebook' => 'link_facebook',
@@ -38,8 +35,10 @@ return [
     'coachs' => 'coachs',
     'players' => 'players',
     'Payment_trainee_id' => 'Payment_trainee_id',
+    'employee' => 'Employee',
 
-
-
+    'Date_of_Birth' => 'Date Of Birth',
+    'start_time' => 'Start Time',
+    'end_time' => 'End Time',
 
 ];

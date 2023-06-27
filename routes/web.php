@@ -29,10 +29,10 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/payment1', [PaypalController::class, 'payment'])->name('payment')->withoutMiddleware('auth:api');
-Route::get('/cancel1', [PaypalController::class, 'cancel'])->name('cancel')->withoutMiddleware('auth:api');
-Route::get('/payment/success1', [PaypalController::class, 'success'])->withoutMiddleware('auth:api')->name('payment.success');
-
+//Route::get('/payment/paypal', [PaypalController::class, 'payment'])->name('payment1')->withoutMiddleware('auth:api');
+//Route::get('/cancel1', [PaypalController::class, 'cancel'])->name('cancel1')->withoutMiddleware('auth:api');
+//Route::get('/payment/success1', [PaypalController::class, 'success'])->withoutMiddleware('auth:api')->name('payment.success');
+//
 
     Route::get('/', [HomeController::class,'index'])->name('selection');
 
@@ -55,7 +55,7 @@ Route::get('/payment/success1', [PaypalController::class, 'success'])->withoutMi
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
         Route::get('setting/club', 'App\Http\Controllers\ClubController@edit')->name('setting.club');
-        Route::post('update/club', 'App\Http\Controllers\ClubController@update')->name('update.club');
+        Route::put('update/club', 'App\Http\Controllers\ClubController@update')->name('update.club');
 
     //==============================dashboard============================
 

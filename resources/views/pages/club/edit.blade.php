@@ -31,18 +31,7 @@
                                 <div class="form-group row">
                                     <label class="col-lg-2 col-form-label font-weight-semibold">Club Name<span class="text-danger">*</span></label>
                                     <div class="col-lg-9">
-                                        <input name="school_name" value="{{$club->name}}" required type="text" class="form-control" placeholder="name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="current_session" class="col-lg-2 col-form-label font-weight-semibold">العام الحالي<span class="text-danger">*</span></label>
-                                    <div class="col-lg-9">
-                                        <select data-placeholder="Choose..." required name="current_session" id="current_session" class="select-search form-control">
-                                            <option value=""></option>
-                                            @for($y=date('Y', strtotime('- 3 years')); $y<=date('Y', strtotime('+ 1 years')); $y++)
-                                                <option {{ ($setting['current_session'] == (($y-=1).'-'.($y+=1))) ? 'selected' : '' }}>{{ ($y-=1).'-'.($y+=1) }}</option>
-                                            @endfor
-                                        </select>
+                                        <input name="name" value="{{$club->name}}" required type="text" class="form-control" placeholder="name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -52,45 +41,40 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label font-weight-semibold">الهاتف</label>
+                                    <label class="col-lg-2 col-form-label font-weight-semibold">Email</label>
                                     <div class="col-lg-9">
-                                        <input name="phone" value="{{ $setting['phone'] }}" type="text" class="form-control" placeholder="Phone">
+                                        <input name="email" value="{{$club->email}}" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label font-weight-semibold">البريد الالكتروني</label>
+                                    <label class="col-lg-2 col-form-label font-weight-semibold">Password</label>
                                     <div class="col-lg-9">
-                                        <input name="school_email" value="{{ $setting['school_email'] }}" type="email" class="form-control" placeholder="School Email">
+                                        <input name="password" type="password" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label font-weight-semibold">عنوان المدرسة<span class="text-danger">*</span></label>
+                                    <label class="col-lg-2 col-form-label font-weight-semibold">Phone<span class="text-danger">*</span></label>
                                     <div class="col-lg-9">
-                                        <input required name="address" value="{{ $setting['address'] }}" type="text" class="form-control" placeholder="School Address">
+                                        <input required name="phone" value="{{$club->phone}}" type="text" class="form-control" >
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label font-weight-semibold">نهاية الترم الاول </label>
-                                    <div class="col-lg-9">
-                                        <input name="end_first_term" value="{{ $setting['end_first_term'] }}" type="text" class="form-control date-pick" placeholder="Date Term Ends">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label font-weight-semibold">نهاية الترم الثاني</label>
-                                    <div class="col-lg-9">
-                                        <input name="end_second_term" value="{{ $setting['end_second_term'] }}" type="text" class="form-control date-pick" placeholder="Date Term Ends">
+                                <br>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="academic_year">{{trans('product_trans.Attachments')}} : <span class="text-danger">*</span></label>
+                                        <input type="file" accept="image/*" name="image_path">
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label font-weight-semibold">شعار المدرسة</label>
-                                    <div class="col-lg-9">
-                                        <div class="mb-3">
-                                            <img style="width: 100px" height="100px" src="{{ URL::asset('attachments/logo/'.$setting['logo']) }}" alt="loading...">
-                                        </div>
-                                        <input name="logo" accept="image/*" type="file" class="file-input" data-show-caption="false" data-show-upload="false" data-fouc>
-                                    </div>
-                                </div>
+{{--                                <div class="form-group row">--}}
+{{--                                    <label class="col-lg-2 col-form-label font-weight-semibold">Photo</label>--}}
+{{--                                    <div class="col-lg-9">--}}
+{{--                                        <div class="mb-3">--}}
+{{--                                            <img style="width: 100px" height="100px" src="{{ URL::asset('attachments/images/logos/clubs) }}" alt="loading...">--}}
+{{--                                        </div>--}}
+{{--                                        <input name="logo" accept="image/*" type="file" class="file-input" data-show-caption="false" data-show-upload="false" data-fouc>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                             </div>
                         </div>
                         <hr>

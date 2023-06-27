@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\imageTrait;
 use App\Models\Club;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Validation\ValidationException;
 
 class ClubController extends Controller
 {
+    use imageTrait;
     /**
      * Display a listing of the resource.
      *
@@ -63,7 +65,7 @@ class ClubController extends Controller
      */
     public function edit(Club $club)
     {
-        $club=Club::where('id',Auth::user()->id)->get();
+        $club=Club::where('id',Auth::user()->club_id)->find(Auth::user()->club_id);
         return view('pages.club.edit', compact('club'));
     }
 
@@ -84,29 +86,15 @@ class ClubController extends Controller
             $id = Auth::user()->club_id;
             $club =Club::find($id);
 
-//            $admin = User::where('club_id', '=', $id)->where('permission', 'admin')->get();
-
-            $rules = [
-                "name" => "required|string",
-                "user_name" => "required|string",
-                "email" => "required|email|unique:employes,email|unique:coachs,email|unique:players,email|unique:clubs,email," . $this->id,
-                "subscribes_id" => "required|integer",
-                "subscription_period" => "required|string",
-                "password" => "required"
-            ];
-
-            $validator = Validator::make($request->all(), $rules);
-
-            if ($validator->fails()) {
-                throw new ValidationException($validator);
-            }
                 $club->name = $request->name;
                 $club->user_name = $request->user_name;
                 $club->email = $request->email;
                 $club->phone = $request->phone;
                 $club->subscribes_id = $request->subscribes_id;
                 $club->subscription_period = $request->subscription_period;
-                $club->password =Hash::make($request->password);
+                if (isset($request->password)){
+                    $club->password =Hash::make($request->password);
+                }
                 $club->save();
                 #update in table users #admin
                 $admin = User::find($club->id);
@@ -116,9 +104,16 @@ class ClubController extends Controller
                 $admin->password = $club->password;
                 $admin->permission = 'admin';
                 $admin->save();
+                #add photo
+            if ($request->hasfile('image_path')) {
+                $this->deleteFile('club',$request->id);
+                $club_image = $this->saveImage($request->image_path, 'attachments/club/' .Auth::user()->club_id);
+                $club->image_path = $club_image;
+                $club->save();
+            }
                 DB::commit();
                 session()->flash('Add', trans('notifi.add'));
-                return redirect()->route('tournament.index');
+                return redirect()->route('dashboard');
 
         } catch (\Exception $e) {
                 DB::rollback();

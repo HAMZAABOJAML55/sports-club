@@ -34,6 +34,7 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>{{trans('coach_trans.photo')}}</th>
                                         <th>{{trans('food_trans.name')}}</th>
                                         <th>{{trans('food_trans.number')}}</th>
                                         <th>{{trans('food_trans.start_time')}}</th>
@@ -50,6 +51,8 @@
                                     @foreach($foods as $food)
                                         <tr>
                                             <td>{{$loop->index+1 }}</td>
+                                            <td><img width="180px" height="180px" class="rounded avatar-lg" src="{{(! empty($food->image_path)) ? asset('/attachments/foods/'.\Illuminate\Support\Facades\Auth::user()->id.'/'.$food->id.'/'.$food->image_path) : asset('backend/assets/images/users/no_image.jpg') }}"  alt="not loading image"></td>
+
                                             <td>{{$food->name}}</td>
                                             <td>{{$food->number}}</td>
                                             <td>{{$food->start_time}}</td>
@@ -64,8 +67,8 @@
                                                         العمليات
                                                     </a>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" href="{{route('food.edit',$food->id)}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;  تعديل بيانات الطالب</a>
-                                                        <a class="dropdown-item" data-target="#Delete_Student{{ $food->id }}" data-toggle="modal" href="#Delete_Student{{ $food->id }}"><i style="color: red" class="fa fa-trash"></i>&nbsp;  حذف بيانات الطالب</a>
+                                                        <a class="dropdown-item" href="{{route('food.edit',$food->id)}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;Edit</a>
+                                                        <a class="dropdown-item" data-target="#Delete_Student{{ $food->id }}" data-toggle="modal" href="#Delete_Student{{ $food->id }}"><i style="color: red" class="fa fa-trash"></i>&nbsp;Delete</a>
                                                     </div>
                                                 </div>
                                             </td>

@@ -88,7 +88,7 @@
                         </div>
 
                         <button class="btn btn-success btn-sm nextBtn btn-lg pull-right"
-                                type="submit">{{trans('team_trans.submit')}}</button>
+                                type="submit">{{trans('player_trans.submit')}}</button>
                     </form>
 
                 </div>

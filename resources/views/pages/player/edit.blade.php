@@ -72,11 +72,18 @@
                                 </div>
                             </div>
 
+
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="gender">Status : <span class="text-danger">*</span></label>
-                                    <select required class="custom-select mr-sm-2" name="player_status">
-                                        <option selected disabled>{{trans('coach_trans.Choose')}}...</option>
+                                    <select class="custom-select mr-sm-2" name="player_status">
+                                        <option selected disabled value="{{$player->player_status}}">
+                                            @if ($player->player_status == 1)
+                                                <span class='badge badge-success' >Active</span>
+                                            @else
+                                                <span class='badge badge-danger'>InActive</span>
+                                            @endif</option>
                                         <option  value="1">Active</option>
                                         <option  value="0">In Active</option>
                                     </select>

@@ -33,6 +33,7 @@
                                         <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>{{trans('coach_trans.photo')}}</th>
                                             <th>{{trans('coach_trans.name')}}</th>
                                             <th>{{trans('coach_trans.email')}}</th>
                                             <th>{{trans('coach_trans.phone')}}</th>
@@ -42,6 +43,7 @@
                                             <th>{{trans('coach_trans.coach_description')}}</th>
                                             <th>{{trans('coach_trans.location')}}</th>
                                             <th>{{trans('coach_trans.sub_location')}}</th>
+                                            <th>{{trans('employee_trans.status')}}</th>
                                             <th>{{trans('coach_trans.link_website')}}</th>
                                             <th>{{trans('coach_trans.link_facebook')}}</th>
                                             <th>{{trans('coach_trans.link_twitter')}}</th>
@@ -60,6 +62,7 @@
                                         @foreach($coachs as $coach)
                                             <tr>
                                                 <td>{{ $loop->index+1 }}</td>
+                                                <td><img width="180px" height="180px" class="rounded avatar-lg" src="{{(! empty($coach->image_path)) ? asset('/attachments/coachs/'.\Illuminate\Support\Facades\Auth::user()->id.'/'.$coach->id.'/'.$coach->image_path) : asset('backend/assets/images/users/no_image.jpg') }}"  alt="not loading image"></td>
                                                 <td>{{$coach->name}}</td>
                                                 <td>{{$coach->email}}</td>
                                                 <td>{{$coach->phone}}</td>
@@ -69,6 +72,14 @@
                                                 <td>{{$coach->coach_description}}</td>
                                                 <td>{{$coach->location->name}}</td>
                                                 <td>{{$coach->sub_location->name}}</td>
+                                                <td>
+                                                    @if ($coach->coach_status == 1)
+                                                        <span class='badge badge-success' >Active</span>
+                                                    @else
+                                                        <span class='badge badge-danger'>InActive</span>
+                                                    @endif
+
+                                                </td>
                                                 <td>{{$coach->link_website}}</td>
                                                 <td>{{$coach->link_facebook}}</td>
                                                 <td>{{$coach->link_twitter}}</td>
@@ -84,8 +95,8 @@
                                                             العمليات
                                                         </a>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                            <a class="dropdown-item" href="{{route('coach.edit',$coach->id)}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;  تعديل بيانات الطالب</a>
-                                                            <a class="dropdown-item" data-target="#Delete_Student{{ $coach->id }}" data-toggle="modal" href="##Delete_Student{{ $coach->id }}"><i style="color: red" class="fa fa-trash"></i>&nbsp;  حذف بيانات الطالب</a>
+                                                            <a class="dropdown-item" href="{{route('coach.edit',$coach->id)}}"><i style="color:green" class="fa fa-edit"></i>&nbsp;Edit</a>
+                                                            <a class="dropdown-item" data-target="#Delete_Student{{ $coach->id }}" data-toggle="modal" href="#Delete_Student{{ $coach->id }}"><i style="color: red" class="fa fa-trash"></i>&nbsp;Delete</a>
                                                         </div>
                                                     </div>
                                                 </td>

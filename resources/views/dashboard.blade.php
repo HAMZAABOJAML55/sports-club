@@ -41,7 +41,7 @@ preloader -->
         <div class="page-title"  >
             <div class="row">
                 <div class="col-sm-6" >
-                    <h4 class="mb-0" style="font-family: 'Cairo', sans-serif; color: white">  Welcome {{\Illuminate\Support\Facades\Auth::user()->name}}</h4>
+                    <h4 class="mb-0" style="font-family: 'Cairo', sans-serif; color: white">  Welcome {{\Illuminate\Support\Facades\Auth::user()->name}} </h4>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb pt-0 pr-0 float-left float-sm-right">
@@ -50,11 +50,96 @@ preloader -->
             </div>
         </div>
 
-
+        <br>
+        <br>
         <!--=================================
 wrapper -->
-
-
+        <!-- widgets -->
+        <div class="row" >
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-30">
+                <div class="card card-statistics h-100">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                    <span class="text-success">
+                                        <i class="fas fa-chalkboard-teacher highlight-icon" aria-hidden="true"></i>
+                                    </span>
+                            </div>
+                            <div class="float-right text-right">
+                                <p class="card-text text-dark">Players Count</p>
+                                <h4>{{\App\Models\Player::where('club_id',\Illuminate\Support\Facades\Auth::user()->club_id)->count()}}</h4>
+                            </div>
+                        </div>
+                        <p class="text-muted pt-3 mb-0 mt-2 border-top">
+                            <i class="fas fa-binoculars mr-1" aria-hidden="true"></i><a href="{{route('player.index')}}" target="_blank"><span class="text-danger">Show details</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-30">
+                <div class="card card-statistics h-100">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                    <span class="text-warning">
+                                        <i class="fas fa-chalkboard-teacher highlight-icon" aria-hidden="true"></i>
+                                    </span>
+                            </div>
+                            <div class="float-right text-right">
+                                <p class="card-text text-dark">Coachs Count</p>
+                                <h4>{{\App\Models\Coach::where('club_id',\Illuminate\Support\Facades\Auth::user()->club_id)->count()}}</h4>
+                            </div>
+                        </div>
+                        <p class="text-muted pt-3 mb-0 mt-2 border-top">
+                            <i class="fas fa-binoculars mr-1" aria-hidden="true"></i><a href="{{route('coach.index')}}" target="_blank"><span class="text-danger">Show details</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-30">
+                <div class="card card-statistics h-100">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                    <span class="text-success">
+                                        <i class="fas fa-user-tie highlight-icon" aria-hidden="true"></i>
+                                    </span>
+                            </div>
+                            <div class="float-right text-right">
+                                <p class="card-text text-dark">Employee Count</p>
+                                <h4>{{\App\Models\Employe::where('club_id',\Illuminate\Support\Facades\Auth::user()->club_id)->count()}}</h4>
+                            </div>
+                        </div>
+                        <p class="text-muted pt-3 mb-0 mt-2 border-top">
+                            <i class="fas fa-binoculars mr-1" aria-hidden="true"></i><a href="{{route('employee.index')}}" target="_blank"><span class="text-danger">Show details</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-30">
+                <div class="card card-statistics h-100">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                    <span class="text-primary">
+                                        <i class="fas fa-chalkboard highlight-icon" aria-hidden="true"></i>
+                                    </span>
+                            </div>
+                            <div class="float-right text-right">
+                                <p class="card-text text-dark">Section Count</p>
+                                <h4>{{\App\Models\Section::where('club_id',\Illuminate\Support\Facades\Auth::user()->club_id)->count()}}</h4>
+                            </div>
+                        </div>
+                        <p class="text-muted pt-3 mb-0 mt-2 border-top">
+                            <i class="fas fa-binoculars mr-1" aria-hidden="true"></i><a href="{{route('section.index')}}" target="_blank"><span class="text-danger">Show details</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Orders Status widgets-->
+        <br>
+        <br>
         <!--=================================
 footer -->
 
