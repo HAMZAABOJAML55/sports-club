@@ -52,6 +52,8 @@ class CreateCoachsTable extends Migration
             $table->foreign('nationality_id')->references('id')->on('nationalitys')->onDelete('cascade');
             $table->string('height')->nullable();
             $table->string('weight')->nullable();
+            $table->string('code')->nullable();
+
             $table->timestamps();
         });
     }

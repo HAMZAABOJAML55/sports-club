@@ -36,7 +36,7 @@ use GeneralTrait;
             $rules = [
                 "name" => "required|string",
                 "user_name" => "required|string",
-                "subscribes_id" => "required|integer",
+                "subscribes_id" => "integer",
                 "subscription_period" => "required|string",
                 "email" => "required|string|unique:clubs",
                 "password" => "required"
@@ -68,7 +68,7 @@ use GeneralTrait;
                 $admin->permission = 'admin';
                 $admin->save();
                 if ($request->hasfile('image_path')) {
-                    $club_image = $this->saveImage($request->image_path, 'attachments/club/' .Auth::user()->club_id);
+                    $club_image = $this->saveImage($request->image_path, 'attachments/club/' . $Club->id);
                     $Club->image_path = $club_image;
                     $Club->save();
                 }

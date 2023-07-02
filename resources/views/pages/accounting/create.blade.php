@@ -42,30 +42,32 @@
                                     <input class="form-control" name="discounts" type="text">
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>{{trans('accounting_trans.number')}} :</label>
+                                    <label>Tax : <span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control" name="tax" type="number">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Payment For Trainee : <span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control" name="Payment_for_trainee" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Number:</label>
                                     <input type="number" name="number" class="form-control">
                                 </div>
                             </div>
 
-
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="coachs">{{trans('accounting_trans.employee')}} : <span
-                                            class="text-danger">*</span></label>
-                                    <select class="custom-select mr-sm-2" name="employee_id">
-                                        <option selected disabled>{{trans('accounting_trans.Choose')}}...</option>
-                                        @foreach($employee as $p)
-                                            <option value="{{ $p->id }}">{{ $p->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="coachs">{{trans('accounting_trans.coachs')}} : <span
-                                            class="text-danger">*</span></label>
+                                    <label for="coachs">{{trans('accounting_trans.coachs')}} : <span></span></label>
                                     <select class="custom-select mr-sm-2" name="coach_id">
                                         <option selected disabled>{{trans('accounting_trans.Choose')}}...</option>
                                         @foreach($coachs as $p)
@@ -102,18 +104,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="Payment_trainee">{{trans('accounting_trans.Payment_trainee_id')}} : <span
-                                            class="text-danger">*</span></label>
-                                    <select class="custom-select mr-sm-2" name="Payment_trainee_id">
-                                        <option selected disabled>{{trans('accounting_trans.Choose')}}...</option>
-                                        @foreach($Payment_trainee as $p)
-                                            <option value="{{ $p->id }}">{{ $p->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+
                             <div class="row">
 
 

@@ -41,17 +41,14 @@ class AccountingController extends Controller
             $accounting = new Accounting();
             $accounting->club_id = Auth::user()->club_id;
             $accounting->number = $request->number;
-//            $accounting->Payment_trainee_id = $request->Payment_trainee_id;
             $accounting->Payment_for_trainee = $request->Payment_for_trainee;
             $accounting->draws = $request->draws;
             $accounting->discounts = $request->discounts;
             $accounting->subtype_id = $request->subtype_id;
             $accounting->player_id = $request->player_id;
             $accounting->coach_id = $request->coach_id;
-            $accounting->employee_id = $request->employee_id;
             $accounting->total_salary = $request->total_salary;
             $accounting->tax = $request->tax;
-            $accounting->deposit = $request->deposit;
             $accounting->save();
             if ($request->hasfile('image_path')) {
                 $_image = $this->saveImage($request->image_path, 'attachments/accountings/'.Auth::user()->club_id.'/'. $accounting->id);
@@ -97,10 +94,8 @@ class AccountingController extends Controller
             $accounting->subtype_id = $request->subtype_id;
             $accounting->player_id = $request->player_id;
             $accounting->coach_id = $request->coach_id;
-            $accounting->employee_id = $request->employee_id;
             $accounting->total_salary = $request->total_salary;
             $accounting->tax = $request->tax;
-            $accounting->deposit = $request->deposit;
             $accounting->save();
             if ($request->hasfile('image_path')) {
                 $this->deleteFile('accountings',$request->id);

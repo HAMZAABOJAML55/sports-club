@@ -15,6 +15,9 @@ return [
     'Processes'=>'العمليات',
     'national_id'=>'الرقم القومي',
     'status' => 'الحالة',
-
+    'club' => 'إسم النادي',
+    'total_salary' => 'Total Salary',
+    'start_time_shift' => 'Start Time Shift',
+    'end_time_shift' => 'End Time Shift',
 
 ];

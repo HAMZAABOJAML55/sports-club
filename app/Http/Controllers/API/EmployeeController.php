@@ -47,10 +47,13 @@ class EmployeeController extends Controller
             $employee->description = $request->description;
             $employee->full_description = $request->full_description;
             $employee->section_id = $request->section_id;
-            $employee->emp_id = $request->emp_id;
+//            $employee->emp_id = $request->emp_id;
             $employee->password = Hash::make($request->password);
             $employee->date_of_birth = $request->date_of_birth;
             $employee->emp_status = $request->emp_status;
+            $employee->start_time_shift = $request->start_time_shift;
+            $employee->end_time_shift = $request->end_time_shift;
+            $employee->total_salary = $request->total_salary;
             $employee->save();
 
             if ($request->hasfile('image_path')) {
@@ -129,10 +132,13 @@ class EmployeeController extends Controller
             $employee->description = $request->description;
             $employee->full_description = $request->full_description;
             $employee->section_id = $request->section_id;
-            $employee->emp_id = $request->emp_id;
+//            $employee->emp_id = $request->emp_id;
             $employee->password = Hash::make($request->password);
             $employee->date_of_birth = $request->date_of_birth;
             $employee->emp_status = $request->emp_status;
+            $employee->start_time_shift = $request->start_time_shift;
+            $employee->end_time_shift = $request->end_time_shift;
+            $employee->total_salary = $request->total_salary;
             $employee->save();
 
             if ($request->hasfile('image_path')) {

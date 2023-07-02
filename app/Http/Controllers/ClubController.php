@@ -22,7 +22,7 @@ class ClubController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.club.signup');
     }
 
     /**
@@ -35,15 +35,58 @@ class ClubController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+//            $rules = [
+//                "name" => "required|string",
+//                "user_name" => "required|string",
+//                "subscribes_id" => "integer",
+//                "subscription_period" => "required|string",
+//                "email" => "required|string|unique:clubs",
+//                "password" => "required"
+//            ];
+//
+//            $validator = Validator::make($request->all(), $rules);
+//
+//            if ($validator->fails()) {
+////                $code = $this->returnCodeAccordingToInput($validator);
+////                return $this->returnValidationError($code, $validator);
+//                return response()->json($validator->errors(), 422);
+//            } else {
+                $Club=new Club();
+                $Club->name = $request->name;
+                $Club->user_name = $request->user_name;
+                $Club->email = $request->email;
+                $Club->phone = $request->phone;
+                $Club->subscribes_id = $request->subscribes_id;
+                $Club->subscription_period = $request->subscription_period;
+                $Club->password =Hash::make($request->password);
+                $Club->save();
+
+                $admin=new User();
+                $admin->club_id = $Club->id;
+                $admin->name = $Club->name;
+                $admin->email = $Club->email;
+                $admin->password = $Club->password;
+                $admin->permission = 'admin';
+                $admin->save();
+                if ($request->hasfile('image_path')) {
+                    $club_image = $this->saveImage($request->image_path, 'attachments/club/' . $Club->id);
+                    $Club->image_path = $club_image;
+                    $Club->save();
+                }
+                DB::commit();
+                session()->flash('Add', trans('notifi.add'));
+                return redirect()->route('login.show','web');
+//            }
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->back()->withErrors(['error' => $ex->getMessage()]);
+
+        }
     }
 
     /**

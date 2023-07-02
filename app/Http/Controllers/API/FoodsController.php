@@ -40,6 +40,7 @@ class FoodsController extends Controller
             $food->components_of_the_diet = $request->components_of_the_diet;
             $food->foodsystem_id = $request->foodsystem_id;
             $food->number = $request->number;
+            $food->mail_rating = $request->mail_rating;
 
             $food->save();
             if ($request->hasfile('image_path')) {
@@ -98,6 +99,8 @@ class FoodsController extends Controller
             $food->components_of_the_diet = $request->components_of_the_diet;
             $food->foodsystem_id = $request->foodsystem_id;
             $food->number = $request->number;
+            $food->mail_rating = $request->mail_rating;
+
             $food->save();
             if ($request->hasfile('image_path')) {
                 $this->deleteFile('foods',$request->id);

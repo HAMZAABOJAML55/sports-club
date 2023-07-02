@@ -16,17 +16,18 @@ class CreateFoodTable extends Migration
         Schema::create('food', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('mail_rating')->nullable();
             $table->bigInteger('foodsystem_id')->unsigned();
             $table->foreign('foodsystem_id')->references('id')->on('foodsystems');
             $table->integer('number');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('image_path')->nullable();
             $table->string('components_of_the_diet')->nullable();
             $table->bigInteger('club_id')->unsigned()->nullable();
             $table->foreign('club_id')->references('id')->on('clubs');
 //            $table->foreign('components_id')->references('id')->on('components');
-            $table->date('start_time');
-            $table->date('end_time');
+            $table->date('start_time')->nullable();
+            $table->date('end_time')->nullable();
             $table->timestamps();
         });
     }

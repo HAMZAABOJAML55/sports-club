@@ -49,6 +49,8 @@ class CreatePlayersTable extends Migration
             $table->string('total')->nullable();
             $table->string('image_path')->nullable();
             $table->boolean('player_status')->default(0);
+            $table->string('code')->nullable();
+
 
             $table->bigInteger('coachs_id')->unsigned()->nullable();
             $table->foreign('coachs_id')->references('id')->on('coachs');

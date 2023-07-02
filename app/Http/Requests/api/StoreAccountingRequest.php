@@ -37,7 +37,7 @@ class StoreAccountingRequest extends FormRequest
             'Payment_trainee_id'=>'integer',
             'Payment_for_trainee'=>'string',
             'total_salary'=>'integer',
-            'tax'=>'integer'
+            'tax'=>'string'
         ];
     }
 

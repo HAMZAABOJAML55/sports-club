@@ -9,12 +9,14 @@ use App\Http\Traits\imageTrait;
 use App\Models\Club;
 use App\Models\Employe;
 use App\Models\Section;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password as RulesPassword;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -74,7 +76,7 @@ class EmployeeController extends Controller
             $employee->description = $request->description;
             $employee->full_description = $request->full_description;
             $employee->section_id = $request->section_id;
-            $employee->emp_id = $request->emp_id;
+//            $employee->emp_id = $request->emp_id;
             $employee->password = Hash::make($request->password);
             $employee->date_of_birth = $request->date_of_birth;
             $employee->save();
@@ -137,5 +139,45 @@ class EmployeeController extends Controller
         ]);
     }
 
+    public function forgetPassword(Request $request)
+    {
+        $verificationCode = mt_rand(100000, 999999);
+        $codeInsert=Employe::where('email',$request->email)->first();
+        if (!$codeInsert){
+            return response()->json(['message' => 'Invalid Invalid email address Please try again'],422);
+        }
+//        $codeInsert->code=Hash::make($verificationCode);
+        $codeInsert->code=$verificationCode;
+        $codeInsert->save();
+        return response()->json(['message' => 'User successfully sent code check it',
+            'code' =>$verificationCode, ]);
+    }
 
+
+
+    public function reset(Request $request)
+    {
+        $verificationCode = mt_rand(100000, 999999);
+        $request->validate([
+            'email' => 'required|email',
+            'code' => 'required|digits:6',
+            'password' => ['required', 'confirmed', RulesPassword::defaults()],
+        ]);
+        $currentDate = Carbon::today();
+
+        $user = Employe::where('email', $request->email)
+            ->where('code', $request->code)
+            ->whereDate('created_at', $currentDate)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'Invalid verification code. Please try again.']);
+        }
+        $user->forceFill([
+            'password' => Hash::make($request->password),
+            'code' =>  Hash::make($verificationCode),
+        ])->save();
+        return response([
+            'message' => 'Password reset successfully'
+        ]);
+    }
 }

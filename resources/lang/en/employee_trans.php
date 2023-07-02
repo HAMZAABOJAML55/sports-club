@@ -19,6 +19,11 @@ return [
     'start_time' => 'Start Time',
     'end_time' => 'End Time',
     'status' => 'Status',
+    'club' => 'Club Name',
+    'total_salary' => 'Total Salary',
+    'start_time_shift' => 'Start Time Shift',
+    'end_time_shift' => 'End Time Shift',
+
 
 
 ];

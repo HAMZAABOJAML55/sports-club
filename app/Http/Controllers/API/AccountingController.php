@@ -71,10 +71,8 @@ use imageTrait;
             $accounting->subtype_id = $request->subtype_id;
             $accounting->player_id = $request->player_id;
             $accounting->coach_id = $request->coach_id;
-            $accounting->employee_id = $request->employee_id;
             $accounting->total_salary = $request->total_salary;
             $accounting->tax = $request->tax;
-            $accounting->deposit = $request->deposit;
             $accounting->save();
             if ($request->hasfile('image_path')) {
                 $_image = $this->saveImage($request->image_path, 'attachments/accountings/'.Auth::user()->club_id.'/'. $accounting->id);
@@ -157,7 +155,6 @@ use imageTrait;
             $accounting->coach_id = $request->coach_id;
             $accounting->total_salary = $request->total_salary;
             $accounting->tax = $request->tax;
-            $accounting->deposit = $request->deposit;
             $accounting->save();
             if ($request->hasfile('image_path')) {
                 $this->deleteFile('accountings',$request->id);

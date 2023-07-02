@@ -31,14 +31,16 @@ class StoreEmployeeRequest extends FormRequest
             'name_ar' => 'string',
             'name_en' => 'required|string',
             "email" => "required|email|unique:coachs,email|unique:players,email|unique:clubs,email|unique:employes,email," . $this->id,
-            "national_id" => "required|string|min:14|unique:employes,national_id,".$this->id,
-            "emp_id" => "required|integer|unique:employes,emp_id,".$this->id,
+            "national_id" => "required|string|unique:employes,national_id,".$this->id,
             'description'    => 'string',
             'full_description'      => 'required|string',
             'section_id'         => 'required|integer',
             'emp_status'         => 'integer|max:1',
             'password'         => 'string',
-            'date_of_birth'         => 'required|date',
+            'date_of_birth'         => 'date',
+            'start_time_shift'         => 'date',
+            'end_time_shift'         => 'date',
+            'total_salary'         => 'integer',
             'image_path'=>'image|mimes:png,jpg,svg,gif|max:2048'
 
         ];

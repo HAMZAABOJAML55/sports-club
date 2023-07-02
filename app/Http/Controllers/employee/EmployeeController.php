@@ -43,9 +43,12 @@ class EmployeeController extends Controller
             $employees->description = $request->description;
             $employees->full_description = $request->full_description;
             $employees->date_of_birth = $request->date_of_birth;
-            $employees->emp_id = $request->emp_id;
+//            $employees->emp_id = $request->emp_id;
             $employees->emp_status = $request->emp_status;
             $employees->national_id = $request->national_id;
+            $employees->start_time_shift = $request->start_time_shift;
+            $employees->end_time_shift = $request->end_time_shift;
+            $employees->total_salary = $request->total_salary;
             $employees->save();
             if ($request->hasfile('image_path')) {
                 $employee_image = $this->saveImage($request->image_path, 'attachments/employees/' .Auth::user()->club_id.'/'. $employees->id);
@@ -87,9 +90,12 @@ class EmployeeController extends Controller
             $employees->description = $request->description;
             $employees->full_description = $request->full_description;
             $employees->date_of_birth = $request->date_of_birth;
-            $employees->emp_id = $request->emp_id;
+//            $employees->emp_id = $request->emp_id;
             $employees->emp_status = $request->emp_status;
             $employees->national_id = $request->national_id;
+            $employees->start_time_shift = $request->start_time_shift;
+            $employees->end_time_shift = $request->end_time_shift;
+            $employees->total_salary = $request->total_salary;
             $employees->save();
             if ($request->hasfile('image_path')) {
                 $this->deleteFile('employees',$request->id);

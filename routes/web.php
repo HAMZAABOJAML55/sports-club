@@ -35,8 +35,11 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 //
 
     Route::get('/', [HomeController::class,'index'])->name('selection');
+Route::get('index/club', 'App\Http\Controllers\ClubController@index')->name('index.club');
+Route::post('store/club', 'App\Http\Controllers\ClubController@store')->name('store.club');
 
-    Route::get('/login/{type}',[LoginController::class,'loginForm'])->middleware('guest')->name('login.show');
+
+Route::get('/login/{type}',[LoginController::class,'loginForm'])->middleware('guest')->name('login.show');
 
     Route::post('/login',[LoginController::class,'login'])->name('login');
 

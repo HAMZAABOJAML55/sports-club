@@ -121,6 +121,12 @@ login-->
                                    style="color: #ffffff;">
                                     <button class="button"><span>تسجيل مستخدم جديد</span><i class="fa fa-check"></i></button>
                                 </a>
+
+                            @else()
+                                <a href="{{route('index.club')}}" class="primary-btn normal-btn" data-aos="flip-left" data-aos-delay="2400"
+                                   style="color: #ffffff;">
+                                    <button class="button"><span>تسجيل نادي جديد</span><i class="fa fa-check"></i></button>
+                                </a>
                             @endif
 
                     </div>

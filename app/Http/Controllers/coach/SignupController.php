@@ -5,6 +5,7 @@ namespace App\Http\Controllers\coach;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\StoreCoachRequest;
 use App\Http\Traits\imageTrait;
+use App\Models\Club;
 use App\Models\Coach;
 use App\Models\Employment_type;
 use App\Models\Gender;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 
 class SignupController extends Controller
 {
+    use imageTrait;
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +33,9 @@ class SignupController extends Controller
         $sub_locations=Sub_Location::all();
         $Employment_Types=Employment_type::all();
         $profs_degrees=Prof::all();
-        return view('pages.coach.signup', compact('profs_degrees','Employment_Types','nationals','Genders','locations','sub_locations'));
+        $clubs=Club::all();
+
+        return view('pages.coach.signup', compact('profs_degrees','clubs','Employment_Types','nationals','Genders','locations','sub_locations'));
     }
 
     /**
@@ -50,11 +54,11 @@ class SignupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    use imageTrait;
     public function store(StoreCoachRequest $request)
     {
         try {
             $coach = new Coach();
+            $coach->club_id = $request->club_id;
             $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $coach->user_name = $request->user_name;
             $coach->phone = $request->phone;
@@ -76,18 +80,26 @@ class SignupController extends Controller
             $coach->coach_description = $request->coach_description;
             $coach->nationality_id = $request->nationality_id;
             $coach->genders_id = $request->genders_id;
+
+            $coach->height = $request->height;#
+            $coach->weight = $request->weight;#
+            $coach->postal_code = $request->postal_code;#
+            $coach->link_Instagram = $request->link_Instagram;#
             $coach->save();
-            $coach_image = $this->saveImage($request->image,'attachments/coachs/'.Auth::user()->club_id.'/'.$coach->id);
-            $coach->image_path = $coach_image;
-            $coach->save();
+            if ($request->hasfile('image_path')) {
+                $coach_image = $this->saveImage($request->image_path, 'attachments/coachs/' .$request->club_id.'/'. $coach->id);
+                $coach->image_path = $coach_image;
+                $coach->save();
+            }
             session()->flash('Add','Welcome: '.$coach->email );
+
             return redirect()->route('login.show','coach');
-        }catch (\Exception $e) {
+
+        } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
 
     }
-
     /**
      * Display the specified resource.
      *

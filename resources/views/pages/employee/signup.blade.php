@@ -80,10 +80,11 @@ preloader -->
                                 </div>
                             </div>
 
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>{{trans('employee_trans.number')}} : <span class="text-danger">*</span></label>
-                                    <input  class="form-control" name="number" type="number" >
+                                    <label>{{trans('employee_trans.national_id')}} : <span class="text-danger">*</span></label>
+                                    <input  class="form-control" name="national_id" type="number" >
                                 </div>
                             </div>
 
@@ -99,8 +100,19 @@ preloader -->
                                 <div class="form-group">
                                     <label for="gender">{{trans('employee_trans.section')}} : <span class="text-danger">*</span></label>
                                     <select class="custom-select mr-sm-2" name="section_id">
-                                        <option selected disabled>{{trans('employee_trans.Choose')}}...</option>
+                                        <option selected disabled>{{trans('coach_trans.Choose')}}...</option>
                                         @foreach($sections as $G)
+                                            <option  value="{{ $G->id }}">{{ $G->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="gender1">{{trans('employee_trans.club')}} : <span class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="club_id">
+                                        <option selected disabled>{{trans('coach_trans.Choose')}}...</option>
+                                        @foreach($clubs as $G)
                                             <option  value="{{ $G->id }}">{{ $G->name }}</option>
                                         @endforeach
                                     </select>
@@ -113,12 +125,7 @@ preloader -->
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>{{trans('employee_trans.emp_id')}} : <span class="text-danger">*</span></label>
-                                    <input  class="form-control" name="emp_id" type="number" >
-                                </div>
-                            </div>
+
                         </div>
 
                         {{--#ajax--}}
@@ -130,7 +137,30 @@ preloader -->
                             </div>
                         </div>
 
-
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{trans('employee_trans.start_time_shift')}}:</label>
+                                <input class="form-control" type="text"  id="datepicker-bottom-right" name="start_time_shift" data-date-format="yyyy-mm-dd">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>{{trans('employee_trans.end_time_shift')}}:</label>
+                                <input class="form-control" type="text"  id="datepicker-bottom-left" name="end_time_shift" data-date-format="yyyy-mm-dd">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{trans('employee_trans.total_salary')}} : <span class="text-danger">*</span></label>
+                                <input  class="form-control" name="total_salary" type="number" >
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="academic_year">{{trans('product_trans.Attachments')}} : <span class="text-danger">*</span></label>
+                                <input type="file" accept="image/*" name="image_path">
+                            </div>
+                        </div>
 
                     </div>
 

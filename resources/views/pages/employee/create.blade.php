@@ -99,12 +99,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>{{trans('employee_trans.emp_id')}} : <span class="text-danger">*</span></label>
-                                    <input  class="form-control" name="emp_id" type="number" >
-                                </div>
-                            </div>
+
                         </div>
 
 {{--#ajax--}}
@@ -113,6 +108,25 @@
                                 <div class="form-group">
                                     <label>{{trans('employee_trans.date_of_birth')}}:</label>
                                     <input class="form-control" type="text"  id="datepicker-action" name="date_of_birth" data-date-format="yyyy-mm-dd">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>{{trans('employee_trans.start_time_shift')}}:</label>
+                                    <input class="form-control" type="text"  id="datepicker-bottom-right" name="start_time_shift" data-date-format="yyyy-mm-dd">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>{{trans('employee_trans.end_time_shift')}}:</label>
+                                    <input class="form-control" type="text"  id="datepicker-bottom-left" name="end_time_shift" data-date-format="yyyy-mm-dd">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{trans('employee_trans.total_salary')}} : <span class="text-danger">*</span></label>
+                                    <input  class="form-control" name="total_salary" type="number" >
                                 </div>
                             </div>
 

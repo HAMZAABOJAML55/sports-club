@@ -51,9 +51,9 @@
                                                 <td>{{$accounting->number}}</td>
                                                 <td>{{$accounting->draws}}</td>
                                                 <td>{{$accounting->discounts}}</td>
-                                                <td>{{$accounting->coach->name}}</td>
-                                                <td>{{$accounting->player->name}}</td>
-                                                <td>{{$accounting->Payments_trainees->name}}</td>
+                                                <td>#</td>
+                                                <td>#</td>
+                                                <td>{{$accounting->Payment_for_trainee}}</td>
                                                 <td>{{$accounting->subtype->name}}</td>
                                                 <td>
                                                     <div class="dropdown show">
