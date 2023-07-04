@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Genders;
+use App\Models\Gender;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +23,7 @@ class GenderSeeder extends Seeder
 
         ];
         foreach ($genders as $ge) {
-            Genders::create(['Name' => $ge]);
+            Gender::create(['name' => $ge]);
         }
 
     }

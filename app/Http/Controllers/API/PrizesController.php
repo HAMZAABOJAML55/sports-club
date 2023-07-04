@@ -18,14 +18,14 @@ class PrizesController extends Controller
 
     public function store(StorePrizeRequest $request)
     {
-        $data['name']  = $request->name ;
-
-        $prize = Prize::create($data);
-        return response()->json([
-            'status'=>true,
-            'date' => $prize,
-            'message' => 'Prize Information Added Successfully',
-        ]);
+//        $data['name']  = $request->name ;
+//
+//        $prize = Prize::create($data);
+//        return response()->json([
+//            'status'=>true,
+//            'date' => $prize,
+//            'message' => 'Prize Information Added Successfully',
+//        ]);
 
     }
 
@@ -36,35 +36,23 @@ class PrizesController extends Controller
         return response()->json($prize);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(StorePrizeRequest $request)
     {
-        $prize = Prize::findOrFail($request->id);
-        if($prize){
-            $data['name']  = $request->name;
-
-            $prize->update($data);
-            return response()->json([
-                'status'=>true,
-                'data' => $prize,
-                'message' => 'Prize Information Updated Successfully',
-            ]);
-        }
+//        $prize = Prize::findOrFail($request->id);
+//        if($prize){
+//            $data['name']  = $request->name;
+//
+//            $prize->update($data);
+//            return response()->json([
+//                'status'=>true,
+//                'data' => $prize,
+//                'message' => 'Prize Information Updated Successfully',
+//            ]);
+//        }
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request)
     {
         Prize::find($request->id)->delete();

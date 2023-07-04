@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreLocationRequest;
-use App\Http\Requests\UpdateCompanyRequest;
-use App\Models\Location;
 use App\Models\Natinality;
 use Illuminate\Http\Request;
 
 class NationalityController extends Controller
 {
-    //
+
 
     public function index()
     {
@@ -23,16 +20,16 @@ class NationalityController extends Controller
         ]);
     }
 
-    public function store(StoreLocationRequest $request)
+    public function store(Request $request)
     {
-        $data['name'] = $request->name;
-//dd($data);
-        $location=Natinality::create($data);
-        return response()->json([
-            'status'=>true,
-            'data' =>$location,
-            'message' => 'Natinality Information Added Successfully',
-        ]);
+//        $data['name'] = $request->name;
+////dd($data);
+//        $location=Natinality::create($data);
+//        return response()->json([
+//            'status'=>true,
+//            'data' =>$location,
+//            'message' => 'Natinality Information Added Successfully',
+//        ]);
 
     }
 
@@ -41,26 +38,26 @@ class NationalityController extends Controller
 //UpdateNatinalityRequest
     public function update(Request $request)
     {
-        $location = Natinality::findOrFail($request->id);
-
-        if($location)
-        {
-            $data['name']  = $request->name ? $request->name : $location->name;
-        }
-        $location->update($data);
-        return response()->json([
-            'status'=>true,
-            'data' => $location,
-            'message' => 'Natinality Information Updated Successfully',
-        ]);
+//        $location = Natinality::findOrFail($request->id);
+//
+//        if($location)
+//        {
+//            $data['name']  = $request->name ? $request->name : $location->name;
+//        }
+//        $location->update($data);
+//        return response()->json([
+//            'status'=>true,
+//            'data' => $location,
+//            'message' => 'Natinality Information Updated Successfully',
+//        ]);
     }
 
 
-    public function show($id)
+    public function show(Request $request)
     {
-        $company = Natinality::findOrFail($id);
-        dd($company);
-//        return response()->json($company);
+        $company = Natinality::findOrFail($request->id);
+
+        return response()->json($company);
     }
 
     public function delete($id)

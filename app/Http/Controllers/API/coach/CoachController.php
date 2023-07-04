@@ -1,0 +1,279 @@
+<?php
+
+namespace App\Http\Controllers\API\coach;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\api\StoreCoachRequest;
+use App\Http\Traits\GeneralTrait;
+use App\Http\Traits\imageTrait;
+use App\Models\Club;
+use App\Models\Coach;
+use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password as RulesPassword;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+
+class CoachController extends Controller
+{
+    use GeneralTrait;
+    public function __construct()
+    {
+        $this->middleware('auth:api_coach', ['except' => ['login', 'register']]);
+    }
+    use imageTrait;
+    public function register(StoreCoachRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $rules = [
+                "club_id" => "required|integer",
+            ];
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                $response = new JsonResponse([
+                    'data' => [],
+                    'message' => 'Validation Error',
+                    'errors' => $validator->messages()->all(),
+                ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+
+                throw new ValidationException($validator, $response);
+
+            }
+            $Club=Club::find($request->club_id);
+            if (!$Club) {
+                return response()->json([
+                    'status' => 'Error',
+                    'status_code'=>ResponseAlias::HTTP_NOT_FOUND,
+                    'message' => 'Club not found',
+                    'data' => []
+                ], ResponseAlias::HTTP_NOT_FOUND);
+            }
+            $coach = new Coach();
+            $coach->club_id = $request->club_id;
+            $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $coach->user_name = $request->user_name;
+            $coach->phone = $request->phone;
+            $coach->email = $request->email;
+            $coach->password = Hash::make($request->password);
+            $coach->subscription_number = $request->subscription_number;
+            $coach->salary = $request->salary;
+            $coach->date_of_birth = $request->date_of_birth;
+            $coach->start_time = $request->start_time;
+            $coach->end_time = $request->end_time;
+            $coach->link_website = $request->link_website;
+            $coach->link_facebook = $request->link_facebook;
+            $coach->link_twitter = $request->link_twitter;
+            $coach->link_youtupe = $request->link_youtupe;
+            $coach->employment_type_id = $request->employment_type_id;
+            $coach->profs_id = $request->profs_id;
+            $coach->location_id = $request->location_id;
+            $coach->sub_location_id = $request->sub_location_id;
+            $coach->coach_description = $request->coach_description;
+            $coach->nationality_id = $request->nationality_id;
+            $coach->genders_id = $request->genders_id;
+            $coach->height = $request->height;
+            $coach->weight = $request->weight;
+            $coach->postal_code = $request->postal_code;
+            $coach->link_Instagram = $request->link_Instagram;
+//            $coach->coach_status = $request->coach_status;
+
+            $coach->save();
+            if ($request->hasfile('image_path')) {
+                $coach_image = $this->saveImage($request->image_path, 'attachments/coachs/'.Auth::user()->club_id.'/' . $coach->id);
+                $coach->image_path = $coach_image;
+                $coach->save();
+            }
+            DB::commit();  // insert data
+            $token = auth('api_coach')->login($coach);
+
+            return response()->json([
+                'message' => 'coach successfully registered',
+                'token'=>$token,
+                'user' => $coach,
+
+            ], 201);
+        } catch (\Throwable $ex) {
+            DB::rollback();
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+
+    }
+    public function register1(StoreCoachRequest $request)
+    {
+        try {
+            $coach = new Coach();
+            $coach->club_id = $request->club_id;
+            $coach->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $coach->user_name = $request->user_name;
+            $coach->phone = $request->phone;
+            $coach->email = $request->email;
+            $coach->password = Hash::make($request->password);
+            $coach->subscription_number = $request->subscription_number;
+            $coach->salary = $request->salary;
+            $coach->date_of_birth = $request->date_of_birth;
+            $coach->start_time = $request->start_time;
+            $coach->end_time = $request->end_time;
+            $coach->link_website = $request->link_website;
+            $coach->link_facebook = $request->link_facebook;
+            $coach->link_twitter = $request->link_twitter;
+            $coach->link_youtupe = $request->link_youtupe;
+            $coach->employment_type_id = $request->employment_type_id;
+            $coach->profs_id = $request->profs_id;
+            $coach->location_id = $request->location_id;
+            $coach->sub_location_id = $request->sub_location_id;
+            $coach->coach_description = $request->coach_description;
+            $coach->nationality_id = $request->nationality_id;
+            $coach->genders_id = $request->genders_id;
+            $coach->height = $request->height;
+            $coach->weight = $request->weight;
+            $coach->postal_code = $request->postal_code;
+            $coach->link_Instagram = $request->link_Instagram;
+            $coach->save();
+            $coach_image = $this->saveImage($request->image_path,'attachments/coachs/'.Auth::user()->club_id.'/'.$coach->id);
+            $coach->image_path = $coach_image;
+            $coach->save();
+            $token = auth('api_coach')->login($coach);
+
+            return response()->json([
+                'message' => 'coach successfully registered',
+                'token'=>$token,
+                'user' => $coach,
+
+            ], 201);
+        } catch (\Throwable $ex) {
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+    }
+    public function login(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        if (!$token = auth('api_coach')->attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        return $this->returnData('token', $token, 'Here Is Your Token');
+
+    }
+
+    public function myData()
+    {
+        $data = auth('api_coach')->user();
+        return $this->returnData('data', $data, 'Here Is Your Data');
+    }
+    public function logout()
+    {
+        auth('api_coach')->logout();
+
+        return $this->returnSuccessMessage('Successfully logged out');
+    }
+    public function refresh()
+    {
+        return $this->respondWithToken(auth('api_coach')->refresh());
+    }
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'expires_in' => auth('api_coach')->factory()->getTTL() * 60
+        ]);
+    }
+    public function forgetPassword(Request $request)
+    {
+        $verificationCode = mt_rand(100000, 999999);
+        $codeInsert=Coach::where('email',$request->email)->first();
+        if (!$codeInsert){
+            return response()->json(['message' => 'Invalid Invalid email address Please try again'],422);
+        }
+//        $codeInsert->code=Hash::make($verificationCode);
+        $codeInsert->code=$verificationCode;
+        $codeInsert->save();
+        return response()->json(['message' => 'User successfully sent code check it',
+            'code' =>$verificationCode, ]);
+    }
+
+
+
+    public function reset(Request $request)
+    {
+        $verificationCode = mt_rand(100000, 999999);
+        $request->validate([
+            'email' => 'required|email',
+            'code' => 'required|digits:6',
+            'password' => ['required', 'confirmed', RulesPassword::defaults()],
+        ]);
+        $currentDate = Carbon::today();
+
+        $user = Coach::where('email', $request->email)
+            ->where('code', $request->code)
+            ->whereDate('created_at', $currentDate)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'Invalid verification code. Please try again.']);
+        }
+        $user->forceFill([
+            'password' => Hash::make($request->password),
+            'code' =>  Hash::make($verificationCode),
+        ])->save();
+        return response([
+            'message' => 'Password reset successfully'
+        ]);
+    }
+
+
+
+
+
+
+    public function index()
+    {
+        //
+    }
+
+
+    public function create()
+    {
+        //
+    }
+
+
+    public function store(Request $request)
+    {
+        //
+    }
+
+
+    public function show($id)
+    {
+        //
+    }
+
+
+    public function edit($id)
+    {
+        //
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    public function destroy($id)
+    {
+        //
+    }
+
+
+}

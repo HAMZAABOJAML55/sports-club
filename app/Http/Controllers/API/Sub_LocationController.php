@@ -3,10 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreLocationRequest;
-use App\Http\Requests\StoreSubLocationRequest;
-use App\Http\Requests\UpdateCompanyRequest;
-use App\Models\Location;
 use App\Models\Sub_Location;
 use Illuminate\Http\Request;
 
@@ -22,14 +18,14 @@ class Sub_LocationController extends Controller
 
     public function store(StoreSubLocationRequest $request)
     {
-        $data['name'] = $request->name;
-        $data['location_id'] = $request->location_id;
-        $location=Sub_Location::create($data);
-        return response()->json([
-            'status'=>true,
-            'data' =>$location,
-            'message' => 'location Information Added Successfully',
-        ]);
+//        $data['name'] = $request->name;
+//        $data['location_id'] = $request->location_id;
+//        $location=Sub_Location::create($data);
+//        return response()->json([
+//            'status'=>true,
+//            'data' =>$location,
+//            'message' => 'location Information Added Successfully',
+//        ]);
 
     }
 
@@ -38,18 +34,18 @@ class Sub_LocationController extends Controller
 
     public function update(Request $request)
     {
-        $location = Sub_Location::findOrFail($request->id);
-
-        if($location)
-        {
-            $data['name']  = $request->name ? $request->name : $location->name;
-        }
-        $location->update($data);
-        return response()->json([
-            'status'=>true,
-            'data' => $location,
-            'message' => 'sub_location Information Updated Successfully',
-        ]);
+//        $location = Sub_Location::findOrFail($request->id);
+//
+//        if($location)
+//        {
+//            $data['name']  = $request->name ? $request->name : $location->name;
+//        }
+//        $location->update($data);
+//        return response()->json([
+//            'status'=>true,
+//            'data' => $location,
+//            'message' => 'sub_location Information Updated Successfully',
+//        ]);
     }
 
 

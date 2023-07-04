@@ -15,8 +15,13 @@ class CreateSectionsTable extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('club_id')->unsigned()->nullable();
+            $table->foreign('club_id')->references('id')->on('clubs');
             $table->string('name');
-            $table->text('description');
+            $table->string('number');
+            $table->text('section_description');
+            $table->string('department_address');
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

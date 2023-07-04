@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Admin;
+use App\Models\Club;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -17,20 +18,29 @@ class CreateAdminUserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
-            'name' => 'user',
-            'email' => 'user@user.com',
-            'password' => bcrypt('12345678')
+
+        $club = Club::create([
+
+            'name' => 'admin',
+            'user_name' => 'admin_admin',
+            'email' =>'admin@admin.com',
+            'phone' => '1233333',
+            'subscribes_id' => 1,
+            'password' =>bcrypt('12345678'),
+            'image_path' => 'Null',
+        ]);
+         User::create([
+            'club_id' => $club->id,
+            'name' => $club->name,
+            'email' => $club->email,
+            'password' => $club->password,
+            'permission' => 'admin',
         ]);
 
-      $admin=  Admin::create([
-            'name' => 'Shahin',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('12345678')
-        ]);
-         $role = Role::create(['name' => 'Admin']);
-         $permissions = Permission::pluck('id','id')->all();
-         $role->syncPermissions($permissions);
-         $user->assignRole([$role->id]);
+
+//         $role = Role::create(['name' => 'Admin']);
+//         $permissions = Permission::pluck('id','id')->all();
+//         $role->syncPermissions($permissions);
+//         $user->assignRole([$role->id]);
     }
 }

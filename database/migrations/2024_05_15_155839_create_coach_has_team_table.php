@@ -15,10 +15,10 @@ class CreateCoachHasTeamTable extends Migration
     {
         Schema::create('coach_has_team', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('coach_id')->unsigned();
-            $table->foreign('coach_id')->references('id')->on('coachs');
-            $table->bigInteger('team_id')->unsigned();
-            $table->foreign('team_id')->references('id')->on('teams');
+            $table->bigInteger('coach_id')->unsigned()->nullable();;
+            $table->foreign('coach_id')->references('id')->on('coachs')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('team_id')->unsigned()->nullable();;
+            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

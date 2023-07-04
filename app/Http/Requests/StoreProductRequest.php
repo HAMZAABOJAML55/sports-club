@@ -28,9 +28,10 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'   => 'required|string|max:12',
-            'player_id'   => 'required',
-            'description'   => 'required|string|max:100',
+            'name_ar'   => 'required|string|max:60',
+            'name_en'   => 'required|string|max:60',
+            'product_types_id'   => 'required',
+            'description'   => 'string|max:200',
             'price'   => 'integer',
         ];
     }
@@ -40,12 +41,6 @@ class StoreProductRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
-        $response = new JsonResponse([
-            'data' => [],
-            'message' => 'Validation Error',
-            'errors' => $validator->messages()->all(),
-        ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
-
-        throw new ValidationException($validator, $response);
+        throw new ValidationException($validator);
     }
 }

@@ -14,8 +14,9 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'api',
         'passwords' => 'users',
+
     ],
 
     /*
@@ -40,6 +41,39 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'player' => [
+            'driver' => 'session',
+            'provider' => 'players',
+        ],
+        'coach' => [
+            'driver' => 'session',
+            'provider' => 'coachs',
+        ],
+        'employe' => [
+            'driver' => 'session',
+            'provider' => 'employes',
+        ],
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+            'hash' => false,
+        ],
+        'api_player' => [
+            'driver' => 'jwt',
+            'provider' => 'players',
+            'hash' => false,
+        ],
+        'api_coach' => [
+            'driver' => 'jwt',
+            'provider' => 'coachs',
+            'hash' => false,
+        ],
+        'api_employe' => [
+            'driver' => 'jwt',
+            'provider' => 'employes',
+            'hash' => false,
+        ],
+
     ],
 
     /*
@@ -64,11 +98,20 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'players' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Player::class,
+        ],
+        'coachs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Coach::class,
+        ],
+        'employes' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Employe::class,
+        ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+
     ],
 
     /*

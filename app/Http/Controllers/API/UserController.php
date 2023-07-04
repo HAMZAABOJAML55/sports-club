@@ -3,15 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\api\StoreUserRequest;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class UserController extends Controller
@@ -69,7 +65,7 @@ class UserController extends Controller
         ], ResponseAlias::HTTP_OK);
     }
 
-    public function update(UpdateUserRequest $request, $id): JsonResponse
+    public function update(StoreUserRequest $request, $id): JsonResponse
     {
         $inputs = $request->all();
         if ($request->has('password')) {
@@ -144,7 +140,7 @@ class UserController extends Controller
             'password'          => 'required|confirmed'
         ]);
 
-        $user = User::findOrFail($request->id);
+        $user = User::find($request->id);
         if (Hash::check($request->current_password, $user->password)) {
             $update = $user->update([
                 'password' => bcrypt($request->password),

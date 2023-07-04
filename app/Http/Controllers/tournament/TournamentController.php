@@ -1,0 +1,143 @@
+<?php
+
+namespace App\Http\Controllers\tournament;
+use App\Http\Controllers\Controller;
+use App\Models\ChampionshipLevel;
+use App\Models\Coach;
+use App\Models\Player;
+use App\Models\Prize;
+use App\Models\Tournament;
+use App\Models\TournamentType;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+class TournamentController extends Controller
+{
+
+    public function index()
+    {
+        $tournaments=Tournament::where('club_id',Auth::user()->club_id)->get();
+        return view('pages.tournament.index',compact('tournaments'));
+
+    }
+
+    public function create()
+    {
+        $tournament_types=TournamentType::all();
+        $prizes=Prize::all();
+        $coachs=Coach::where('club_id',Auth::user()->club_id)->get();
+        $players=Player::where('club_id',Auth::user()->club_id)->get();
+        $championship_levels=ChampionshipLevel::all();
+        return view('pages.tournament.create', compact('players','coachs','tournament_types','prizes','championship_levels'));
+    }
+
+    public function store(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+//            return $request;
+            $tournament = new Tournament();
+            $tournament->club_id = Auth::user()->club_id;
+            $tournament->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $tournament->description = $request->description;
+            $tournament->number = $request->number;
+            $tournament->start_time = $request->start_time;
+            $tournament->end_time = $request->end_time;
+            $tournament->tournament_type_id = $request->tournament_type_id;
+            $tournament->prize_type_id = $request->prize_type_id;
+            $tournament->championship_levels_id = $request->championship_levels_id;
+            $tournament->save();
+            $tournament->player()->syncWithoutDetaching($request->player_id);
+            $tournament->coach()->syncWithoutDetaching($request->coach_id);
+            DB::commit();  // insert data
+
+            session()->flash('Add', trans('notifi.add'));
+            return redirect()->route('tournament.index');
+        } catch (\Exception $e) {
+            //            وهنا يعمل رجوع عن الحفظ
+            DB::rollback();
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+
+    public function edit($id)
+    {
+        $tournament_types=TournamentType::all();
+        $prizes=Prize::all();
+        $coachs=Coach::where('club_id',Auth::user()->club_id)->get();
+        $players=Player::where('club_id',Auth::user()->club_id)->get();
+        $championship_levels=ChampionshipLevel::all();
+        $tournaments=Tournament::where('club_id',Auth::user()->club_id)->find($id);
+        return view('pages.tournament.edit', compact('players','coachs','prizes','tournament_types','tournaments','championship_levels'));
+    }
+
+
+    public function update(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+//            $validated = $request->validated();
+            $tournament = Tournament::where('club_id',Auth::user()->club_id)->find($request->id);
+            $tournament->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
+            $tournament->description = $request->description;
+            $tournament->number = $request->number;
+            $tournament->start_time = $request->start_time;
+            $tournament->end_time = $request->end_time;
+            $tournament->tournament_type_id = $request->tournament_type_id;
+            $tournament->prize_type_id = $request->prize_type_id;
+            $tournament->championship_levels_id = $request->championship_levels_id;
+            $tournament->save();
+            //important to update player
+            if(isset($request->player_id)) {
+                $tournament->player()->sync($request->player_id);
+            }
+
+            //important to update coach
+            if(isset($request->coach_id)) {
+                $tournament->coach()->sync($request->coach_id);
+            }
+
+            DB::commit();  // insert data
+
+            session()->flash('update', trans('update.add'));
+            return redirect()->route('tournament.index');
+        } catch (\Exception $e) {
+            //            وهنا يعمل رجوع عن الحفظ
+            DB::rollback();
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+
+    public function destroy(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $tournament = Tournament::where('club_id',Auth::user()->club_id)->find($request->id);
+            $tournament->coach()->detach();
+            $tournament->player()->detach();
+            $tournament->delete();
+            DB::commit();  // insert data
+
+            session()->flash('delete', trans('notifi.delete'));
+            return redirect()->route('tournament.index');
+        } catch (\Exception $e) {
+            //            وهنا يعمل رجوع عن الحفظ
+            DB::rollback();
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+}
