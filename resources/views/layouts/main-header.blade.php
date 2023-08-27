@@ -3,7 +3,7 @@ header start-->
 <nav class="admin-header navbar navbar-default col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <!-- logo -->
     <div class="text-left navbar-brand-wrapper">
-        <a class="navbar-brand brand-logo" href="{{ url('/dashboard') }}"><img src="{{ URL::asset('assets/images/logo-dark.png') }}" alt=""></a>
+        <a class="navbar-brand brand-logo" href="{{ url('/dashboard') }}"><img style="width: 300px;height: 100px" src="{{ URL::asset('assets/images/system-gym.png') }}" alt=""></a>
         <a class="navbar-brand brand-logo-mini" href="{{ url('/dashboard') }}"><img src="{{ URL::asset('assets/images/logo-icon-dark.png') }}"
                                                                                     alt=""></a>
 

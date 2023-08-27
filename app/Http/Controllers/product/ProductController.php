@@ -45,8 +45,7 @@ use imageTrait;
             // insert img
             if ($request->hasfile('photos')) {
                 foreach ($request->file('photos') as $file) {
-                    $name = $file->getClientOriginalName();
-                    $file->storeAs('attachments/product/' . $product->id, $file->getClientOriginalName(), 'upload_attachments');
+                    $name = $this->saveImage($file, 'attachments/product/'.$product->id);
                     $images = new Image();
                     $images->file_name = $name;
                     $images->imageable_id = $product->id;
@@ -121,12 +120,13 @@ use imageTrait;
     public function destroy(Request $request)
     {
         try {
-            $images=Image::where('imageable_id',$request->id);
+            $product=Product::find($request->id);
+            $images=$product->images();
             if ($images){
                 $this->deleteFile('product',$request->id);
                 $images->delete();
             }
-            Product::destroy($request->id);
+            $product->destroy($request->id);
             session()->flash('delete', trans('notifi.delete'));
             return redirect()->route('product.index');
         } catch (\Exception $e) {

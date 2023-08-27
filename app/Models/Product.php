@@ -19,9 +19,9 @@ class Product extends Model
         return $this->belongsTo(ProductType::class,'product_types_id','id');
     }
 
-    public function image()
+    public function images()
     {
-        $this->belongsTo(Image::class,'image_id','id');
+        return $this->morphMany('App\Models\Image', 'imageable');
     }
     public function club()
     {

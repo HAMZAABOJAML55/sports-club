@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\StoreProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Http\Traits\GeneralTrait;
 use App\Http\Traits\imageTrait;
 use App\Models\Image;
@@ -16,12 +17,14 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ProductController extends Controller
 {
-        use GeneralTrait;
-        use imageTrait;
+    use GeneralTrait;
+    use imageTrait;
     public function index()
     {
-        $prodects = Product::where('club_id',Auth::user()->club_id)->get();
-        return response()->json($prodects);
+        $products = Product::where('club_id',Auth::user()->club_id);
+        return response()->json([ 'date' =>ProductResource::collection($products->get()),
+
+        ]);
     }
 
     public function store(Request $request)
@@ -50,11 +53,11 @@ class ProductController extends Controller
             $product->product_types_id = $request->product_types_id;
             $product->save();
 
-            // insert img
-            if ($request->hasfile('image_path')) {
-                foreach ($request->file('image_path') as $file) {
-                    $name = $file->getClientOriginalName();
-                    $file->storeAs('attachments/product/' . $product->id, $file->getClientOriginalName(), 'upload_attachments');
+            // Insert img in the server
+            if ($request->hasfile('images')) {
+
+                foreach ($request->file('images') as $file) {
+                    $name = $this->saveImage($file, 'attachments/product/' . $product->id);
                     $images = new Image();
                     $images->file_name = $name;
                     $images->imageable_id = $product->id;
@@ -66,7 +69,7 @@ class ProductController extends Controller
             DB::commit();  // insert data
             return response()->json([
                 'status'=>true,
-                'date' =>$product,
+                'date' =>new ProductResource($product),
                 'message' => 'product  Added Successfully',
             ]);
         } catch (\Throwable $ex) {
@@ -79,8 +82,12 @@ class ProductController extends Controller
 
     public function show(Request $request)
     {
-        $prodect = Product::where('club_id',Auth::user()->club_id)->find($request->id);
-        return response()->json($prodect);
+        $product = Product::where('club_id',Auth::user()->club_id)->find($request->id);
+        return response()->json([
+            'status'=>true,
+            'date' =>new ProductResource($product),
+            'message' => 'product Successfully',
+        ]);
     }
 
 
@@ -98,15 +105,14 @@ class ProductController extends Controller
             $product->save();
 
             // insert img
-            if($request->hasfile('image_path')) {
+            if($request->hasfile('images')) {
                 $images=Image::where('imageable_id',$request->id);
                 if ($images){
-                    $this->deleteFile('product',$request->id);
+                    $this->deleteFileApi('product',$request->id);
                     $images->delete();
                 }
-                foreach ($request->file('image_path') as $file) {
-                    $name = $file->getClientOriginalName();
-                    $file->storeAs('attachments/product/' . $product->id, $file->getClientOriginalName(), 'upload_attachments');
+                foreach ($request->file('images') as $file) {
+                    $name = $this->saveImage($file, 'attachments/product/' . $product->id);
                     $images = new Image();
                     $images->file_name = $name;
                     $images->imageable_id = $product->id;
@@ -118,8 +124,8 @@ class ProductController extends Controller
             DB::commit();  // insert data
             return response()->json([
                 'status'=>true,
-                'date' =>$product,
-                'message' => 'product  Updated Successfully',
+                'date' =>new ProductResource($product),
+                'message' => 'product updated Successfully',
             ]);
         } catch (\Throwable $ex) {
             //            وهنا يعمل رجوع عن الحفظ
@@ -144,7 +150,7 @@ class ProductController extends Controller
             }
             $images=Image::where('imageable_id',$request->id);
             if ($images){
-                $this->deleteFile('product',$request->id);
+                $this->deleteFileApi('product',$request->id);
                 $images->delete();
             }
             $products->delete();
